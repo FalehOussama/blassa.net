@@ -14,8 +14,15 @@ namespace BlassaApi.Models
                 .WithOne()
                 .HasForeignKey<Preferences>(e => e.UserId)
                 .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Vehicules)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired();
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Vehicule> Vehicules { get; set; }
     }
 }
