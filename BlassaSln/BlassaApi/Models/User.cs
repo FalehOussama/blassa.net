@@ -1,0 +1,29 @@
+﻿namespace BlassaApi.Models
+{
+    public class User
+    {
+        public int Id { get; set; }
+        public string? ImgUrl { get; set; }
+        public string? UId { get; set; }
+        public string? Nom { get; set; }
+        public string? Prenom { get; set; }
+        public DateTime? DateCreation { get; set; }
+        public DateTime? DateNaissance { get; set; }
+        public string? Email { get; set; }
+        public string? Description { get; set; }
+        public string? Sexe { get; set; }
+        public string? Tel1 { get; set; }
+        public string? Tel2 { get; set; }
+        public string? NumSerieTel { get; set; }
+        public string? Methode { get; set; }
+        public string? Platforme { get; set; }
+        public string? Marque { get; set; }
+        public bool? ConditionsGenerales { get; set; }
+        public bool? Verifie { get; set; }
+        public bool? SuperDriver { get; set; }
+        public float NotesAvis { get; set; }
+
+        public Preferences? Preferences { get; set; } // Reference navigation to dependent
+
+    }
+}
