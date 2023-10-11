@@ -29,6 +29,8 @@
         public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
         public ICollection<Commentaire> Commentaires { get; } = new List<Commentaire>();
         public ICollection<Commentaire> CommentairesPost { get; } = new List<Commentaire>();
+        public ICollection<Avi> Avis { get; } = new List<Avi>();
+        public ICollection<Avi> AvisPost { get; } = new List<Avi>();
 
     }
 }
