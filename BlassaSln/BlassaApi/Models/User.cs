@@ -18,9 +18,9 @@
         public string? Methode { get; set; }
         public string? Platforme { get; set; }
         public string? Marque { get; set; }
-        public bool? ConditionsGenerales { get; set; }
-        public bool? Verifie { get; set; }
-        public bool? SuperDriver { get; set; }
+        public bool ConditionsGenerales { get; set; }
+        public bool Verifie { get; set; }
+        public bool SuperDriver { get; set; }
         public float NotesAvis { get; set; }
 
         public Preferences? Preferences { get; set; } // Reference navigation to dependent

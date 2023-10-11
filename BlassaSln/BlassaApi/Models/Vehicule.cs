@@ -10,7 +10,7 @@
         public bool Verifie { get; set; }
         public CouleurType Couleur { get; set; }
         public TypeVehiculeType TypeVehicule { get; set; }
-        public DateTime MiseEnCirculation { get; set; }
+        public DateTime? MiseEnCirculation { get; set; }
         public int UserId { get; set; } // Required foreign key property
     }
 
