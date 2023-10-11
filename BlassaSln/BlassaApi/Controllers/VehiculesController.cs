@@ -15,8 +15,8 @@ namespace BlassaApi.Controllers
             _dbContext = dbContext;
         }
 
-        //GET : api/Vehicules
-        [HttpGet("{userId}")]
+        //GET : api/Vehicules/User
+        [HttpGet("/VehiculesUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Vehicule>>> GetVehiculesUser(int userId)
         {
             if (_dbContext.Vehicules == null)
@@ -44,7 +44,7 @@ namespace BlassaApi.Controllers
 
         //POST : api/Vehicules
         [HttpPost]
-        public async Task<ActionResult<User>> PostVehicule(Vehicule vehicule)
+        public async Task<ActionResult<Vehicule>> PostVehicule(Vehicule vehicule)
         {
             if (!UserExists(vehicule.UserId))
                 return BadRequest();
