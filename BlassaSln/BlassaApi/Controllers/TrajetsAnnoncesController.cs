@@ -20,9 +20,7 @@ namespace BlassaApi.Controllers
         public async Task<ActionResult<IEnumerable<TrajetAnnonce>>> GetTrajetsAnnoncesUser(int userId)
         {
             if (_dbContext.TrajetsAnnonces == null)
-            {
                 return NotFound();
-            }
             return await _dbContext.TrajetsAnnonces.Where(x => x.UserId == userId).ToListAsync();
         }
 

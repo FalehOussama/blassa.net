@@ -27,6 +27,8 @@
         public ICollection<Vehicule> Vehicules { get; } = new List<Vehicule>(); // Collection navigation containing dependents
         public ICollection<TrajetAnnonce> TrajetsAnnonces { get; } = new List<TrajetAnnonce>();
         public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
+        public ICollection<Commentaire> Commentaires { get; } = new List<Commentaire>();
+        public ICollection<Commentaire> CommentairesPost { get; } = new List<Commentaire>();
 
     }
 }
