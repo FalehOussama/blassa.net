@@ -16,7 +16,7 @@ namespace BlassaApi.Controllers
         }
 
         //GET : api/Vehicules/User
-        [HttpGet("/VehiculesUser/{userId}")]
+        [HttpGet("api/VehiculesUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Vehicule>>> GetVehiculesUser(int userId)
         {
             if (_dbContext.Vehicules == null)

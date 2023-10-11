@@ -16,7 +16,7 @@ namespace BlassaApi.Controllers
         }
 
         //GET : api/CommentairesUser
-        [HttpGet("/CommentairesUser/{userId}")]
+        [HttpGet("api/CommentairesUser/{userId}")]
         public async Task<ActionResult<IEnumerable<Commentaire>>> GetCommentairesUser(int userId)
         {
             if (_dbContext.Commentaires == null)
