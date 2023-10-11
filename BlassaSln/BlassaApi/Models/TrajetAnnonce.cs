@@ -44,6 +44,14 @@
         public TypeVehiculeType VTypeVehicule { get; set; }
         public DateTime? VMiseEnCirculation { get; set; }
 
+        public AnnonceStatusType Status { get; set; }
+
         public DateTime DateCreation { get; set; }
+    }
+
+    public enum AnnonceStatusType
+    {
+        NON_DISPONIBLE,
+        DISPONIBLE
     }
 }
