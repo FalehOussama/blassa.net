@@ -16,7 +16,7 @@ namespace BlassaApi.Controllers
         }
 
         //GET : api/TrajetsAnnoncesUser
-        [HttpGet("api/TrajetsAnnoncesUser/{userId}")]
+        [HttpGet("User/{userId}")]
         public async Task<ActionResult<IEnumerable<TrajetAnnonce>>> GetTrajetsAnnoncesUser(int userId)
         {
             if (_dbContext.TrajetsAnnonces == null)
@@ -25,7 +25,7 @@ namespace BlassaApi.Controllers
         }
 
         //GET : api/TrajetsAnnoncesUserReservation
-        [HttpGet("api/TrajetsAnnoncesUserReservation/{userId}")]
+        [HttpGet("UserReservation/{userId}")]
         public async Task<ActionResult<IEnumerable<TrajetAnnonce>>> GetTrajetsAnnoncesUserReservation(int userId)
         {
             if (_dbContext.TrajetsAnnonces == null)
