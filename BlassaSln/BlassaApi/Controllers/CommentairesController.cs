@@ -15,7 +15,7 @@ namespace BlassaApi.Controllers
             _dbContext = dbContext;
         }
 
-        //GET : api/CommentairesUser
+        //GET : api/Commentaires/User
         [HttpGet("User/{userId}")]
         public async Task<ActionResult<IEnumerable<Commentaire>>> GetCommentairesUser(int userId)
         {
@@ -48,7 +48,7 @@ namespace BlassaApi.Controllers
 
         //POST : api/Commentaires
         [HttpPost]
-        public async Task<ActionResult<User>> PostCommentaire(Commentaire commentaire)
+        public async Task<ActionResult<Commentaire>> PostCommentaire(Commentaire commentaire)
         {
             if (!UserExists(commentaire.UserId))
                 return BadRequest();
