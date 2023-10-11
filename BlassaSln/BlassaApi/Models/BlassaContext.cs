@@ -62,6 +62,20 @@ namespace BlassaApi.Models
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.AvisConducteur)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.AvisConducteurPost)
+                .WithOne(e => e.UserAvi)
+                .HasForeignKey(e => e.UserAviId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<TrajetAnnonce>()
                 .HasMany(e => e.Reservations)
                 .WithOne()
@@ -75,5 +89,6 @@ namespace BlassaApi.Models
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Commentaire> Commentaires { get; set; }
         public DbSet<Avi> Avis { get; set; }
+        public DbSet<AviConducteur> AvisConducteur { get; set; }
     }
 }

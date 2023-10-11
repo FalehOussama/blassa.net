@@ -6,36 +6,36 @@ namespace BlassaApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AvisController : Controller
+    public class AvisConducteurController : Controller
     {
         private readonly BlassaContext _dbContext;
 
-        public AvisController(BlassaContext dbContext)
+        public AvisConducteurController(BlassaContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        //GET : api/Avis/User
+        //GET : api/AvisConducteur/User
         [HttpGet("User/{userId}")]
-        public async Task<ActionResult<IEnumerable<Avi>>> GetAvisUser(int userId)
+        public async Task<ActionResult<IEnumerable<AviConducteur>>> GetAvisConducteurUser(int userId)
         {
             if (_dbContext.Avis == null)
                 return NotFound();
 
-            return await _dbContext.Avis
+            return await _dbContext.AvisConducteur
                 .Include(x => x.UserAvi)
                 .Where(x => x.UserId == userId)
                 .ToListAsync();
         }
 
-        //GET : api/Avis/5
+        //GET : api/AvisConducteur/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Avi>> GetAvi(int id)
+        public async Task<ActionResult<AviConducteur>> GetAviConducteur(int id)
         {
-            if (_dbContext.Avis == null)
+            if (_dbContext.AvisConducteur == null)
                 return NotFound();
 
-            var avi = await _dbContext.Avis
+            var avi = await _dbContext.AvisConducteur
                 .Include(x => x.UserAvi)
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
@@ -46,9 +46,9 @@ namespace BlassaApi.Controllers
             return Ok(avi);
         }
 
-        //POST : api/Avis
+        //POST : api/AvisConducteur
         [HttpPost]
-        public async Task<ActionResult<Avi>> PostAvi(Avi avi)
+        public async Task<ActionResult<AviConducteur>> PostAviConducteur(AviConducteur avi)
         {
             if (!UserExists(avi.UserId))
                 return BadRequest();
@@ -57,15 +57,15 @@ namespace BlassaApi.Controllers
 
             avi.DateAvi = DateTime.Now;
 
-            _dbContext.Avis.Add(avi);
+            _dbContext.AvisConducteur.Add(avi);
             await _dbContext.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAvi), new { id = avi.Id }, avi);
+            return CreatedAtAction(nameof(GetAviConducteur), new { id = avi.Id }, avi);
         }
 
-        //PUT : api/Avis/5
+        //PUT : api/AvisConducteur/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAvi(int id, Avi avi)
+        public async Task<IActionResult> PutAvi(int id, AviConducteur avi)
         {
             if (id != avi.Id)
                 return BadRequest();
@@ -78,7 +78,7 @@ namespace BlassaApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AviExists(id))
+                if (!AviConducteurExists(id))
                     return NotFound();
                 else
                     throw;
@@ -86,18 +86,18 @@ namespace BlassaApi.Controllers
             return NoContent();
         }
 
-        //DELETE : api/Avis/5
+        //DELETE : api/AvisConducteur/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAvi(int id)
+        public async Task<IActionResult> DeleteAviConducteur(int id)
         {
-            if (_dbContext.Avis == null)
+            if (_dbContext.AvisConducteur == null)
                 return NotFound();
 
-            var avi = await _dbContext.Avis.FindAsync(id);
+            var avi = await _dbContext.AvisConducteur.FindAsync(id);
             if (avi == null)
                 return NotFound();
 
-            _dbContext.Avis.Remove(avi);
+            _dbContext.AvisConducteur.Remove(avi);
             await _dbContext.SaveChangesAsync();
 
             return NoContent();
@@ -108,9 +108,9 @@ namespace BlassaApi.Controllers
             return (_dbContext.Users?.Any(u => u.Id == id)).GetValueOrDefault();
         }
 
-        private bool AviExists(int id)
+        private bool AviConducteurExists(int id)
         {
-            return (_dbContext.Avis?.Any(u => u.Id == id)).GetValueOrDefault();
+            return (_dbContext.AvisConducteur?.Any(u => u.Id == id)).GetValueOrDefault();
         }
     }
 }

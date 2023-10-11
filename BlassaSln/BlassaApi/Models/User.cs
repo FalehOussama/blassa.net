@@ -31,6 +31,8 @@
         public ICollection<Commentaire> CommentairesPost { get; } = new List<Commentaire>();
         public ICollection<Avi> Avis { get; } = new List<Avi>();
         public ICollection<Avi> AvisPost { get; } = new List<Avi>();
+        public ICollection<AviConducteur> AvisConducteur { get; } = new List<AviConducteur>();
+        public ICollection<AviConducteur> AvisConducteurPost { get; } = new List<AviConducteur>();
 
     }
 }
