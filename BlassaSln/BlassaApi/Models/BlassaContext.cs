@@ -26,10 +26,24 @@ namespace BlassaApi.Models
                 .WithOne()
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Reservations)
+                .WithOne()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<TrajetAnnonce>()
+                .HasMany(e => e.Reservations)
+                .WithOne()
+                .HasForeignKey(e => e.TrajetAnnonceId)
+                .IsRequired();
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Vehicule> Vehicules { get; set; }
         public DbSet<TrajetAnnonce> TrajetsAnnonces { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

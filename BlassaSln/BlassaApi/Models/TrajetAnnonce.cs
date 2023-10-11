@@ -16,6 +16,7 @@
         public DateTime DateHeureDepart { get; set; }
         public int Prix { get; set; }
         public int NombrePlaces { get; set; }
+        public int NombrePlacesDispo { get; set; }
 
         public bool Tel { get; set; }
         public bool WhatsApp { get; set; }
@@ -44,14 +45,8 @@
         public TypeVehiculeType VTypeVehicule { get; set; }
         public DateTime? VMiseEnCirculation { get; set; }
 
-        public AnnonceStatusType Status { get; set; }
-
         public DateTime DateCreation { get; set; }
-    }
 
-    public enum AnnonceStatusType
-    {
-        NON_DISPONIBLE,
-        DISPONIBLE
+        public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
     }
 }

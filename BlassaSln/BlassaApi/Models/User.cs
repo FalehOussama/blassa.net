@@ -26,6 +26,7 @@
         public Preferences? Preferences { get; set; } // Reference navigation to dependent
         public ICollection<Vehicule> Vehicules { get; } = new List<Vehicule>(); // Collection navigation containing dependents
         public ICollection<TrajetAnnonce> TrajetsAnnonces { get; } = new List<TrajetAnnonce>();
+        public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
 
     }
 }

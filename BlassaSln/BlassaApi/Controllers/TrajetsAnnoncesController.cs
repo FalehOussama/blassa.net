@@ -15,7 +15,7 @@ namespace BlassaApi.Controllers
             _dbContext = dbContext;
         }
 
-        //GET : api/TrajetsAnnonces/User
+        //GET : api/TrajetsAnnoncesUser
         [HttpGet("/TrajetsAnnoncesUser/{userId}")]
         public async Task<ActionResult<IEnumerable<TrajetAnnonce>>> GetTrajetsAnnoncesUser(int userId)
         {
@@ -24,6 +24,19 @@ namespace BlassaApi.Controllers
                 return NotFound();
             }
             return await _dbContext.TrajetsAnnonces.Where(x => x.UserId == userId).ToListAsync();
+        }
+
+        //GET : api/TrajetsAnnoncesUserReservation
+        [HttpGet("/TrajetsAnnoncesUserReservation/{userId}")]
+        public async Task<ActionResult<IEnumerable<TrajetAnnonce>>> GetTrajetsAnnoncesUserReservation(int userId)
+        {
+            if (_dbContext.TrajetsAnnonces == null)
+            {
+                return NotFound();
+            }
+            return await _dbContext.TrajetsAnnonces
+                .Where(x => x.Reservations.Any(r => r.UserId == userId))
+                .ToListAsync();
         }
 
         //GET : api/TrajetsAnnonces/5
@@ -48,6 +61,9 @@ namespace BlassaApi.Controllers
         {
             if (!UserExists(trajetAnnonce.UserId))
                 return BadRequest();
+
+            trajetAnnonce.NombrePlacesDispo = trajetAnnonce.NombrePlaces;
+            trajetAnnonce.DateCreation = DateTime.Now;
 
             _dbContext.TrajetsAnnonces.Add(trajetAnnonce);
             await _dbContext.SaveChangesAsync();
