@@ -49,6 +49,9 @@ namespace BlassaApi.Controllers
             if (!UserExists(vehicule.UserId))
                 return BadRequest();
 
+            if(!VehiculeCanAdd(vehicule.UserId))
+                return BadRequest();
+
             _dbContext.Vehicules.Add(vehicule);
             await _dbContext.SaveChangesAsync();
 
@@ -105,6 +108,11 @@ namespace BlassaApi.Controllers
         private bool VehiculeExists(int id)
         {
             return (_dbContext.Vehicules?.Any(u => u.Id == id)).GetValueOrDefault();
+        }
+
+        private bool VehiculeCanAdd(int idUser)
+        { 
+            return _dbContext.Vehicules.Count(u => u.UserId == idUser) < 3;
         }
     }
 }
