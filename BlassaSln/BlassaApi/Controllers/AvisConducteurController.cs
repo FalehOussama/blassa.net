@@ -123,7 +123,7 @@ namespace BlassaApi.Controllers
 
         //PUT : api/AvisConducteur/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAvi(int id, AviConducteur avi)
+        public async Task<IActionResult> PutAviConducteur(int id, AviConducteur avi)
         {
             if (id != avi.Id)
                 return BadRequest();
