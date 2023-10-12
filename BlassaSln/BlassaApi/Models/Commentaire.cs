@@ -5,7 +5,7 @@
         public int Id { get; set; }
         //User qui a reçu le comm
         public int UserId { get; set; }
-        public User UserComm { get; set; } = null!;
+        public User? UserComm { get; set; } = null!;
         //User qui a posté le comm
         public int UserCommId { get; set; }
         public DateTime DateComm { get; set; }
