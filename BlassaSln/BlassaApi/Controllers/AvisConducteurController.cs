@@ -110,7 +110,7 @@ namespace BlassaApi.Controllers
                 return BadRequest();
             if (!UserExists(avi.UserAviId))
                 return BadRequest();
-            if (!AviUserExists(avi.UserId, avi.UserAviId))
+            if (AviUserExists(avi.UserId, avi.UserAviId))
                 return BadRequest("Avi existe déjà");
 
             avi.DateAvi = DateTime.Now;
