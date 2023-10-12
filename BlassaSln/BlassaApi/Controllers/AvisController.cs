@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using BlassaApi.Dto;
 using BlassaApi.Models;
 
 namespace BlassaApi.Controllers
@@ -15,7 +16,62 @@ namespace BlassaApi.Controllers
             _dbContext = dbContext;
         }
 
-        //GET : api/Avis/User
+        //GET : api/Avis/User/Stat/5
+        [HttpGet("User/Stat/{userId}")]
+        public async Task<ActionResult<AviDto>> GetAviUserStat(int userId)
+        {
+            var aviStat = new AviDto();
+            if (_dbContext.Avis == null)
+                return Ok(aviStat);
+
+            var qureyAviStat = from av in _dbContext.Avis
+                               where av.UserId == userId
+                               group av by av.Categorie into g
+                               select new
+                               {
+                                   Categorie = g.Key,
+                                   Nbre = g.Count()
+                               };
+
+            var results = await qureyAviStat.ToListAsync();
+            int nbreTotal = 0;
+
+            foreach (var r in results)
+            {
+
+                aviStat.Score += (int)r.Categorie * r.Nbre;
+                nbreTotal += r.Nbre;
+                switch (r.Categorie)
+                {
+                    case CategorieAvisCommentaireType.EXCELLENT:
+                        aviStat.NbreExcellent = r.Nbre;
+                        break;
+                    case CategorieAvisCommentaireType.BIEN:
+                        aviStat.NbreBien = r.Nbre;
+                        break;
+                    case CategorieAvisCommentaireType.CORRECT:
+                        aviStat.NbreCorrect = r.Nbre;
+                        break;
+                    case CategorieAvisCommentaireType.DECEVANT:
+                        aviStat.NbreDecevant = r.Nbre;
+                        break;
+                    case CategorieAvisCommentaireType.TRES_DECEVANT:
+                        aviStat.NbreTreDecevant = r.Nbre;
+                        break;
+                }
+            }
+
+            if (nbreTotal > 0)
+            {
+                var maxScore = ((int)CategorieAvisCommentaireType.EXCELLENT) * nbreTotal;
+                aviStat.Rating = ((float)aviStat.Score * 5) / (float)maxScore;
+            }
+                
+
+            return Ok(aviStat);
+        }
+
+        //GET : api/Avis/User/5
         [HttpGet("User/{userId}")]
         public async Task<ActionResult<IEnumerable<Avi>>> GetAvisUser(int userId)
         {
