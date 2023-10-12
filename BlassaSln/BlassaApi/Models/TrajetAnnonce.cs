@@ -45,6 +45,10 @@
         public TypeVehiculeType VTypeVehicule { get; set; }
         public DateTime? VMiseEnCirculation { get; set; }
 
+        //User
+        public bool USuperDriver { get; set; }
+        public bool UVerifie { get; set; }
+
         public DateTime DateCreation { get; set; }
 
         public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
