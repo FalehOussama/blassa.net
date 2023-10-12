@@ -110,6 +110,8 @@ namespace BlassaApi.Controllers
                 return BadRequest();
             if (!UserExists(avi.UserAviId))
                 return BadRequest();
+            if (!AviUserExists(avi.UserId, avi.UserAviId))
+                return BadRequest("Avi existe déjà");
 
             avi.DateAvi = DateTime.Now;
 
@@ -167,6 +169,13 @@ namespace BlassaApi.Controllers
         private bool AviConducteurExists(int id)
         {
             return (_dbContext.AvisConducteur?.Any(u => u.Id == id)).GetValueOrDefault();
+        }
+
+        private bool AviUserExists(int userId, int userAviId)
+        {
+            return (_dbContext.AvisConducteur?
+                .Any(u => u.UserId == userId &&
+                            u.UserAviId == userAviId)).GetValueOrDefault();
         }
     }
 }
