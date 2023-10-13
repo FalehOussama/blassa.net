@@ -20,6 +20,8 @@ namespace BlassaApi.Controllers
         [HttpPost("Recherche")]
         public async Task<ActionResult<TrajetsAnnoncesRechercheRetourDto>> TrajetsAnnoncesRecherche(TrajetAnnonceCriteresDto criteres, TrajetAnnonceTriTypeDto tri, int pageNb)
         {
+            if (pageNb <= 0)
+                return BadRequest("pageNb: {pageNb} <= 0");
             var retour = new TrajetsAnnoncesRechercheRetourDto();
             if (_dbContext.TrajetsAnnonces == null)
                 return retour;
@@ -35,25 +37,6 @@ namespace BlassaApi.Controllers
             query = query.Where(t => t.DateHeureDepart > criteres.DateDepart);
 
             query = query.Where(t => t.NombrePlacesDispo >= criteres.NombrePlaces);
-
-            if (pageNb == 1)
-            {
-                retour.NbreAvant6H = await query.Where(t => t.DateHeureDepart.Hour <= 5).CountAsync();
-                retour.NbreEntre6H12H = await query.Where(t => t.DateHeureDepart.Hour >= 6 && t.DateHeureDepart.Hour <= 11).CountAsync();
-                retour.NbreEntre12H18H = await query.Where(t => t.DateHeureDepart.Hour >= 12 && t.DateHeureDepart.Hour <= 17).CountAsync();
-                retour.NbreApres18H = await query.Where(t => t.DateHeureDepart.Hour >= 18).CountAsync();
-                retour.NbreSuperDriver = await query.Where(t => t.USuperDriver).CountAsync();
-                retour.NbreProfilVerifie = await query.Where(t => t.UVerifie).CountAsync();
-                retour.NbreMax2Arriere = await query.Where(t => t.Max2).CountAsync();
-                retour.NbreReservationInst = await query.Where(t => t.Instantane).CountAsync();
-                retour.NbreBLeger = await query.Where(t => t.Leger).CountAsync();
-                retour.NbreBMoyen = await query.Where(t => t.Moyen).CountAsync();
-                retour.NbreBLourd = await query.Where(t => t.Lourd).CountAsync();
-                retour.NbreBLourd = await query.Where(t => t.Lourd).CountAsync();
-                retour.NbreClimatisation = await query.Where(t => t.VClimatise).CountAsync();
-                retour.NbreCigaretteAuto = await query.Where(t => t.Cigarette).CountAsync();
-                retour.NbreAnimauxAuto = await query.Where(t => t.Animaux).CountAsync();
-            }
 
             //A vérifier
             switch (criteres.HeureDepart)
@@ -73,10 +56,10 @@ namespace BlassaApi.Controllers
             }
 
             if (criteres.SuperDriver)
-                query = query.Where(t => t.USuperDriver);
+                query = query.Where(t => t.User.SuperDriver);
 
             if (criteres.ProfilVerifie)
-                query = query.Where(t => t.UVerifie);
+                query = query.Where(t => t.User.Verifie);
 
             if (criteres.Max2Arriere)
                 query = query.Where(t => t.Max2);
@@ -103,6 +86,23 @@ namespace BlassaApi.Controllers
                 query = query.Where(t => t.Animaux);
 
             retour.Count = await query.CountAsync();
+            if (pageNb == 1)
+            {
+                retour.NbreAvant6H = await query.Where(t => t.DateHeureDepart.Hour <= 5).CountAsync();
+                retour.NbreEntre6H12H = await query.Where(t => t.DateHeureDepart.Hour >= 6 && t.DateHeureDepart.Hour <= 11).CountAsync();
+                retour.NbreEntre12H18H = await query.Where(t => t.DateHeureDepart.Hour >= 12 && t.DateHeureDepart.Hour <= 17).CountAsync();
+                retour.NbreApres18H = await query.Where(t => t.DateHeureDepart.Hour >= 18).CountAsync();
+                retour.NbreSuperDriver = await query.Where(t => t.User.SuperDriver).CountAsync();
+                retour.NbreProfilVerifie = await query.Where(t => t.User.Verifie).CountAsync();
+                retour.NbreMax2Arriere = await query.Where(t => t.Max2).CountAsync();
+                retour.NbreReservationInst = await query.Where(t => t.Instantane).CountAsync();
+                retour.NbreBLeger = await query.Where(t => t.Leger).CountAsync();
+                retour.NbreBMoyen = await query.Where(t => t.Moyen).CountAsync();
+                retour.NbreBLourd = await query.Where(t => t.Lourd).CountAsync();
+                retour.NbreClimatisation = await query.Where(t => t.VClimatise).CountAsync();
+                retour.NbreCigaretteAuto = await query.Where(t => t.Cigarette).CountAsync();
+                retour.NbreAnimauxAuto = await query.Where(t => t.Animaux).CountAsync();
+            }
 
             switch (tri)
             {
@@ -122,7 +122,30 @@ namespace BlassaApi.Controllers
 
             var nbPageElts = 10;
             var skip = nbPageElts * (pageNb - 1);
-            retour.Trajets = await query.Skip(skip).Take(nbPageElts).ToListAsync();
+            retour.Trajets = await query
+                .Select(t => new RechTrajetAnnonceDto() { 
+                    Id = t.Id,
+                    Depart = t.Depart,
+                    Destination = t.Destination,
+                    DateHeureDepart = t.DateHeureDepart,
+                    NombrePlaces = t.NombrePlaces,
+                    NombrePlacesDispo = t.NombrePlacesDispo,
+                    Prix = t.Prix,
+                    Instantane = t.Instantane,
+                    VoyageAvec = t.VoyageAvec,
+                    VClimatise = t.VClimatise,
+                    UserId = t.UserId,
+                    UId = t.User.UId,
+                    UNom = t.User.Nom,
+                    UPrenom = t.User.Prenom,
+                    UImgUrl = t.User.ImgUrl,
+                    USexe = t.User.Sexe,
+                    USuperDriver = t.User.SuperDriver,
+                    UVerifie = t.User.Verifie
+                })
+                .Skip(skip)
+                .Take(nbPageElts)
+                .ToListAsync();
 
             return retour;
         }

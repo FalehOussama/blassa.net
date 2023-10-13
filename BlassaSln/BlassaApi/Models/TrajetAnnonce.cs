@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int UserId { get; set; } // Required foreign key property
+        public User? User { get; set; } = null!;
 
         public string Depart { get; set; }
         public float LonDepart { get; set; }
@@ -44,10 +45,6 @@
         public CouleurType VCouleur { get; set; }
         public TypeVehiculeType VTypeVehicule { get; set; }
         public DateTime? VMiseEnCirculation { get; set; }
-
-        //User
-        public bool USuperDriver { get; set; }
-        public bool UVerifie { get; set; }
 
         public DateTime DateCreation { get; set; }
 

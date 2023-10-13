@@ -23,7 +23,7 @@ namespace BlassaApi.Models
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.TrajetsAnnonces)
-                .WithOne()
+                .WithOne(e => e.User)
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
 

@@ -1,14 +1,12 @@
-﻿using BlassaApi.Models;
-
-namespace BlassaApi.Dto
+﻿namespace BlassaApi.Dto
 {
     public class TrajetsAnnoncesRechercheRetourDto
     {
         public TrajetsAnnoncesRechercheRetourDto()
         {
-            Trajets = new List<TrajetAnnonce>();
+            Trajets = new List<RechTrajetAnnonceDto>();
         }
-        public List<TrajetAnnonce> Trajets { get; set; }
+        public List<RechTrajetAnnonceDto> Trajets { get; set; }
         public int Count { get; set; }
         public int NbreAvant6H { get; set; }
         public int NbreEntre6H12H { get; set; }
