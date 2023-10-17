@@ -34,7 +34,7 @@ namespace BlassaApi.Controllers
             if (!string.IsNullOrEmpty(criteres.Destination))
                 query = query.Where(t => t.Destination.ToUpper().StartsWith(criteres.Destination.ToUpper()));
 
-            query = query.Where(t => t.DateHeureDepart > criteres.DateDepart);
+            query = query.Where(t => t.DateHeureDepart >= criteres.DateDepart);
 
             query = query.Where(t => t.NombrePlacesDispo >= criteres.NombrePlaces);
 
@@ -85,6 +85,22 @@ namespace BlassaApi.Controllers
             if (criteres.AnimauxAutorises)
                 query = query.Where(t => t.Animaux);
 
+            if (criteres.VoyageAvec != null)
+            {
+                switch (criteres.VoyageAvec)
+                {
+                    case VoyageAvecType.TOUS:
+                        query = query.Where(t => t.VoyageAvec == VoyageAvecType.TOUS);
+                        break;
+                    case VoyageAvecType.FILLES:
+                        query = query.Where(t => t.VoyageAvec == VoyageAvecType.FILLES);
+                        break;
+                    case VoyageAvecType.GARCONS:
+                        query = query.Where(t => t.VoyageAvec == VoyageAvecType.GARCONS);
+                        break;
+                }
+            }
+
             retour.Count = await query.CountAsync();
             if (pageNb == 1)
             {
@@ -102,6 +118,9 @@ namespace BlassaApi.Controllers
                 retour.NbreClimatisation = await query.Where(t => t.VClimatise).CountAsync();
                 retour.NbreCigaretteAuto = await query.Where(t => t.Cigarette).CountAsync();
                 retour.NbreAnimauxAuto = await query.Where(t => t.Animaux).CountAsync();
+                retour.NbreVoyageAvecTous = await query.Where(t => t.VoyageAvec == VoyageAvecType.TOUS).CountAsync();
+                retour.NbreVoyageAvecFilles = await query.Where(t => t.VoyageAvec == VoyageAvecType.FILLES).CountAsync();
+                retour.NbreVoyageAvecGarcons = await query.Where(t => t.VoyageAvec == VoyageAvecType.GARCONS).CountAsync();
             }
 
             switch (tri)

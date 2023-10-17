@@ -22,5 +22,8 @@
         public int NbreClimatisation { get; set; }
         public int NbreCigaretteAuto { get; set; }
         public int NbreAnimauxAuto { get; set; }
+        public int NbreVoyageAvecTous { get; set; }
+        public int NbreVoyageAvecFilles { get; set; }
+        public int NbreVoyageAvecGarcons { get; set; }
     }
 }

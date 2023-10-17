@@ -1,4 +1,6 @@
-﻿namespace BlassaApi.Dto
+﻿using BlassaApi.Models;
+
+namespace BlassaApi.Dto
 {
     public class TrajetAnnonceCriteresDto
     {
@@ -17,6 +19,7 @@
         public bool Climatisation { get; set; }
         public bool CigaretteAutorisee { get; set; }
         public bool AnimauxAutorises { get; set; }
+        public VoyageAvecType? VoyageAvec { get; set; }
     }
 
     public enum HeureDepartCritereTypeDto
