@@ -9,6 +9,6 @@
         //User qui a posté l'avi
         public int UserAviId { get; set; }
         public DateTime DateAvi { get; set; }
-        public CategorieAvisCommentaireType Categorie { get; set; }
+        public CategorieAvisType Categorie { get; set; }
     }
 }

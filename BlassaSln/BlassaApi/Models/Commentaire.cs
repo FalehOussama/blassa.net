@@ -10,6 +10,5 @@
         public int UserCommId { get; set; }
         public DateTime DateComm { get; set; }
         public string Texte { get; set; }
-        public CategorieAvisCommentaireType Categorie { get; set; }
     }
 }

@@ -43,19 +43,19 @@ namespace BlassaApi.Controllers
                 nbreTotal += r.Nbre;
                 switch (r.Categorie)
                 {
-                    case CategorieAvisCommentaireType.EXCELLENT:
+                    case CategorieAvisType.EXCELLENT:
                         aviStat.NbreExcellent = r.Nbre;
                         break;
-                    case CategorieAvisCommentaireType.BIEN:
+                    case CategorieAvisType.BIEN:
                         aviStat.NbreBien = r.Nbre;
                         break;
-                    case CategorieAvisCommentaireType.CORRECT:
+                    case CategorieAvisType.CORRECT:
                         aviStat.NbreCorrect = r.Nbre;
                         break;
-                    case CategorieAvisCommentaireType.DECEVANT:
+                    case CategorieAvisType.DECEVANT:
                         aviStat.NbreDecevant = r.Nbre;
                         break;
-                    case CategorieAvisCommentaireType.TRES_DECEVANT:
+                    case CategorieAvisType.TRES_DECEVANT:
                         aviStat.NbreTreDecevant = r.Nbre;
                         break;
                 }
@@ -63,7 +63,7 @@ namespace BlassaApi.Controllers
 
             if (nbreTotal > 0)
             {
-                var maxScore = ((int)CategorieAvisCommentaireType.EXCELLENT) * nbreTotal;
+                var maxScore = ((int)CategorieAvisType.EXCELLENT) * nbreTotal;
                 aviStat.Rating = ((float)aviStat.Score * 5) / (float)maxScore;
             }
 

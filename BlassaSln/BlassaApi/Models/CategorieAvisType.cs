@@ -1,6 +1,6 @@
 ﻿namespace BlassaApi.Models
 {
-    public enum CategorieAvisCommentaireType
+    public enum CategorieAvisType
     {
         TRES_DECEVANT,
         DECEVANT,
