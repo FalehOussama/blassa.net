@@ -1,0 +1,8 @@
+{
+  "name": "Blassa",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

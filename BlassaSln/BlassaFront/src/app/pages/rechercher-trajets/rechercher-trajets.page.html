@@ -1,0 +1,84 @@
+<app-menu></app-menu>
+
+
+<ion-content [fullscreen]="true" class="ion-padding back">
+
+  <ion-img class="cover" src="../../../assets/images/Background/ovva2.png" alt="Header"></ion-img>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col>
+        <ion-card class="has-card-footer">
+          <ion-list >
+            <ion-item lines="none">
+              <ion-input value="{{depart}}" [(ngModel)]="autocompleteDep.input" (ionInput)="UpdateSearchResultsDep()"  placeholder="Depart" style="font-family: Arial, Helvetica, sans-serif;"></ion-input>
+              <ion-icon class="bullet small" name="locate-outline" slot="start" style="color: rgb(89, 89, 233);"></ion-icon>
+
+            </ion-item>
+
+            
+            <ion-list [hidden]="autocompleteItemsDep.length == 0">
+              <ion-item *ngFor="let item of autocompleteItemsDep" tappable (click)="SelectSearchResultDep(item)">
+                {{ item.description }}
+              </ion-item>
+            </ion-list>
+
+            <ion-item lines="none">
+              <ion-input [(ngModel)]="dest" placeholder="Destination" value="{{dest}}" [(ngModel)]="autocompleteDes.input" (ionInput)="UpdateSearchResultsDes()"></ion-input>
+              <ion-icon class="bullet small" name="location-outline" slot="start" style="color: rgb(206, 72, 72);"></ion-icon>
+            </ion-item>
+
+            <ion-list [hidden]="autocompleteItemsDes.length == 0">
+              <ion-item *ngFor="let item of autocompleteItemsDes" tappable (click)="SelectSearchResultDes(item)">
+                {{ item.description }}
+              </ion-item>
+            </ion-list>
+
+            <ion-item lines="none">
+              <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+              <ion-input id="date" placeholder="{{date | date}}"></ion-input>
+              <ion-popover trigger="date">
+                <ng-template>
+                  <ion-datetime [(ngModel)]="date" [min]="today"></ion-datetime>
+                </ng-template>
+              </ion-popover>
+            </ion-item>
+            <ion-item class="centred" lines="none">
+              <ion-icon class="bullet small" name="people-outline" slot="start"></ion-icon>
+              <p class="row3text">Passagers</p>
+              <ion-icon name="remove-circle-outline" style="color:blue; margin-left: auto;"
+                (click)="minusPa()"></ion-icon>
+              <p
+                style="color:blue; text-align: center; font-size: 2rem; width: 40px ;margin-top: auto; margin-bottom: auto;">
+                {{passagers}}</p>
+              <ion-icon name="add-circle-outline" style="color:blue;" (click)="plusPa()"></ion-icon>
+            </ion-item>
+          </ion-list>
+          <div class="ion-activatable">
+            <ion-row class="card-footer ion-activatable" (click)="rechercher();">
+              <ion-ripple-effect class="custom-ripple" type="unbounded"></ion-ripple-effect>
+              <p>Rechercher</p>
+            </ion-row>
+            <ion-row class="card-footer ion-activatable" (click)="rechercher();">
+              
+              <p>Rechercher</p>
+            </ion-row>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-list mode="ios" style="margin-top: 30px; border-radius: 20px;">
+      <ion-item button detail="true" *ngFor="let recherche of user?.recherches" (click)="rechercheParHistorique(recherche.depart , recherche.destination , recherche.nbrPassager , convertDate(recherche.date_recherche))">
+        <ion-icon name="time-outline" slot="start"></ion-icon>
+        <ion-label>
+          <h3>{{recherche.depart}} <ion-icon name="arrow-forward-outline" size="small" style="vertical-align: middle;"></ion-icon> {{recherche.destination}}</h3>
+          <p>{{parseDate(recherche.date_recherche) | date}} , {{recherche.nbrPassager}} passager</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>

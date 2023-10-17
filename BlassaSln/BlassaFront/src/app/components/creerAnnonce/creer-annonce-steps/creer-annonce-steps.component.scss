@@ -1,0 +1,32 @@
+.chain{
+    margin-top: 40px;
+    .line{
+      display: block;
+      height: 0px;
+      border-top: 5px solid #5C97BF;
+      border-bottom: 5px solid #5C97BF;
+      width:200x;
+      margin-left:5px;
+      
+    }
+    .circle{
+      width: 40px;
+      height: 40px;
+      background: #ddd;
+      border: 5px solid #5C97BF;
+      border-radius: 25px;
+      display: inline-block;
+      margin-top: -35px;
+      margin-right: 125px;
+    }
+    .circle.complete{
+      background-color:#2ECC71;
+      
+    }
+    
+    .label
+    {
+      width:50px;
+      text-align:center;  
+    }
+  }

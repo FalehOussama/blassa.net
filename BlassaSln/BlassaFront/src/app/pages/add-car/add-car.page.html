@@ -1,0 +1,50 @@
+<app-menu></app-menu>
+
+<ion-content class="ion-padding">
+  <ion-img class="cover" src="../../../assets/images/Background/AjouterVehicule.png" alt="Header"></ion-img>
+
+  <form [formGroup]="vehiculeForm">
+
+    <ion-item>
+      <ion-input label-placement="floating" class="textLarge" label="Matricule" formControlName="matricule" value="matricule"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label-placement="floating" class="textLarge" label="Marque" formControlName="marque" value="marque"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label-placement="floating" class="textLarge" label="Model" formControlName="model"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="textLarge">Climatisation</ion-label>
+      <ion-toggle label-placement="floating" class="textLarge" label="Climatisation" [checked]="vehicule?.climatise" formControlName="climatise"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-select label-placement="floating" class="textLarge" label="Type" placeholder="Selectionner Type" formControlName="type">
+        <ion-select-option *ngFor="let type of types" [value]="type">{{ type }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select label-placement="floating" class="textLarge" label="Couleur" placeholder="Selectionner Couleur" formControlName="couleur">
+        <ion-select-option *ngFor="let color of colors" [value]="color">{{ color }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-label class="text ion-padding">Mise en circulation</ion-label>
+    <ion-item lines="none">
+      <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+      <ion-input id="date" placeholder="{{vehiculeForm.value['miseEnCirculation'] | date}}"></ion-input>
+      <ion-popover trigger="date">
+        <ng-template>
+          <ion-datetime formControlName="miseEnCirculation"></ion-datetime>
+        </ng-template>
+      </ion-popover>
+    </ion-item>
+    <ion-item>
+      <input label-placement="floating" class="textLarge" label="Carte grise" type="file" />
+    </ion-item>
+  
+        
+</form>
+
+  <ion-button style="float: right;" (click)="addVehicule();">Ajouter</ion-button>
+</ion-content>

@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    margin-top: 15%;
+    margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: 700;
+  }
+  
+  h3 {
+    color: #939fab;
+    font-weight: 600;
+  }
+  
+  form {
+    margin-top: -5rem;
+  
+    .forgot-password-link {
+      text-decoration: none;
+      display: inline-block;
+      width: 100%;
+      text-align: right;
+      font-weight: 600;
+      font-size: 14px;
+      color: #4a4a4a;
+    }
+  
+    app-button {
+      display: block;
+      margin-top: 3rem;
+    }
+  }
+  
+  .footer-text {
+    text-align: center;
+    font-size: 17px;
+    margin-top: 20%;
+  
+    a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #fa578e;
+    }
+  }
+
+  .img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 130px;
+    -webkit-filter: drop-shadow(0px 0px 10px #ffffff);
+    filter: drop-shadow(0px 0px 12px #ffffff);
+    // animation: myAnim 6s linear 0s infinite alternate both;
+  
+  }
+  .cover{
+    width: 100%;
+
+  }
+
+  .imageRow{
+    margin-top: 50px;
+    margin-bottom: 30px;
+    justify-content :center;
+  }
+
+  ion-content{
+    --background:
+    linear-gradient(180deg, rgb(255, 255, 255) 27%, rgb(255, 255, 255) 65%, rgba(255,255,255,0.27614373386073177) 100%),
+    url('../../../assets/images/Background/map.jpg');
+}
+
+
+@keyframes myAnim {
+	0%,
+	50%,
+	100% {
+		opacity: 1;
+	}
+
+	25%,
+	75% {
+		opacity: 0;
+	}
+}

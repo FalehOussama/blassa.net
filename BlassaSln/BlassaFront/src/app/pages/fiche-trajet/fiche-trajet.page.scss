@@ -1,0 +1,147 @@
+
+ion-content{
+    --background:
+    linear-gradient(180deg, rgb(255, 255, 255,0.27614373386073177) 27%, rgb(255, 255, 255) 65%, rgba(255,255,255,0.27614373386073177) 100%),
+    url('../../../assets/images/Background/map.jpg');
+}
+
+.distanceIcon{
+    height: 120px;
+    width: 25px;
+}
+
+.trajet{
+    font-size: medium;
+    font-family: font2;
+    opacity: 0.8;
+    width: 200px;
+}
+
+.adresse{
+    font-size: medium;
+    font-family: font4;
+    margin-top: -12px;
+}
+
+.seat{
+    height:19px;
+    opacity: 0.78;
+}
+
+.social{
+    height: 45px;
+    width: 45px;
+    float: right;
+}
+
+.star{
+    height: 15px;
+    width: 15px;
+}
+
+.title{
+    margin: auto;
+    margin-top: 20px;
+    font-family: font2;
+    font-size: 1.3rem;
+}
+
+.nom{
+    font-family: font2;
+}
+
+.rating{
+    font-family: font4;
+    font-size: small;
+}
+
+.iconsRow{
+    margin: auto;
+    font-family: font5;
+    font-size: small;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.icons {
+    
+}
+ion-grid {
+    --ion-grid-columns: 6;
+  }
+
+  .img{
+    width: 100px;
+}
+
+ion-button {
+    --box-shadow: none;
+    --border-radius: 10px;
+    --background: #ebeef4;
+  
+    height: 48px;
+    font-size: 1rem;
+    color: #b7d423;
+    margin-bottom: 0.7rem;
+    text-transform: initial;
+  
+    ion-icon {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .text{
+    margin: auto;
+    font-family: font4;
+    font-size: 0.8rem;
+  }
+
+  .text2{
+    margin: auto;
+    font-family: font4;
+    font-size: 1rem;
+  }
+
+  .sep{
+    border-bottom: 1px solid black;
+    width: 100%;
+    opacity: 0.7;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .icon{
+    width: 20px;
+}
+  
+
+.reservations{
+    ion-content{
+        --background:
+        linear-gradient(180deg, rgb(255, 255, 255,0.27614373386073177) 27%, rgb(255, 255, 255) 65%, rgba(255,255,255,0.27614373386073177) 100%),
+        
+    }
+}
+  
+
+.inst{
+    margin: auto;
+    margin-right: 10px;
+    float: right;
+    margin-top: -33px;
+}
+
+
+.garcons{
+    border-top: 3px solid #3833bd;
+    border-bottom: 3px solid #3833bd;
+}
+
+.filles{
+    border-top: 10px solid #ec8cd5;
+    border-bottom: 3px solid #ec8cd5;
+}
+
+
+
+

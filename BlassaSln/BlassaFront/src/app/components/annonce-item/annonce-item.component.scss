@@ -1,0 +1,129 @@
+.card{
+    opacity: 0.97;
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(239,239,255,1) 100%); 
+    box-shadow: none;
+}
+
+.img{
+    height: 50px;
+}
+
+p{
+    font-size: 6px;
+}
+
+.chip{
+    size: 10px;
+    width: auto;
+}
+
+.image{
+    width: 50px;
+    height: 50px;
+    align-self: center;
+}
+.badge{
+    margin: 2px;
+    display: block;
+    float: right;
+    background-color: #F2A341;
+}
+
+.bdgeRow{
+   justify-content: end;
+   align-content: center;
+   align-self: center;
+}
+
+.centered{
+    justify-content: center;
+    align-self: center;
+}
+
+
+
+//prop2
+
+ion-thumbnail {
+    --size: 90px;
+    --border-radius: 14px;
+  }
+
+
+ion-card{
+    box-shadow: 1px 0px 5px 4px rgba(58,57,57,0.23);
+    border-radius: 17px;
+}
+ion-item{
+    // --background : rgb(247, 247, 236);
+}
+
+ion-chip {
+    --background: #cdcdcd;
+    --color: #000000;
+    float: right;
+  }
+
+//
+.distanceIcon{
+    height: 75px;
+    width: 25px;
+}
+
+.trajet{
+    font-size: medium;
+    margin-top: 2px;
+    font-family: font2;
+}
+
+.heure{
+    font-size: large;
+    font-family: font3;
+    height: 20px;
+}
+
+.date{
+    font-size: large;
+    font-family: font3;
+    margin-top: 10px;
+}
+
+.prix{
+    font-size: large;
+    font-family: font4;
+    height: 15px;
+}
+
+.nom{
+    font-family: font2;
+    font-size: 1rem;
+}
+
+.seat{
+    height: 25px;
+    margin-left: 5px;
+}
+.seatNb{
+    font-size: large;
+    font-family: font4;
+    height: 15px;
+}
+
+.inst{
+    margin: auto;
+    margin-right: 10px;
+}
+
+.verifie{
+    border: 2px solid green;
+}
+
+.garcons{
+    --background: linear-gradient(90deg, rgba(255,255,255,0.27614373386073177) 96%, rgba(67,79,251,1) 100%);
+}
+
+.filles{
+    --background: linear-gradient(90deg, rgba(255,255,255,0.27614373386073177) 96%, rgba(251,67,227,1) 100%);
+}
+

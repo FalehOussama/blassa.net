@@ -1,0 +1,65 @@
+ion-icon {
+    font-size: 2rem;
+  }
+
+//   ion-content{
+//     --background: linear-gradient(237deg, rgba(242,242,242,1) 15%, rgba(166,165,233,1) 100%); 
+// }
+//   .back{
+//     --background: linear-gradient(237deg, rgba(242,242,242,1) 15%, rgba(166,165,233,1) 100%); 
+//   }
+
+  .card-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: blue;
+    color: white;
+    margin: auto;
+    justify-content: center;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .card-footer-disabled {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(161, 138, 138);
+    color: white;
+    margin: auto;
+    justify-content: center;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .has-card-footer {
+    padding-bottom: 60px;
+    border-radius: 20px;
+    margin-top: 30px;
+  }
+
+  .custom-ripple {
+    color: #e6e6e8;
+  }
+
+  .title{
+    font-family: HelloValentina;
+    justify-content: center;
+    font-size: 2rem;
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .cover{
+    width: 100%;
+
+  }
+
+  .img {
+    width: 100px;
+  }
+  
+  .isDisabled{
+    color: grey;
+  }

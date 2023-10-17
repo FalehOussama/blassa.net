@@ -1,0 +1,45 @@
+<ion-card class="{{style}}">
+  <ion-grid [fixed]="true">
+    <ion-row>
+    <ion-col size="auto" style="margin-left: 10px;">
+      <ion-row>
+        <p class="heure">{{dateHeure[3]}}</p> <p class="heure" *ngIf="dateHeure[4]==0">:0</p><p class="heure" *ngIf="dateHeure[4]!=0">:</p> <p class="heure">{{dateHeure[4]}}</p>
+      </ion-row>
+      <ion-row>
+        <p class="date">{{dateHeure[2]}} {{months[dateHeure[1]-1]}} </p>
+      </ion-row>
+    </ion-col>
+    <ion-col size="auto" style="margin-top: 20px;">
+      <ion-img class="distanceIcon" src="../../../assets/icon/Distance.png" alt="Distance"></ion-img>
+    </ion-col>
+    <ion-col style="margin-top: 20px;">
+      <ion-row class="ion-text-wrap">
+        <p class="trajet ion-text-wrap">{{Dep}}</p>
+      </ion-row>
+      <ion-row class="ion-text-wrap">
+        <p class="trajet ion-text-wrap" style="margin-top: 18px;">{{Des}}</p>
+      </ion-row>
+    </ion-col>
+    <ion-col size="auto" style="margin-right: 10px;">
+      <ion-row style="justify-content: end;">
+        <p class="prix" style="float: right;">{{prix}} DT</p>
+      </ion-row>
+      <ion-row>
+        <p class="prix" style="margin-top: 2px;">{{NBP}}</p><ion-img class="seat" src="../../../assets/icon/Seat.png" alt="Distance"></ion-img>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row style="margin-top: -15px;">
+    <ion-item lines="none">
+      <ion-avatar slot="start"  *ngIf="verifie" class="verifie">
+        <img alt="Silhouette of a person's head" src="{{IMG}}" />
+      </ion-avatar>
+      <ion-avatar slot="start"  *ngIf="verifie!=true">
+        <img alt="Silhouette of a person's head" src="{{IMG}}" />
+      </ion-avatar>
+      <ion-label class="nom">{{Nom}}</ion-label>
+    </ion-item>
+    <ion-icon name="flash-outline" *ngIf="inst==true" class="inst" size="large" color="warning"></ion-icon>
+  </ion-row>
+  </ion-grid>
+</ion-card>

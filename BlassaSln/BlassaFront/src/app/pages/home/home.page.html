@@ -1,0 +1,208 @@
+
+<app-menu></app-menu>
+
+<ion-content appParralaxHeader [scrollEvents]="true" parallaxHeader="../../../assets/images/Background/header3.png"
+  [parallaxHeight]="120">
+
+  <ion-fab vertical="top" horizontal="end" style="margin-top: 80px;">
+    <ion-fab-button id="filter-content">
+      <ion-icon name="filter-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+  <div class="main" *ngIf="annonces?.length==0">
+
+    <ion-title>
+      Aucune annonce 
+    </ion-title>
+  </div>
+
+
+
+    <app-annonce-item *ngFor="let annonce of annonces | paginate : 
+    { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: count }; 
+    let i = index" [current]="annonce" 
+      (click)="afficherFiche(annonce.id_Annonce)" 
+      [IMG]="annonce.conducteur.imgUrl"
+      [Nom]="annonce.conducteur.nom"
+      [idUser]="annonce?.iduser" 
+      [prix]="annonce?.prix"
+      [Dep]="annonce?.trajet.depart" 
+      [Des]="annonce?.trajet.destination" 
+      [dateHeure]="annonce?.date_Heure_Depart"  
+      [NBP]="annonce?.nombrePlaces" 
+      [inst]="annonce?.inst"
+      [verifie]="annonce?.conducteur.verifie" 
+      [filles]="annonce?.filles" 
+      [garcons]="annonce?.garcons" 
+      [tous]="annonce?.tous"
+     ></app-annonce-item>
+
+
+     <ion-row class="ion-justify-content-center">
+      <pagination-controls 
+      class="paginator"       
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onChange($event)"></pagination-controls>
+ 
+     </ion-row>
+
+
+
+
+
+
+
+</ion-content>
+
+
+<ion-modal trigger="filter-content" (willDismiss)="onWillDismiss($event)" mode="ios">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Reset</ion-button>
+        </ion-buttons>
+        <ion-title>Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+
+
+      <ion-accordion-group class="accordion" style="margin-top: -16px;">
+        <ion-accordion>
+          <ion-item slot="header" color="light">
+            <ion-label>Trier par</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <!-- Trier par content -->
+
+            <ion-list lines="none">
+              <ion-radio-group value="{{answer}}">
+                <ion-item>
+                  <ion-icon mode="ios" name="time-outline" slot="start"></ion-icon>
+                  <ion-radio value="dpt" justify="space-between" (click)="triDepartTot();">Départ le plus tot</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-icon mode="ios" name="cash-outline" slot="start"></ion-icon>
+                  <ion-radio value="ppb" justify="space-between" (click)="prixPlusBas();">Prix le plus bas</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-icon mode="ios" name="walk-sharp" color="success" slot="start"></ion-icon>
+                  <ion-radio value="ppd" justify="space-between" (click)="triPlusProchePointDep()">Proche du point de départ</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-icon mode="ios" name="walk-sharp" color="success" slot="start"></ion-icon>
+                  <ion-radio value="sppa" justify="space-between">Proche de point d'arrivée</ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+
+            <!-- Trier par content -->
+          </div>
+        </ion-accordion>
+        <ion-accordion>
+          <ion-item slot="header" color="light">
+            <ion-label>Heure de départ</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <!-- Heure content -->
+
+            <ion-radio-group value="{{at}}">
+              <ion-item>
+                <ion-radio value="06" justify="space-between" (click)="temps(0,6);">Avant 06:00</ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-radio value="612" justify="space-between" (click)="temps(6,12);">06:00 - 12:00</ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-radio value="1218" justify="space-between" (click)="temps(12,18);">12:01 - 18:00</ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-radio value="180" justify="space-between" (click)="temps(18,24);">Aprés 18:00</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+            <!-- Heure par content -->
+          </div>
+        </ion-accordion>
+        <ion-accordion>
+          <ion-item slot="header" color="light">
+            <ion-label>Services et équipements</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <!-- Services par content -->
+
+            <form [formGroup]="filtreForm">
+
+              <ion-list lines="none">
+                <ion-item>
+                  <ion-checkbox justify="space-between" formControlName="superDriver"  (ionChange)="filtrer('superDriver' , 'conducteur');">Super Driver</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-checkbox justify="space-between" formControlName="verifie"  (ionChange)="filtrer('verifie' , 'conducteur');">Profil Vérifié</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-checkbox justify="space-between"  formControlName="max2" (ionChange)="filtrer('max2' , 'annonce');">Max. 2 à l'arriére</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-checkbox justify="space-between" formControlName="inst" (ionChange)="filtrer('inst' , 'annonce');">Réservation instantanée</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>Bagage</ion-label>
+                  <ion-list>
+                    <ion-item><ion-checkbox justify="space-between" formControlName="leger" (ionChange)="filtrer('leger' , 'annonce');">Leger</ion-checkbox>
+                      <p style="margin-left: 10px; opacity: 0;">0</p>
+                    </ion-item>
+                    <ion-item><ion-checkbox justify="space-between" formControlName="moyen" (ionChange)="filtrer('moyen' , 'annonce');">Moyen</ion-checkbox>
+                      <p style="margin-left: 10px; opacity: 0;">0</p>
+                    </ion-item>
+                    <ion-item><ion-checkbox justify="space-between" formControlName="lourd" (ionChange)="filtrer('lourd' , 'annonce');">Lourd</ion-checkbox>
+                      <p style="margin-left: 10px; opacity: 0;">0</p>
+                    </ion-item>
+                  </ion-list>
+  
+  
+  
+  
+                </ion-item>
+  
+                <ion-item>
+  
+                  <ion-checkbox justify="space-between" (ionChange)="filtrer('climatisation' , 'annonce');" formControlName="climatisation">Climatisation</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-checkbox justify="space-between" (ionChange)="filtrer('cigarette' , 'annonce');" formControlName="cigarette">Cigarette autorisée</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-checkbox justify="space-between" (ionChange)="filtrer('animal' , 'annonce');" formControlName="animal">Animaux de compagnie autorisés</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                </ion-item>
+              </ion-list>
+
+            </form>
+
+            <!-- Services par content -->
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+
+    </ion-content>
+  </ng-template>
+</ion-modal>

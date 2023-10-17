@@ -1,0 +1,15 @@
+<ion-content class="ion-padding">
+  <h1>Create Account,</h1>
+  <h3>Sign up to get started!</h3>
+
+  <form>
+    <ion-input label-placement="floating" fill="outline" placeholder="Email" [(ngModel)]="email" name="email"></ion-input>
+    <br/>
+    <ion-input  type="Password" label-placement="floating" fill="outline" placeholder="Password" [(ngModel)]="password" name="password"></ion-input>
+
+    <app-button label='Register' (click)="signup()"></app-button>
+    <app-icon-button icon='logo-facebook' label='Connect with Facebook'></app-icon-button>
+  </form>
+
+  <p class="footer-text">I'm already a member, <a routerLink="#" (click)="toLogin()">Sign In</a></p>
+</ion-content>

@@ -1,0 +1,103 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="white">
+    <ion-buttons slot="start">
+      <ion-menu-toggle id="mainContent">
+        <ion-button auto-hide="false" (click)="toggleSideMenu()" auto-hide="false">
+          <ion-img style="height: 30px;" src="../../../assets/icons/menu.png" slot="start"></ion-img>
+        </ion-button>
+      </ion-menu-toggle>
+    </ion-buttons>
+
+
+
+    <ion-img style="margin-left: 15px" slot="start" class="img" src="../../../assets/images/logo/blassaLogo.png"
+      alt="Blassa Logo"></ion-img>
+    <ion-buttons slot="secondary">
+      <ion-button [routerLink]="['/profil']" id="profil">
+        <ion-avatar slot="start" style="height: 30px; width: 30px;">
+          <img alt="Silhouette of a person's head" src={{user?.imgUrl}} />
+        </ion-avatar>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="setOpen(true)">
+        <ion-icon slot="icon-only" name="notifications" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+
+
+  </ion-toolbar>
+
+</ion-header>
+<!-- 
+<ion-menu contentId="mainContent" mode="ios">
+  <ion-content>
+    <ion-item routerLink="/nouveau-trajet">
+      <ion-card class="menu-item ion-activatable">
+        <ion-ripple-effect class="custom-ripple" type="unbounded"></ion-ripple-effect>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto" class="icons">
+              <ion-icon name="add-circle-outline" size="large"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <p class="menu-text">Publier un trajet</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-item>
+
+    <ion-item routerLink="/rechercher-trajets">
+      <ion-card class="menu-item ion-activatable">
+        <ion-ripple-effect class="custom-ripple" type="unbounded"></ion-ripple-effect>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto" class="icons">
+              <ion-icon name="search-circle-outline" size="large"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <p class="menu-text">Rechercher un trajet</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-item>
+
+
+    <ion-item routerLink="/mes-trajets">
+      <ion-card class="menu-item ion-activatable">
+        <ion-ripple-effect class="custom-ripple" type="unbounded"></ion-ripple-effect>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="auto" class="icons">
+              <ion-icon name="compass-outline" size="large"></ion-icon>
+            </ion-col>
+            <ion-col>
+              <p class="menu-text">Mes trajets</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </ion-item>
+
+    <app-icon-button2 label='Logout' (click)="logout()"></app-icon-button2>
+
+
+    <app-invite *ngIf="method=='Invite'"></app-invite>
+  </ion-content>
+
+</ion-menu> -->
+
+<ion-alert
+  mode="ios"
+  header="Mode invité"
+  subHeader="Vous devez se connecter"
+  [buttons]="alertButtons"
+  [isOpen]="isInviteAlert"
+  (didDismiss)="setOpen2(false)"
+></ion-alert>
+
+<ion-alert [isOpen]="isAlertOpen" header="Alert" subHeader="" message="Disponible dans les meilleures délais"
+[buttons]="alertButtons" (didDismiss)="setOpen(false)"></ion-alert>

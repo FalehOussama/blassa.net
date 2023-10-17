@@ -1,0 +1,35 @@
+<ion-grid>
+  <ion-row style="width: 100%;">
+
+    <!-- car 1 -->
+
+    <ion-card *ngIf="car1!=undefined" class="notEmpty" (click)="carPage(0);">
+
+    </ion-card>
+
+    <ion-card *ngIf="car1==undefined" class="empty">
+
+    </ion-card>
+
+    <!-- car 2 -->
+
+    <ion-card *ngIf="car2!=undefined" class="notEmpty" (click)="carPage(1);">
+
+    </ion-card>
+
+
+    <ion-card *ngIf="car2==undefined" class="empty">
+
+    </ion-card>
+
+    <!-- car 3 -->
+
+    <ion-card *ngIf="car3!=undefined" class="notEmpty" (click)="carPage(2);">
+
+    </ion-card>
+
+    <ion-card *ngIf="car3==undefined" class="empty">
+
+    </ion-card>
+  </ion-row>
+</ion-grid>

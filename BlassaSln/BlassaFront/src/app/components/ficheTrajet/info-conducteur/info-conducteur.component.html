@@ -1,0 +1,38 @@
+<ion-card>
+  <ion-grid>
+    <ion-row class="row">
+      <ion-col>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar>
+          <ion-label>Nom prenom</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col >
+        <ion-row class="ratings">
+          <img class="rating" src="../../../assets/images/Socials/star.png"/>
+          <img class="rating" src="../../../assets/images/Socials/star.png"/>
+          <img class="rating" src="../../../assets/images/Socials/star.png"/>
+          <img class="rating" src="../../../assets/images/Socials/star.png"/>
+          <img class="rating" src="../../../assets/images/Socials/halfStar.png"/>
+      </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ratings">
+      <ion-col>
+        <ion-row class="description">
+          <ion-text>Description</ion-text>
+        </ion-row>
+      </ion-col>
+
+      <ion-col>
+        <ion-row class="socials">
+          <img class="social" src="../../../assets/images/Socials/phone.png" (click)="call()" />
+          <img class="social" src="../../../assets/images/Socials/whatsapp.png" (click)="whatsapp()" />
+          <img class="social" src="../../../assets/images/Socials/messenger.png"/>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>

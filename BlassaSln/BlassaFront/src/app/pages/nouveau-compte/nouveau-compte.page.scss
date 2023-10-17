@@ -1,0 +1,58 @@
+.title{
+    font-family: font5;
+    opacity: 0.85;
+    font-size: 1.5rem;
+}
+
+.titreChamp{
+    font-family: font1;
+    opacity: 0.85;
+    font-size: 1rem;
+}
+
+.textLarge{
+    font-family: font4;
+    font-size: 1rem;
+    margin: auto;
+}
+
+.roleCard{
+    width: 100%;
+    height: 150px;
+}
+
+.role{
+    font-family: font3;
+    opacity: 0.7;
+    font-size: 1rem;
+}
+
+.roleImg{
+    width: 60px;
+}
+
+.input{
+    margin-bottom: 13px;
+}
+
+
+.content1 {
+    background-color: mintcream;
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+  }
+  
+  .content2 {
+    background-color: lightblue;
+    position: relative;
+    left: 0;
+  }
+
+  .content3 {
+    background-color: lightblue;
+    position: relative;
+    height: 110%;
+  }
+

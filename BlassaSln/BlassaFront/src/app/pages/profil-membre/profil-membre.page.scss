@@ -1,0 +1,77 @@
+.nom{
+    width: 100%;
+    font-family: font2;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+
+.role{
+    width: 100%;
+    font-family: font4;
+    opacity: 0.7;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.text{
+    margin-top: 5px;
+    font-family: font4;
+    opacity: 0.7;
+    font-size: 0.9rem;
+}
+
+.noterAlert{
+    margin-top: 5px;
+    font-family: font4;
+    font-size: 0.9rem;
+}
+
+.text2{
+    margin-top: -4px;
+    font-family: font3;
+    font-size: 1.1rem;
+    justify-content: center;
+}
+
+.text3{
+    font-family: font2;
+    font-size: 1.1rem;
+    justify-content: center;
+    opacity: 0.9;
+}
+
+.age{
+    opacity: 0.8;
+    font-family: font4;
+    font-size: 0.8rem;
+}
+
+.line{
+    border-right: 1px solid black;
+}
+
+.sep{
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+.icon{
+    width: 20px;
+}
+
+ion-icon {
+    color: #FFD700;
+    size: 30px;
+  }
+
+.social{
+    height: 45px;
+    width: 45px;
+    margin-right: 10px;
+}
+
+.noter{
+    border-left: 1px solid black;
+    margin-left: 20px;
+}
