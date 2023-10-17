@@ -52,16 +52,15 @@ namespace BlassaApi.Controllers
         public async Task<ActionResult<User>> GetUserByUid(string uId)
         {
             if (_dbContext.Users == null)
-            {
                 return NotFound();
-            }
 
             var user = await _dbContext.Users
                 .Where(u => u.UId == uId)
                 .Include(u => u.Preferences)
                 .FirstOrDefaultAsync();
+
             if (user == null)
-                return NotFound();
+                return Ok();
 
             return Ok(user);
         }
@@ -70,6 +69,8 @@ namespace BlassaApi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         { 
+            if (user.Preferences == null)
+                user.Preferences = new Preferences();
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
 
