@@ -159,27 +159,29 @@ export class LoginPage implements OnInit   {
           newUser.avis = avis;
           newUser.nom = this.nom;
           newUser.methode = this.method;
-           this.userService.save(newUser).subscribe(
+          this.userService.save(newUser).subscribe(
             async (res)=>{
               while(this.tokenStorage.userback == undefined){
                 this.tokenStorage.userback = await res;
                 await this.storage.set('user', this.tokenStorage.userback);
                 console.log(res)
-              }
-
-              this.router.navigate(['/gc']);
+              }              
             }
           );
         }
         else{
           do{
-            console.log(res)
-            this.tokenStorage.userback = await res;
-            this.tokenStorage.userback.imgUrl = this.img;
-            await this.storage.set('user', this.tokenStorage.userback);
+              console.log(res)
+              this.tokenStorage.userback = await res;
+              this.tokenStorage.userback.imgUrl = this.img;
+              await this.storage.set('user', this.tokenStorage.userback);
             }while(this.tokenStorage.userback == undefined)
-            this.router.navigate(['/rechercher-trajets']); 
         }
+
+        if (this.tokenStorage.userback.conditionsGenerales)
+          this.router.navigate(['/rechercher-trajets']);
+        else
+          this.router.navigate(['/gc']);
 
       }
     );

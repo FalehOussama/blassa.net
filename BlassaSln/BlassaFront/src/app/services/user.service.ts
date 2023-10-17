@@ -18,16 +18,17 @@ export class UserService {
     private token : TokenStorageService,
     ) { }
 
-  private baseUrl = url +  "/user";
+  private baseUrl = url +  "/Users";
   private baseUrl2 = url + "/commentaires";
   private baseUrl3 = url + "/rating";
 
   public save(user: User) {
-    return this.http.post<User>(this.baseUrl + '/addUser', user);
+    return this.http.post<User>(this.baseUrl, user);
   }
 
   public getUserByUid(uid:any): Observable<any>{
-    return this.http.get<any>(this.baseUrl + "/uid/" + uid );
+    return this.http.get<any>(this.baseUrl + "/Uid/?Uid=" + uid);
+    //return this.http.get<any>(this.baseUrl + "/Uid/?Uid=uId12");
   }
 
   public getUserById(id:any): Observable<any>{

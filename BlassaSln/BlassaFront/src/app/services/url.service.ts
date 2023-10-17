@@ -7,7 +7,9 @@ export class UrlService {
 
   constructor() { }
 
-  private recette="https://blassabackend.ew.r.appspot.com"
+  private recette = "https://blassabackend.ew.r.appspot.com"
 
-  public url = this.recette;
+  private local = "https://localhost:7245/api"
+
+  public url = this.local;
 }

@@ -12,6 +12,6 @@ import { CommonModule } from '@angular/common';
 export class UrlModule { }
 
 const recette="https://blassabackend.ew.r.appspot.com";
-const local = "http://192.168.1.107:8080";
+const local = "https://localhost:7245/api";
 export var url = local;
 
