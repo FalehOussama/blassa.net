@@ -47,6 +47,25 @@ namespace BlassaApi.Controllers
             return Ok(user);
         }
 
+        //GET : api/Users/5
+        [HttpGet("Uid")]
+        public async Task<ActionResult<User>> GetUserByUid(string uId)
+        {
+            if (_dbContext.Users == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _dbContext.Users
+                .Where(u => u.UId == uId)
+                .Include(u => u.Preferences)
+                .FirstOrDefaultAsync();
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
+
         //POST : api/Users
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
