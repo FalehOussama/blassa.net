@@ -10,25 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "BlassaFront", "BlassaFront\", "{0E531D95-B9ED-43BE-9353-77E53C08BFF6}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_60671"
-		Debug.AspNetCompiler.PhysicalPath = "BlassaFront\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60671\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_60671"
-		Release.AspNetCompiler.PhysicalPath = "BlassaFront\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60671\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "60671"
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlassaFront", "BlassaFront\BlassaFront.csproj", "{5B52D50E-68C7-48CA-9DF3-87C076912E1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,10 +22,10 @@ Global
 		{FF3E5765-6A08-48A7-9D44-3CC16E18EEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF3E5765-6A08-48A7-9D44-3CC16E18EEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF3E5765-6A08-48A7-9D44-3CC16E18EEF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E531D95-B9ED-43BE-9353-77E53C08BFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E531D95-B9ED-43BE-9353-77E53C08BFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E531D95-B9ED-43BE-9353-77E53C08BFF6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E531D95-B9ED-43BE-9353-77E53C08BFF6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{5B52D50E-68C7-48CA-9DF3-87C076912E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B52D50E-68C7-48CA-9DF3-87C076912E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B52D50E-68C7-48CA-9DF3-87C076912E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B52D50E-68C7-48CA-9DF3-87C076912E1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
