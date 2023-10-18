@@ -70,6 +70,7 @@ namespace BlassaApi.Controllers
         public async Task<ActionResult<User>> PostUser(User user)
         {
             user.DateCreation = DateTime.Now;
+            user.Nouveau = true;
             if (user.Preferences == null)
                 user.Preferences = new Preferences();
             _dbContext.Users.Add(user);

@@ -21,7 +21,7 @@
         public bool ConditionsGenerales { get; set; }
         public bool Verifie { get; set; }
         public bool SuperDriver { get; set; }
-        public float NotesAvis { get; set; }
+        public bool Nouveau { get; set; } = true;
 
         public Preferences? Preferences { get; set; } // Reference navigation to dependent
         public ICollection<Vehicule> Vehicules { get; } = new List<Vehicule>(); // Collection navigation containing dependents
