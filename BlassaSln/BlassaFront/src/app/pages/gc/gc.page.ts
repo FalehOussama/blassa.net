@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { browserRefresh } from '../../app.component';
 
@@ -17,26 +16,25 @@ export class GCPage implements OnInit {
   checkbox:boolean=false;
   userback : any ;
   public browserRefresh: boolean;
+
   constructor(
     private userService : UserService,
-    private token : TokenStorageService,
     private router: Router,
     private storage : StorageService
   ) { }
 
   async ngOnInit() {
-    const userStr = await this.storage.get('user');
-    let user = this.token.user;
+    let user = await this.storage.get('user');
 
-    if(user.uid!=null){
-      this.userService.getUserByUid(user.uid).subscribe(
+    if (user.uId !=null){
+      this.userService.getUserByUid(user.uId).subscribe(
         res =>{
           return this.userback = res;
         }
       );
     }
     else if(user.id!=null){
-      this.userService.getUserByUid(user.id).subscribe(
+      this.userService.getUserById(user.id).subscribe(
         res =>{
           return this.userback = res;
         }
@@ -56,13 +54,24 @@ export class GCPage implements OnInit {
     console.log(this.checkbox);
   }
 
-  async onSubmit(){
-   await this.userService.conditionsGenerales(this.userback.id_User).subscribe(
-    res => this.token.userback.conditionsGenerales=true
-   );
-   await this.storage.set('user' , this.userback)
-    this.router.navigate(['/nouveau-compte']);
-
+  async onSubmit() {
+    this.userback.conditionsGenerales = true;
+    this.userService.updateUser(this.userback).subscribe(
+      async (res) => {
+        await this.storage.set('user', this.userback);
+        this.userback = await this.storage.get('user');
+        
+        this.redirectByUser(this.userback);
+      }
+    );
   }
 
+  private redirectByUser(user: any) {
+    if (user == undefined)
+      return;
+    if (user?.nouveau)
+      this.router.navigate(['/nouveau-compte']);
+    else
+      this.router.navigate(['/rechercher-trajets']);
+  }
 }

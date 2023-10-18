@@ -159,9 +159,9 @@ export class LoginPage implements OnInit   {
               while (user == undefined){
                 await this.storage.set('user', await res);
                 user = await this.storage.get('user');
-                console.log(res);
-                this.redirectByUser(user);
-              }              
+              }
+              console.log(res);
+              this.redirectByUser(user);            
             }
           );
         }
@@ -182,12 +182,10 @@ export class LoginPage implements OnInit   {
               userback.tel1 = this.tel1;
               this.userService.updateUser(userback).subscribe(
                 async (res) => {
-                  while (user == undefined) {
-                    await this.storage.set('user', await res);
-                    user = await this.storage.get('user');
-                    console.log(user);
-                    this.redirectByUser(user);
-                  }
+                  await this.storage.set('user', userback);
+                  user = await this.storage.get('user');
+                  console.log(user);
+                  this.redirectByUser(user);
                 }
               );
             }
@@ -207,8 +205,12 @@ export class LoginPage implements OnInit   {
   private redirectByUser(user: any) {
     if (user == undefined)
       return;
-    if (user?.conditionsGenerales)
-      this.router.navigate(['/rechercher-trajets']);
+    if (user?.conditionsGenerales) {
+      if (user?.nouveau)
+        this.router.navigate(['/nouveau-compte']);
+      else
+        this.router.navigate(['/rechercher-trajets']);
+    }      
     else
       this.router.navigate(['/gc']);
   }
