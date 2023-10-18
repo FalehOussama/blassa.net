@@ -40,7 +40,7 @@ export class UserService {
   }
 
   public updateUser(user : any) : Observable<any>{
-    return this.http.put<any>(this.baseUrl + "/updateUser" , user);
+    return this.http.put<any>(this.baseUrl + "/" + user.id , user);
   }
 
   public updateUserImg(user : any) : Observable<any>{

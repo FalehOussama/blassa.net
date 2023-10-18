@@ -3,7 +3,6 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
@@ -24,7 +23,7 @@ import { StorageService } from 'src/app/services/storage.service';
 })
 export class LoginPage implements OnInit   {
 
-  email = '';
+  email : any;
   password = '';
   error = '';
   username = '';
@@ -33,40 +32,32 @@ export class LoginPage implements OnInit   {
   userback : any ;
   uid:any;
   img:any;
-  nom:any;
+  nom: any;
+  prenom: any;
   coords: any;
-  method:any;
+  method: any;
+  tel1: any;
+  value: any;
 
 
   constructor(
     private fireauth: AngularFireAuth,
     private router: Router,
-    private tokenStorage : TokenStorageService,
     private userService : UserService,
     private storage : StorageService
     
   ) { 
 
     
-  this.storage.get('user').then(
-    async data => {
-      this.value = await data;
-      if(data){
-        console.log('to rechercher')
-        console.log(this.value)
-        this.router.navigate(['/rechercher-trajets']);
+    this.storage.get('user').then(
+      async data => {
+        this.value = await data;
+        this.redirectByUser(this.value);
       }
-      else{
-        
-        console.log(this.value)
-        console.log('to login');
-      }
-    }
-  )
-
+    )
   }
 
-  value:any;
+  
   ngOnInit() {
       
   }
@@ -79,11 +70,11 @@ export class LoginPage implements OnInit   {
   loginAno() {
     this.signInAnonymously().then(
       (userData) => {
-        this.tokenStorage.user = userData;
-        this.tokenStorage.method="Invite";
+        //this.tokenStorage.user = userData;
+        //this.tokenStorage.method="Invite";
         userModel.nom = "Invité";
         userModel.imgUrl="https://static.vecteezy.com/system/resources/previews/009/507/522/original/blue-avatar-sign-semi-flat-color-icon-customer-profile-anonymous-guest-full-sized-item-on-white-network-simple-cartoon-style-illustration-for-web-graphic-design-and-animation-vector.jpg"
-        this.tokenStorage.userback = userModel;
+        /*this.tokenStorage.userback = userModel;*/
         this.router.navigate(['/rechercher-trajets']); 
       }
     ).catch(err => {
@@ -116,13 +107,13 @@ export class LoginPage implements OnInit   {
   async doLogin() {
     const user = await GoogleAuth.signIn();
     if (user) { 
-      this.tokenStorage.method="Google";
-      this.tokenStorage.user = user;
       this.uid = user.id;
+      this.email = user.email;
       this.img = user.imageUrl;
-      this.nom = user.givenName;
+      this.prenom = user.givenName;
+      this.nom = user.familyName;
       this.method="Google"
-      this.getUser(this.tokenStorage.user.id , this.tokenStorage.user.email);
+      this.getUser(this.uid, this.email);
      }
   }
 
@@ -133,13 +124,14 @@ export class LoginPage implements OnInit   {
       (user)=>{
         console.log(user)
         if (user) { 
-          this.tokenStorage.method="Facebook";
-          this.tokenStorage.user = user;
           this.uid = user.user?.uid;
           this.img = user.user?.photoUrl;
-          this.nom = user.user?.displayName;
+          //this.nom = user.user?.displayName;
+          this.prenom = user.user?.displayName;
+          this.email = user.user?.email;
+          this.tel1 = user.user?.phoneNumber;
           this.method="Facebook";
-          this.getUser(user.user?.uid , user.user?.email);
+          this.getUser(this.uid, this.email);
          }
       }
     );
@@ -151,6 +143,7 @@ export class LoginPage implements OnInit   {
   async getUser(uid : any , email : any){
     await this.userService.getUserByUid(this.uid).subscribe(
       async (res) => {
+        let user = await this.storage.get('user');
         if(res==null){
           let newUser : any = {};
           newUser.uid = uid;
@@ -158,12 +151,14 @@ export class LoginPage implements OnInit   {
           newUser.imgUrl = this.img;
           newUser.avis = avis;
           newUser.nom = this.nom;
+          newUser.prenom = this.prenom;
+          newUser.tel1 = this.tel1;
           newUser.methode = this.method;
           this.userService.save(newUser).subscribe(
             async (res)=>{
-              while(this.tokenStorage.userback == undefined){
-                this.tokenStorage.userback = await res;
-                await this.storage.set('user', this.tokenStorage.userback);
+              while (user == undefined){
+                await this.storage.set('user', await res);
+                user = await this.storage.get('user');
                 console.log(res)
               }              
             }
@@ -172,19 +167,44 @@ export class LoginPage implements OnInit   {
         else{
           do{
               console.log(res)
-              this.tokenStorage.userback = await res;
-              this.tokenStorage.userback.imgUrl = this.img;
-              await this.storage.set('user', this.tokenStorage.userback);
-            }while(this.tokenStorage.userback == undefined)
+            let userback = await res;
+            let userBackChanged = (userback.imgUrl != this.img) ||
+              (userback.email != this.email) ||
+              (userback.nom != this.nom) ||
+              (userback.prenom != this.prenom) ||
+              (userback.tel1 != this.tel1);
+            if (userBackChanged) {
+                userback.email = this.email;
+                userback.imgUrl = this.img;
+                userback.nom = this.nom;
+                userback.prenom = this.prenom;
+                userback.tel1 = this.tel1;
+                this.userService.updateUser(userback).subscribe(
+                  async (res) => {
+                    while (user == undefined) {
+                      await this.storage.set('user', await res);
+                      user = await this.storage.get('user');
+                      console.log(user);
+                    }
+                  }
+                );
+              }
+              await this.storage.set('user', await res);
+              user = await this.storage.get('user');
+          } while (user == undefined)
         }
 
-        if (this.tokenStorage.userback.conditionsGenerales)
-          this.router.navigate(['/rechercher-trajets']);
-        else
-          this.router.navigate(['/gc']);
+        this.redirectByUser(user);
 
       }
     );
+  }
+
+  private redirectByUser(user: any) {
+    if (user?.conditionsGenerales)
+      this.router.navigate(['/rechercher-trajets']);
+    else
+      this.router.navigate(['/gc']);
   }
   
 
