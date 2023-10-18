@@ -201,6 +201,8 @@ export class LoginPage implements OnInit   {
   }
 
   private redirectByUser(user: any) {
+    if (user == undefined)
+      return;
     if (user?.conditionsGenerales)
       this.router.navigate(['/rechercher-trajets']);
     else
