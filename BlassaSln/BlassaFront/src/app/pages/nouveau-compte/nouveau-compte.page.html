@@ -8,7 +8,7 @@
       </ion-avatar>
     </ion-row>
     <ion-row class="ion-text-center" style="margin-top: 20px;">
-      <ion-label class="title ion-text-wrap">Bienvenue {{user?.nom}} sur l’application Blassa</ion-label>
+      <ion-label class="title ion-text-wrap">Bienvenue {{user?.prenom}} sur l’application Blassa</ion-label>
     </ion-row>
 
     <!-- Etape 1 -->
@@ -96,6 +96,7 @@
     fill="outline"
     label="Télephone : +216"
     formControlName="tel1"
+    value={{user?.tel1}}
     required
   ></ion-input >
   </form >

@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnimationController, IonContent } from '@ionic/angular';
 import type { Animation } from '@ionic/angular';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
-
+import { VehiculeService } from 'src/app/services/vehicule.service';
+import { Vehicule } from '../../classes/vehicule';
 
 import { MaskitoOptions, MaskitoElementPredicateAsync } from '@maskito/core';
 import { StorageService } from 'src/app/services/storage.service';
@@ -49,7 +49,8 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
     public formBuilder1: FormBuilder,
     public formBuilder2: FormBuilder,
     public formBuilder3: FormBuilder,
-    public userService : UserService,
+    public userService: UserService,
+    public vehiculeService: VehiculeService,
     public router : Router,
     private storage : StorageService,
     ) {
@@ -67,7 +68,8 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
     @Input() role:string;
     @Input() audience : string="";
     @Input() sexe : string;
-    user:any;
+    user: any;
+    vehicule: Vehicule;
   
   ngOnInit() {
 
@@ -162,9 +164,6 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
   etape3:boolean=false;
   @Input() verifie:boolean = false;
 
-  vehicule:any={};
-
-
   getVehicule(){
     console.log(this.vehiculeForm.value)
   }
@@ -173,7 +172,7 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
   async enregistrerPassager(){
     
     await this.updateUserFront();
-    this.updateUser();
+    this.enregistrer();
     this.storage.set('user' , this.user);
 
   }
@@ -181,7 +180,7 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
   async enregistrerConducteur(){
     
     await this.updateUserFront();
-    this.updateUser();
+    this.enregistrer();
     this.storage.set('user' , this.user);
 
   }
@@ -189,30 +188,47 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
 
   updateUserFront(){
 
-    this.user.sexe=this.sexe;
-    this.user.prefs=this.preferences.value;
-    this.user.tel1=this.ionicForm2.value['tel1'];
-    this.user.description=this.ionicForm1.value['description'];
-    this.user.conditionsGenerales=true;
-    if(this.role=='conducteur'){
-      this.preferences.value['passager']=false;
-      this.user.vehicules[0]=this.vehiculeForm.value;
+    this.user.sexe = this.sexe;    
+    this.user.tel1 = this.ionicForm2.value['tel1'];
+    this.user.description = this.ionicForm1.value['description'];
+
+    this.user.preferences.passager = this.preferences.value.passager;
+    this.user.preferences.tel = this.preferences.value.tel;
+    this.user.preferences.tel = this.preferences.value.tel;
+    this.user.preferences.whatsApp = this.preferences.value.whatsapp;
+    this.user.preferences.messenger = this.preferences.value.messenger;
+
+    this.user.nouveau = false;
+    
+    if (this.role == 'conducteur') {
+      this.vehicule = new Vehicule();
+      this.vehicule.userId = this.user.id;
+      this.vehicule.matricule = this.vehiculeForm.value.matricule;
+      this.vehicule.marque = this.vehiculeForm.value.marque;
+      this.vehicule.modele = this.vehiculeForm.value.model;
+      this.vehicule.climatise = this.vehiculeForm.value.climatise;
+      this.vehicule.verifie = false;
+      this.vehicule.miseEnCirculation = new Date(this.vehiculeForm.value.miseEnCirculation);
+      let indexCouleur = this.colors.indexOf(this.vehiculeForm.value.couleur);
+      this.vehicule.couleur = indexCouleur;
+      let indexTypeV = this.types.indexOf(this.vehiculeForm.value.type);
+      this.vehicule.typeVehicule = indexTypeV;
     }
   }
-  
 
-  // addVehicule(){
-  //  this.userService.addVehicule2(this.user.id_User , this.vehiculeForm.value).subscribe();
-  // }
-
-  updateUser(){
+  enregistrer(){
      this.userService.updateUser(this.user).subscribe(
-      async (res)=>{
-        do{
-          this.user = await res;
-        }while(res==undefined || res==null)
-        console.log(this.user)
-        this.router.navigate(['/rechercher-trajets']);
+       async (res) => {
+         console.log(this.user);
+         if (this.vehicule != null) {
+           this.vehiculeService.post(this.vehicule).subscribe(
+             async (resV) => {
+               this.router.navigate(['/rechercher-trajets']);
+             }
+             );
+         }
+         else
+           this.router.navigate(['/rechercher-trajets']);
       }
     )
   }

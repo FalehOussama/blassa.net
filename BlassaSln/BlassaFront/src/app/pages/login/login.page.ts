@@ -173,13 +173,14 @@ export class LoginPage implements OnInit   {
               (userback.email != this.email) ||
               (userback.nom != this.nom) ||
               (userback.prenom != this.prenom) ||
-              (userback.tel1 != this.tel1);
+              (!userback.tel1 && userback.tel1 != this.tel1);
             if (userBackChanged) {
               userback.email = this.email;
               userback.imgUrl = this.img;
               userback.nom = this.nom;
               userback.prenom = this.prenom;
-              userback.tel1 = this.tel1;
+              if (!userback.tel1)
+                userback.tel1 = this.tel1;
               this.userService.updateUser(userback).subscribe(
                 async (res) => {
                   await this.storage.set('user', userback);

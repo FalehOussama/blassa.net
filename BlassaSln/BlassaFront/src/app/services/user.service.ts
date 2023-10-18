@@ -28,23 +28,14 @@ export class UserService {
 
   public getUserByUid(uid:any): Observable<any>{
     return this.http.get<any>(this.baseUrl + "/Uid/?Uid=" + uid);
-    //return this.http.get<any>(this.baseUrl + "/Uid/?Uid=uId12");
   }
 
   public getUserById(id:any): Observable<any>{
     return this.http.get<any>(this.baseUrl + "/" + id );
   }
 
-  public conditionsGenerales(id : any) : Observable<any>{
-    return this.http.put<any>(this.baseUrl + "/CG/" + id , null);
-  }
-
   public updateUser(user : any) : Observable<any>{
     return this.http.put<any>(this.baseUrl + "/" + user.id , user);
-  }
-
-  public updateUserImg(user : any) : Observable<any>{
-    return this.http.put<any>(this.baseUrl + "/updateUserImg" , user);
   }
 
   public getNombreTrajets(userUid:any): Observable<any>{
