@@ -208,7 +208,8 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
       this.vehicule.modele = this.vehiculeForm.value.model;
       this.vehicule.climatise = this.vehiculeForm.value.climatise;
       this.vehicule.verifie = false;
-      this.vehicule.miseEnCirculation = new Date(this.vehiculeForm.value.miseEnCirculation);
+      if (this.vehiculeForm.value.miseEnCirculation)
+        this.vehicule.miseEnCirculation = new Date(this.vehiculeForm.value.miseEnCirculation);
       let indexCouleur = this.colors.indexOf(this.vehiculeForm.value.couleur);
       this.vehicule.couleur = indexCouleur;
       let indexTypeV = this.types.indexOf(this.vehiculeForm.value.type);
