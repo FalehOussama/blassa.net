@@ -159,7 +159,8 @@ export class LoginPage implements OnInit   {
               while (user == undefined){
                 await this.storage.set('user', await res);
                 user = await this.storage.get('user');
-                console.log(res)
+                console.log(res);
+                this.redirectByUser(user);
               }              
             }
           );
@@ -174,27 +175,30 @@ export class LoginPage implements OnInit   {
               (userback.prenom != this.prenom) ||
               (userback.tel1 != this.tel1);
             if (userBackChanged) {
-                userback.email = this.email;
-                userback.imgUrl = this.img;
-                userback.nom = this.nom;
-                userback.prenom = this.prenom;
-                userback.tel1 = this.tel1;
-                this.userService.updateUser(userback).subscribe(
-                  async (res) => {
-                    while (user == undefined) {
-                      await this.storage.set('user', await res);
-                      user = await this.storage.get('user');
-                      console.log(user);
-                    }
+              userback.email = this.email;
+              userback.imgUrl = this.img;
+              userback.nom = this.nom;
+              userback.prenom = this.prenom;
+              userback.tel1 = this.tel1;
+              this.userService.updateUser(userback).subscribe(
+                async (res) => {
+                  while (user == undefined) {
+                    await this.storage.set('user', await res);
+                    user = await this.storage.get('user');
+                    console.log(user);
+                    this.redirectByUser(user);
                   }
-                );
-              }
+                }
+              );
+            }
+            else {
               await this.storage.set('user', await res);
               user = await this.storage.get('user');
+              this.redirectByUser(user);
+            }
+              
           } while (user == undefined)
         }
-
-        this.redirectByUser(user);
 
       }
     );
