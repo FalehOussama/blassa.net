@@ -3,17 +3,15 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sim, SimCard } from '@jonz94/capacitor-sim';
 import { Geocoder } from 'ionic-native';
-import { AnnonceStorageService } from 'src/app/services/annonce-storage.service';
-import { AnnonceService } from 'src/app/services/annonce.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UserService } from 'src/app/services/user.service';
+import { TrajetAnnonceCriteresDto } from '../../classes/trajetAnnonceCriteresDto';
 
 @Component({
   selector: 'app-rechercher-trajets',
   templateUrl: './rechercher-trajets.page.html',
   styleUrls: ['./rechercher-trajets.page.scss'],
 })
+
 export class RechercherTrajetsPage implements OnInit {
   static lonDep: any;
   static latDep: any;
@@ -23,10 +21,6 @@ export class RechercherTrajetsPage implements OnInit {
   constructor(
     private router: Router,
     public zone: NgZone,
-    private annonceService : AnnonceService,
-    private annonceStorage : AnnonceStorageService,
-    private userService : UserService,
-    private token : TokenStorageService,
     private storage : StorageService,
     public formBuilder: FormBuilder,
   ) { 
@@ -70,8 +64,9 @@ export class RechercherTrajetsPage implements OnInit {
 
   @Input() depart:any;
   @Input() dest:any;
-  Date:number = Date.now();
-  date:any=null;
+  //Date:number = Date.now();
+  //@Input() date: Date = new Date();
+  date: any = new Date().toISOString();
   @Input() passagers: any = 1;
 
   
@@ -84,12 +79,12 @@ export class RechercherTrajetsPage implements OnInit {
 
   sliced:any;
   ngOnInit() {
-    this.date = this.today;
+    //this.date = this.today;
     this.recherche = this.formBuilder.group({
       nbrPassager: [this.passagers, ],
-      date:[this.today.toString().slice(0,19),],
-      depart:["-",],
-      destination:["-",]
+      date:[this.date,],
+      depart:[this.depart,],
+      destination:[this.dest,]
     });
 
   }
@@ -111,36 +106,27 @@ export class RechercherTrajetsPage implements OnInit {
 
   rechercheParHistorique(dep:any , des:any , nbp:any , date:any){
     
-    this.annonceService.rechercher2(dep , des , nbp , this.recherche.value['date'] ).subscribe(
-      async data=>
-      {
-      console.log(data);
-      await this.storage.set('annonces' , data);
-      this.listeTrajets();
-      }
-    )
+    //this.annonceService.rechercher2(dep , des , nbp , this.recherche.value['date'] ).subscribe(
+    //  async data=>
+    //  {
+    //  console.log(data);
+    //  await this.storage.set('annonces' , data);
+    //  this.listeTrajets();
+    //  }
+    //)
 
   }
 
   rechercher(){
-    console.log(this.recherche.value['depart'])
-    console.log(this.depart) 
+    let trajetAnnonceCriteresDto = new TrajetAnnonceCriteresDto();
+    trajetAnnonceCriteresDto.depart = this.depart;
+    trajetAnnonceCriteresDto.destination = this.dest;
+    trajetAnnonceCriteresDto.nombrePlaces = this.passagers;
+    trajetAnnonceCriteresDto.dateDepart = new Date(this.date);
 
-    if(this.depart == undefined ) this.recherche.value['depart']="-"
-    if(this.dest == undefined ) this.recherche.value['destination']="-"
+    this.storage.set('trajetAnnonceCriteresDto', trajetAnnonceCriteresDto);
 
-    this.annonceService.rechercher(this.user?.id_User , this.recherche.value['depart'] , this.recherche.value['destination']  ,this.recherche.value['nbrPassager']  , "2020-01-01T10:10:10"  ).subscribe(
-      async data=>
-      {
-        await this.storage.set('annonces' , data);
-        await this.userService.getUserById(this.user?.id_User).subscribe(
-          async (res)=> await this.storage.set('user',res)
-          
-        )
-      console.log(this.storage.get('annonces'));
-      this.listeTrajets();
-      }
-    )
+    this.router.navigate(['/home']);
   }
 
 
@@ -159,69 +145,60 @@ export class RechercherTrajetsPage implements OnInit {
   //Code Google Maps
 
   SelectSearchResultDep(item) {
-    ///WE CAN CONFIGURE MORE COMPLEX FUNCTIONS SUCH AS UPLOAD DATA TO FIRESTORE OR LINK IT TO SOMETHING
-    // alert(JSON.stringify(item))      
-    this.placeid = item.place_id;
-    this.recherche.value['depart']= item.structured_formatting["main_text"];
-    this.depart = item.description
-    this.autocompleteItemsDep = [];
-    // this.getLatLngFromAddressDep(item.place_id);
-    console.log(RechercherTrajetsPage.lonDep);
+    /////WE CAN CONFIGURE MORE COMPLEX FUNCTIONS SUCH AS UPLOAD DATA TO FIRESTORE OR LINK IT TO SOMETHING
+    //// alert(JSON.stringify(item))      
+    //this.placeid = item.place_id;
+    //this.recherche.value['depart']= item.structured_formatting["main_text"];
+    //this.depart = item.description
+    //this.autocompleteItemsDep = [];
+    //// this.getLatLngFromAddressDep(item.place_id);
+    //console.log(RechercherTrajetsPage.lonDep);
 }
   
 
   SelectSearchResultDes(item) {   
-    this.dest=item.description
-    console.log(item)
-    this.placeid = item.place_id;
-    this.recherche.value['destination']= item.structured_formatting["main_text"];
-    this.lonDes = item;
-    this.latDes = item.latitude;
-    this.autocompleteItemsDes = [];
+    //this.dest=item.description
+    //console.log(item)
+    //this.placeid = item.place_id;
+    //this.recherche.value['destination']= item.structured_formatting["main_text"];
+    //this.lonDes = item;
+    //this.latDes = item.latitude;
+    //this.autocompleteItemsDes = [];
   }
 
 
   UpdateSearchResultsDes(){
-    if (this.autocompleteDes.input == '') {
-      this.autocompleteItemsDes = [];
-      return;
-    }
-    this.GoogleAutocompleteDes.getPlacePredictions({ input: this.autocompleteDes.input },
-    (predictions, status) => {
-      this.autocompleteItemsDes = [];
-      this.zone.run(() => {
-        predictions.forEach((prediction) => {
-          this.autocompleteItemsDes.push(prediction);
-        });
-      });
-    });
+    //if (this.autocompleteDes.input == '') {
+    //  this.autocompleteItemsDes = [];
+    //  return;
+    //}
+    //this.GoogleAutocompleteDes.getPlacePredictions({ input: this.autocompleteDes.input },
+    //(predictions, status) => {
+    //  this.autocompleteItemsDes = [];
+    //  this.zone.run(() => {
+    //    predictions.forEach((prediction) => {
+    //      this.autocompleteItemsDes.push(prediction);
+    //    });
+    //  });
+    //});
   }
 
   UpdateSearchResultsDep(){
-    if (this.autocompleteDep.input == '') {
-      this.autocompleteItemsDep = [];
-      return;
-    }
-    this.GoogleAutocompleteDep.getPlacePredictions({ input: this.autocompleteDep.input },
-    (predictions, status) => {
-      this.autocompleteItemsDep = [];
-      this.zone.run(() => {
-        predictions.forEach((prediction) => {
-          this.autocompleteItemsDep.push(prediction);
-        });
-      });
-    });
+    //if (this.autocompleteDep.input == '') {
+    //  this.autocompleteItemsDep = [];
+    //  return;
+    //}
+    //this.GoogleAutocompleteDep.getPlacePredictions({ input: this.autocompleteDep.input },
+    //(predictions, status) => {
+    //  this.autocompleteItemsDep = [];
+    //  this.zone.run(() => {
+    //    predictions.forEach((prediction) => {
+    //      this.autocompleteItemsDep.push(prediction);
+    //    });
+    //  });
+    //});
   }
-  
-
-  //Redirection
-  listeTrajets(){
-    this.router.navigate(['/home']);
-  }
-
-
-
-  
+    
   //  getLatLngFromAddressDep(place_Id : any ){
 
   //   var geocoder = new google.maps.Geocoder();

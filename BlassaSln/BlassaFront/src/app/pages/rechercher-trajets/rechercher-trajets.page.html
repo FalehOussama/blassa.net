@@ -12,7 +12,7 @@
         <ion-card class="has-card-footer">
           <ion-list >
             <ion-item lines="none">
-              <ion-input value="{{depart}}" [(ngModel)]="autocompleteDep.input" (ionInput)="UpdateSearchResultsDep()"  placeholder="Depart" style="font-family: Arial, Helvetica, sans-serif;"></ion-input>
+              <ion-input value="{{depart}}" [(ngModel)]="depart" (ionInput)="UpdateSearchResultsDep()"  placeholder="Depart" style="font-family: Arial, Helvetica, sans-serif;"></ion-input>
               <ion-icon class="bullet small" name="locate-outline" slot="start" style="color: rgb(89, 89, 233);"></ion-icon>
 
             </ion-item>
@@ -40,10 +40,11 @@
               <ion-input id="date" placeholder="{{date | date}}"></ion-input>
               <ion-popover trigger="date">
                 <ng-template>
-                  <ion-datetime [(ngModel)]="date" [min]="today"></ion-datetime>
+                  <ion-datetime [(ngModel)]="date"></ion-datetime>
                 </ng-template>
               </ion-popover>
             </ion-item>
+
             <ion-item class="centred" lines="none">
               <ion-icon class="bullet small" name="people-outline" slot="start"></ion-icon>
               <p class="row3text">Passagers</p>
@@ -70,7 +71,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid>
+  <!--<ion-grid>
     <ion-list mode="ios" style="margin-top: 30px; border-radius: 20px;">
       <ion-item button detail="true" *ngFor="let recherche of user?.recherches" (click)="rechercheParHistorique(recherche.depart , recherche.destination , recherche.nbrPassager , convertDate(recherche.date_recherche))">
         <ion-icon name="time-outline" slot="start"></ion-icon>
@@ -80,5 +81,5 @@
         </ion-label>
       </ion-item>
     </ion-list>
-  </ion-grid>
+  </ion-grid>-->
 </ion-content>
