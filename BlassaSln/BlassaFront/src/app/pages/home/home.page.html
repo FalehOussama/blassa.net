@@ -126,22 +126,22 @@
               <!-- Services par content -->
               <ion-list lines="none">
                 <ion-item>
-                  <ion-checkbox justify="space-between">Super Driver</ion-checkbox>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.superDriver}}" formControlName="superDriver">Super Driver</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between">Profil Vérifié</ion-checkbox>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.profilVerifie}}" formControlName="profilVerifie">Profil Vérifié</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between">Max. 2 à l'arriére</ion-checkbox>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.max2Arriere}}" formControlName="max2Arriere">Max. 2 à l'arriére</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between">Réservation instantanée</ion-checkbox>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.reservationInst}}" formControlName="reservationInst">Réservation instantanée</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
@@ -149,37 +149,32 @@
                   <ion-label>Bagage</ion-label>
                   <ion-list>
                     <ion-item>
-                      <ion-checkbox justify="space-between">Leger</ion-checkbox>
+                      <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.bLeger}}" formControlName="bLeger">Leger</ion-checkbox>
                       <p style="margin-left: 10px; opacity: 0;">0</p>
                     </ion-item>
                     <ion-item>
-                      <ion-checkbox justify="space-between">Moyen</ion-checkbox>
+                      <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.bMoyen}}" formControlName="bMoyen">Moyen</ion-checkbox>
                       <p style="margin-left: 10px; opacity: 0;">0</p>
                     </ion-item>
                     <ion-item>
-                      <ion-checkbox justify="space-between">Lourd</ion-checkbox>
+                      <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.bLourd}}" formControlName="bLourd">Lourd</ion-checkbox>
                       <p style="margin-left: 10px; opacity: 0;">0</p>
                     </ion-item>
                   </ion-list>
-
-
-
-
                 </ion-item>
 
                 <ion-item>
-
-                  <ion-checkbox justify="space-between" (ionChange)="filtrer('climatisation' , 'annonce');" formControlName="climatisation">Climatisation</ion-checkbox>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.climatisation}}" formControlName="climatisation">Climatisation</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between" (ionChange)="filtrer('cigarette' , 'annonce');" formControlName="cigarette">Cigarette autorisée</ion-checkbox>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.cigaretteAutorisee}}" formControlName="cigaretteAutorisee">Cigarette autorisée</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between" (ionChange)="filtrer('animal' , 'annonce');" formControlName="animal">Animaux de compagnie autorisés</ion-checkbox>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.animauxAutorises}}" formControlName="animauxAutorises">Animaux de compagnie autorisés</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
               </ion-list>

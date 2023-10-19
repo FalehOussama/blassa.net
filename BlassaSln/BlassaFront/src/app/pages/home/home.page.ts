@@ -38,16 +38,46 @@ export class HomePage implements OnInit  {
     if (ev.detail.role === 'confirm') {
       this.tri = +this.filtreForm.value.tri;
       this.trajetAnnonceCriteresDto.heureDepart = +this.filtreForm.value.heureDepart;
+      this.trajetAnnonceCriteresDto.superDriver = this.filtreForm.value.superDriver;
+      this.trajetAnnonceCriteresDto.profilVerifie = this.filtreForm.value.profilVerifie;
+      this.trajetAnnonceCriteresDto.max2Arriere = this.filtreForm.value.max2Arriere;
+      this.trajetAnnonceCriteresDto.reservationInst = this.filtreForm.value.reservationInst;
+      this.trajetAnnonceCriteresDto.bLeger = this.filtreForm.value.bLeger;
+      this.trajetAnnonceCriteresDto.bMoyen = this.filtreForm.value.bMoyen;
+      this.trajetAnnonceCriteresDto.bLourd = this.filtreForm.value.bLourd;
+      this.trajetAnnonceCriteresDto.climatisation = this.filtreForm.value.climatisation;
+      this.trajetAnnonceCriteresDto.cigaretteAutorisee = this.filtreForm.value.cigaretteAutorisee;
+      this.trajetAnnonceCriteresDto.animauxAutorises = this.filtreForm.value.animauxAutorises;
     }
     else {
       //this.filtreForm.controls.tri.value = "0";
       this.tri = TrajetAnnonceTriTypeDto.DEPART_PLUS_TOT;
       this.trajetAnnonceCriteresDto.heureDepart = HeureDepartCritereTypeDto.TOUS;
+      this.trajetAnnonceCriteresDto.superDriver = false;
+      this.trajetAnnonceCriteresDto.profilVerifie = false;
+      this.trajetAnnonceCriteresDto.max2Arriere = false;
+      this.trajetAnnonceCriteresDto.reservationInst = false;
+      this.trajetAnnonceCriteresDto.bLeger = false;
+      this.trajetAnnonceCriteresDto.bMoyen = false;
+      this.trajetAnnonceCriteresDto.bLourd = false;
+      this.trajetAnnonceCriteresDto.climatisation = false;
+      this.trajetAnnonceCriteresDto.cigaretteAutorisee = false;
+      this.trajetAnnonceCriteresDto.animauxAutorises = false;
     }
 
     this.filtreForm.patchValue({
       tri: this.tri.toString(),
-      heureDepart: this.trajetAnnonceCriteresDto.heureDepart.toString()
+      heureDepart: this.trajetAnnonceCriteresDto.heureDepart.toString(),
+      superDriver: this.trajetAnnonceCriteresDto.superDriver,
+      profilVerifie: this.trajetAnnonceCriteresDto.profilVerifie,
+      max2Arriere: this.trajetAnnonceCriteresDto.max2Arriere,
+      reservationInst: this.trajetAnnonceCriteresDto.reservationInst,
+      bLeger: this.trajetAnnonceCriteresDto.bLeger,
+      bMoyen: this.trajetAnnonceCriteresDto.bMoyen,
+      bLourd: this.trajetAnnonceCriteresDto.bLourd,
+      climatisation: this.trajetAnnonceCriteresDto.climatisation,
+      cigaretteAutorisee: this.trajetAnnonceCriteresDto.cigaretteAutorisee,
+      animauxAutorises: this.trajetAnnonceCriteresDto.animauxAutorises
     });
 
     this.currentPage = 1;
@@ -68,7 +98,17 @@ export class HomePage implements OnInit  {
 
     this.filtreForm = this.formBuilder.group({
       tri: ["0"],
-      heureDepart: ["0"]
+      heureDepart: ["0"],
+      superDriver: [false],
+      profilVerifie: [false],
+      max2Arriere: [false],
+      reservationInst: [false],
+      bLeger: [false],
+      bMoyen: [false],
+      bLourd: [false],
+      climatisation: [false],
+      cigaretteAutorisee: [false],
+      animauxAutorises: [false]
     });
 
     this.loadAnnonces();
