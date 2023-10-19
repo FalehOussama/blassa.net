@@ -9,8 +9,10 @@
   <ItemGroup>
     <None Remove="src\app\classes\couleurType.ts" />
     <None Remove="src\app\classes\heureDepartCritereTypeDto.ts" />
+    <None Remove="src\app\classes\rechTrajetAnnonceDto.ts" />
     <None Remove="src\app\classes\trajetAnnonceCriteresDto.ts" />
     <None Remove="src\app\classes\trajetAnnonceTriTypeDto.ts" />
+    <None Remove="src\app\classes\trajetsAnnoncesRechercheRetourDto.ts" />
     <None Remove="src\app\classes\typeVehiculeType.ts" />
     <None Remove="src\app\classes\vehicule.ts" />
     <None Remove="src\app\classes\voyageAvecType.ts" />
@@ -20,8 +22,10 @@
   <ItemGroup>
     <TypeScriptCompile Include="src\app\classes\couleurType.ts" />
     <TypeScriptCompile Include="src\app\classes\heureDepartCritereTypeDto.ts" />
+    <TypeScriptCompile Include="src\app\classes\rechTrajetAnnonceDto.ts" />
     <TypeScriptCompile Include="src\app\classes\trajetAnnonceCriteresDto.ts" />
     <TypeScriptCompile Include="src\app\classes\trajetAnnonceTriTypeDto.ts" />
+    <TypeScriptCompile Include="src\app\classes\trajetsAnnoncesRechercheRetourDto.ts" />
     <TypeScriptCompile Include="src\app\classes\typeVehiculeType.ts" />
     <TypeScriptCompile Include="src\app\classes\vehicule.ts" />
     <TypeScriptCompile Include="src\app\classes\voyageAvecType.ts" />

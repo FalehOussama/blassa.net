@@ -16,7 +16,7 @@ namespace BlassaApi.Controllers
             _dbContext = dbContext;
         }
 
-        //GET : api/TrajetsAnnonces/User
+        //POST : api/TrajetsAnnonces/User
         [HttpPost("Recherche")]
         public async Task<ActionResult<TrajetsAnnoncesRechercheRetourDto>> TrajetsAnnoncesRecherche(TrajetAnnonceCriteresDto criteres, TrajetAnnonceTriTypeDto tri, int pageNb)
         {
@@ -34,6 +34,7 @@ namespace BlassaApi.Controllers
             if (!string.IsNullOrEmpty(criteres.Destination))
                 query = query.Where(t => t.Destination.ToUpper().StartsWith(criteres.Destination.ToUpper()));
 
+            criteres.DateDepart = new DateTime(criteres.DateDepart.Year, criteres.DateDepart.Month, criteres.DateDepart.Day, 0, 1, 0);
             query = query.Where(t => t.DateHeureDepart >= criteres.DateDepart);
 
             query = query.Where(t => t.NombrePlacesDispo >= criteres.NombrePlaces);

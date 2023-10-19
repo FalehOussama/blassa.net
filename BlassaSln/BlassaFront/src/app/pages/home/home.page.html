@@ -10,33 +10,27 @@
     </ion-fab-button>
   </ion-fab>
 
-
   <div class="main" *ngIf="annonces?.length==0">
-
     <ion-title>
       Aucune annonce 
     </ion-title>
   </div>
 
-
-
-    <app-annonce-item *ngFor="let annonce of annonces | paginate : 
+  <app-annonce-item *ngFor="let annonce of annonces | paginate : 
     { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: count }; 
     let i = index" [current]="annonce" 
-      (click)="afficherFiche(annonce.id_Annonce)" 
-      [IMG]="annonce.conducteur.imgUrl"
-      [Nom]="annonce.conducteur.nom"
-      [idUser]="annonce?.iduser" 
+      (click)="afficherFiche(annonce.id)" 
+      [uImgUrl]="annonce.uImgUrl"
+      [uPrenom]="annonce.uPrenom"
+      [userId]="annonce?.userId" 
       [prix]="annonce?.prix"
-      [Dep]="annonce?.trajet.depart" 
-      [Des]="annonce?.trajet.destination" 
-      [dateHeure]="annonce?.date_Heure_Depart"  
-      [NBP]="annonce?.nombrePlaces" 
-      [inst]="annonce?.inst"
-      [verifie]="annonce?.conducteur.verifie" 
-      [filles]="annonce?.filles" 
-      [garcons]="annonce?.garcons" 
-      [tous]="annonce?.tous"
+      [depart]="annonce?.depart" 
+      [destination]="annonce?.destination" 
+      [dateHeureDepart]="annonce?.dateHeureDepart"  
+      [nombrePlacesDispo]="annonce?.nombrePlacesDispo" 
+      [instantane]="annonce?.instantane"
+      [uVerifie]="annonce?.uVerifie" 
+      [voyageAvec]="annonce?.voyageAvec"
      ></app-annonce-item>
 
 

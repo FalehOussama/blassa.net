@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TokenStorageService } from './token-storage.service';
 import { url } from '../modules/url/url.module';
 import { StorageService } from './storage.service';
+import { TrajetAnnonceCriteresDto } from '../classes/trajetAnnonceCriteresDto';
+import { TrajetAnnonceTriTypeDto } from '../classes/trajetAnnonceTriTypeDto';
+import { TrajetsAnnoncesRechercheRetourDto } from '../classes/trajetsAnnoncesRechercheRetourDto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,14 @@ export class AnnonceService {
   
   constructor(
     private http: HttpClient ,
-    private token : TokenStorageService,
     private storage : StorageService,
     ) { 
     }
-    private baseUrl = url +  "/annonce";
+  private baseUrl = url + "/TrajetsAnnonces";
+
+  trajetsAnnoncesRecherchePost(crietres: TrajetAnnonceCriteresDto, tri: TrajetAnnonceTriTypeDto, pageNb: number) {
+    return this.http.post<TrajetsAnnoncesRechercheRetourDto>(this.baseUrl + "/Recherche/?tri=" + tri + "&pageNb=" + pageNb, crietres);
+  }
 
 
   getAnnonces(): Observable<any[]>{

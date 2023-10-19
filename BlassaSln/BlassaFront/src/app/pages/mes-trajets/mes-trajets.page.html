@@ -23,7 +23,7 @@
        </video>
     </ion-row>
   </div>
-  <app-annonce-item *ngFor="let annonce of mesAnnonces" 
+  <!--<app-annonce-item *ngFor="let annonce of mesAnnonces" 
   (click)="afficherFiche(annonce.id_Annonce)" 
   [IMG]="annonce.conducteur?.imgUrl"
   [Nom]="annonce.conducteur?.nom"
@@ -38,7 +38,7 @@
   [filles]="annonce.filles" 
   [garcons]="annonce.garcons" 
   [tous]="annonce.tous"
-  ></app-annonce-item>
+  ></app-annonce-item>-->
 </div>
 
 <div *ngIf="segment=='reservations'">
@@ -49,7 +49,7 @@
        </video>
     </ion-row>
   </div>
-  <app-annonce-item *ngFor="let annonce of mesReservations"  
+  <!--<app-annonce-item *ngFor="let annonce of mesReservations"  
   (click)="afficherFiche(annonce.id_Annonce)" 
   [IMG]="annonce.conducteur.imgUrl"
   [Nom]="annonce.conducteur.nom"
@@ -64,7 +64,7 @@
   [filles]="annonce.filles" 
   [garcons]="annonce.garcons" 
   [tous]="annonce.tous"
-  ></app-annonce-item>
+  ></app-annonce-item>-->
 </div>
 
 </ion-content>

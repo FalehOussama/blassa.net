@@ -4,8 +4,8 @@ namespace BlassaApi.Dto
 {
     public class TrajetAnnonceCriteresDto
     {
-        public string Depart { get; set; }
-        public string Destination { get; set; }
+        public string? Depart { get; set; }
+        public string? Destination { get; set; }
         public DateTime DateDepart { get; set; }
         public int NombrePlaces { get; set; }
         public HeureDepartCritereTypeDto HeureDepart { get; set; }

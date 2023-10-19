@@ -1,16 +1,16 @@
 import { Component, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
-
 import { Router } from '@angular/router';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { IonModal, LoadingController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
-import { AnnonceStorageService } from 'src/app/services/annonce-storage.service';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@capacitor/geolocation';
 import { RefreshService } from 'src/app/services/refresh.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TrajetAnnonceCriteresDto } from '../../classes/trajetAnnonceCriteresDto';
+import { TrajetAnnonceTriTypeDto } from '../../classes/trajetAnnonceTriTypeDto';
+import { TrajetsAnnoncesRechercheRetourDto } from '../../classes/trajetsAnnoncesRechercheRetourDto';
 
 @Component({
   selector: 'app-home',
@@ -18,12 +18,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit  {
-
-
-
-
-
-
 
   @ViewChild(IonModal) modal: IonModal;
 
@@ -47,14 +41,9 @@ export class HomePage implements OnInit  {
     }
   }
 
-  answer="dpt"
-
-
-
-
+  answer = "dpt";
 
   constructor(
-    private token : TokenStorageService,
     private router : Router,
     private annonceService : AnnonceService,
     public loadingController: LoadingController,
@@ -64,13 +53,14 @@ export class HomePage implements OnInit  {
     private formBuilder : FormBuilder,
   ) { 
 
-    this.storage.get('annonces').then(
-      async data => {
-        this.annonces = await data;
-        this.unFiltredAnnonces = await data;
-        console.log(this.annonces)
-      }
-    )
+    this.loadAnnonces();
+    //this.storage.get('annonces').then(
+    //  async data => {
+    //    this.annonces = await data;
+    //    this.unFiltredAnnonces = await data;
+    //    console.log(this.annonces)
+    //  }
+    //);
     this.storage.get('user').then(
       async data => {
         this.user = await data;
@@ -96,38 +86,39 @@ export class HomePage implements OnInit  {
   filtreForm:FormGroup;
 
   async ionViewWillEnter(){
-    this.annonces = await this.storage.get('annonces')
+    
     this.ngOnInit();
   } 
 
-  keys=['cigarette' , 'climatisation' , 'max2' , 'animal' , 'leger' ,'moyen' , 'lourd', 'inst']
-  keys2=[ 'superDriver' , 'verifie']
+  keys = ['cigarette', 'climatisation', 'max2', 'animal', 'leger', 'moyen', 'lourd', 'inst'];
+  keys2 = ['superDriver', 'verifie'];
+
+  trajetAnnonceCriteresDto: TrajetAnnonceCriteresDto;
+  trajetsAnnoncesRechercheRetourDto: TrajetsAnnoncesRechercheRetourDto;
+
    async ngOnInit() {
 
-    this.filtreForm = this.formBuilder.group({
-      cigarette: [false],
-      climatisation: [false],
-      max2: [false],
-      animal: [false],
-      leger: [false],
-      moyen: [false],
-      lourd: [false],
-      superDriver: [false],
-      verifie: [false],
-      inst: [false],
-    })
+     this.filtreForm = this.formBuilder.group({
+       cigarette: [false],
+       climatisation: [false],
+       max2: [false],
+       animal: [false],
+       leger: [false],
+       moyen: [false],
+       lourd: [false],
+       superDriver: [false],
+       verifie: [false],
+       inst: [false],
+     });     
 
-    
-
-
-    this.tel = this.token.tel;
+    this.tel = this.user?.tel1;
     this.sexe = this.user?.sexe;
-    console.log(this.annonces)
+    console.log(this.annonces);
 
     this.setCurrentPosition();  
 
-    // setInterval(this.refresh.refreshAnnonces , 10000);
-    }
+     // setInterval(this.refresh.refreshAnnonces , 10000);
+   }
 
 
 
@@ -295,5 +286,17 @@ export class HomePage implements OnInit  {
   public onChange(event): void {
     console.dir(event);
     this.currentPage = event;
+    this.loadAnnonces();
+  }
+
+  private async loadAnnonces() {
+    this.trajetAnnonceCriteresDto = await this.storage.get('trajetAnnonceCriteresDto');
+    this.annonceService.trajetsAnnoncesRecherchePost(this.trajetAnnonceCriteresDto, TrajetAnnonceTriTypeDto.TOUS, this.currentPage).subscribe(
+          async (res) => {
+            this.trajetsAnnoncesRechercheRetourDto = await res;
+            this.count = this.trajetsAnnoncesRechercheRetourDto.count;
+            this.annonces = this.trajetsAnnoncesRechercheRetourDto.trajets;
+          }
+    );
   }
 }

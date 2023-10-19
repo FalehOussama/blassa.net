@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
+import { VoyageAvecType } from '../../classes/voyageAvecType';
 
 @Component({
   selector: 'app-annonce-item',
@@ -20,10 +21,10 @@ export class AnnonceItemComponent  implements OnInit {
 
 
   ngOnInit() {
-     if(this.filles){
+    if (this.voyageAvec == VoyageAvecType.FILLES){
       this.style="filles";
      }
-     else if(this.garcons){
+    else if (this.voyageAvec == VoyageAvecType.GARCONS){
       this.style="garcons";
      }else{
       this.style="tous"
@@ -31,19 +32,18 @@ export class AnnonceItemComponent  implements OnInit {
   }
 
 
-  @Input() idUser: number;
+  @Input() id: number;
+  @Input() userId: number;
   @Input() prix: number;
-  @Input() Dep: string;
-  @Input() Des: string;
-  @Input() IMG: string;
-  @Input() NBP: number[];
-  @Input() Nom: string;
-  @Input() inst: boolean;
-  @Input() verifie: any;
-  @Input() filles: any;
-  @Input() garcons: any;
-  @Input() tous: any;
-  @Input() dateHeure:any;
+  @Input() depart: string;
+  @Input() destination: string;
+  @Input() uImgUrl: string;
+  @Input() nombrePlacesDispo: number[];
+  @Input() uPrenom: string;
+  @Input() instantane: boolean;
+  @Input() uVerifie: any;
+  @Input() voyageAvec: number;
+  @Input() dateHeureDepart:any;
 
 
   @Input() current: number;
