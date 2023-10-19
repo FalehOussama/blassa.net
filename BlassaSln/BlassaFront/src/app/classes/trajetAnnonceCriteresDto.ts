@@ -19,5 +19,5 @@ export class TrajetAnnonceCriteresDto {
   cigaretteAutorisee: boolean;
   animauxAutorises: boolean;  
   
-  voyageAvec: VoyageAvecType;
+  voyageAvec?: VoyageAvecType;
 }

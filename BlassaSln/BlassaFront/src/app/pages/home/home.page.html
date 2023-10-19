@@ -101,18 +101,23 @@
               <ion-radio-group  id="radio-heureDepart" value="{{trajetAnnonceCriteresDto.heureDepart}}" formControlName="heureDepart">
                 <ion-item>
                   <ion-radio value="0" justify="space-between">Tous</ion-radio>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.count}}</p>
                 </ion-item>
                 <ion-item>
                   <ion-radio value="1" justify="space-between">Avant 06:00</ion-radio>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreAvant6H}}</p>
                 </ion-item>
                 <ion-item>
                   <ion-radio value="2" justify="space-between">06:00 - 12:00</ion-radio>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreEntre6H12H}}</p>
                 </ion-item>
                 <ion-item>
                   <ion-radio value="3" justify="space-between">12:01 - 18:00</ion-radio>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreEntre12H18H}}</p>
                 </ion-item>
                 <ion-item>
                   <ion-radio value="4" justify="space-between">Aprés 18:00</ion-radio>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreApres18H}}</p>
                 </ion-item>
               </ion-radio-group>
               <!-- Heure par content -->
@@ -127,22 +132,22 @@
               <ion-list lines="none">
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.superDriver}}" formControlName="superDriver">Super Driver</ion-checkbox>
-                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreSuperDriver}}</p>
                 </ion-item>
 
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.profilVerifie}}" formControlName="profilVerifie">Profil Vérifié</ion-checkbox>
-                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreProfilVerifie}}</p>
                 </ion-item>
 
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.max2Arriere}}" formControlName="max2Arriere">Max. 2 à l'arriére</ion-checkbox>
-                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreMax2Arriere}}</p>
                 </ion-item>
 
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.reservationInst}}" formControlName="reservationInst">Réservation instantanée</ion-checkbox>
-                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreReservationInst}}</p>
                 </ion-item>
 
                 <ion-item>
@@ -150,32 +155,56 @@
                   <ion-list>
                     <ion-item>
                       <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.bLeger}}" formControlName="bLeger">Leger</ion-checkbox>
-                      <p style="margin-left: 10px; opacity: 0;">0</p>
+                      <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreBLeger}}</p>
                     </ion-item>
                     <ion-item>
                       <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.bMoyen}}" formControlName="bMoyen">Moyen</ion-checkbox>
-                      <p style="margin-left: 10px; opacity: 0;">0</p>
+                      <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreBMoyen}}</p>
                     </ion-item>
                     <ion-item>
                       <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.bLourd}}" formControlName="bLourd">Lourd</ion-checkbox>
-                      <p style="margin-left: 10px; opacity: 0;">0</p>
+                      <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreBLourd}}</p>
                     </ion-item>
                   </ion-list>
                 </ion-item>
 
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.climatisation}}" formControlName="climatisation">Climatisation</ion-checkbox>
-                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreClimatisation}}</p>
                 </ion-item>
 
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.cigaretteAutorisee}}" formControlName="cigaretteAutorisee">Cigarette autorisée</ion-checkbox>
-                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreCigaretteAuto}}</p>
                 </ion-item>
 
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.animauxAutorises}}" formControlName="animauxAutorises">Animaux de compagnie autorisés</ion-checkbox>
-                  <p style="margin-left: 10px; opacity: 0.2;">0</p>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreAnimauxAuto}}</p>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Voyage avec</ion-label>
+                  <ion-list>
+                    <ion-radio-group id="radio-voyageAvec" value="{{trajetAnnonceCriteresDto.voyageAvec}}" formControlName="voyageAvec">
+                      <ion-item>
+                        <ion-radio value="99" justify="space-between">Tous</ion-radio>
+                        <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.count}}</p>
+                      </ion-item>
+                      <ion-item>
+                        <ion-radio value="0" justify="space-between">Mixte</ion-radio>
+                        <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreVoyageAvecTous}}</p>
+                      </ion-item>
+                      <ion-item>
+                        <ion-radio value="1" justify="space-between">Filles</ion-radio>
+                        <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreVoyageAvecFilles}}</p>
+                      </ion-item>
+                      <ion-item>
+                        <ion-radio value="2" justify="space-between">Garçons</ion-radio>
+                        <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreVoyageAvecGarcons}}</p>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-list>
                 </ion-item>
               </ion-list>
               <!-- Services par content -->

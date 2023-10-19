@@ -12,6 +12,7 @@ import { TrajetAnnonceCriteresDto } from '../../classes/trajetAnnonceCriteresDto
 import { TrajetAnnonceTriTypeDto } from '../../classes/trajetAnnonceTriTypeDto';
 import { TrajetsAnnoncesRechercheRetourDto } from '../../classes/trajetsAnnoncesRechercheRetourDto';
 import { HeureDepartCritereTypeDto } from '../../classes/heureDepartCritereTypeDto';
+import { VoyageAvecType } from '../../classes/voyageAvecType';
 
 @Component({
   selector: 'app-home',
@@ -48,10 +49,13 @@ export class HomePage implements OnInit  {
       this.trajetAnnonceCriteresDto.climatisation = this.filtreForm.value.climatisation;
       this.trajetAnnonceCriteresDto.cigaretteAutorisee = this.filtreForm.value.cigaretteAutorisee;
       this.trajetAnnonceCriteresDto.animauxAutorises = this.filtreForm.value.animauxAutorises;
+      let voyageAvecStr: string = this.filtreForm.value.voyageAvec;
+      if (voyageAvecStr == '99')
+        this.trajetAnnonceCriteresDto.voyageAvec = undefined;
+      else
+        this.trajetAnnonceCriteresDto.voyageAvec = +voyageAvecStr;
     }
     else {
-      //this.filtreForm.controls.tri.value = "0";
-      this.tri = TrajetAnnonceTriTypeDto.DEPART_PLUS_TOT;
       this.trajetAnnonceCriteresDto.heureDepart = HeureDepartCritereTypeDto.TOUS;
       this.trajetAnnonceCriteresDto.superDriver = false;
       this.trajetAnnonceCriteresDto.profilVerifie = false;
@@ -63,6 +67,7 @@ export class HomePage implements OnInit  {
       this.trajetAnnonceCriteresDto.climatisation = false;
       this.trajetAnnonceCriteresDto.cigaretteAutorisee = false;
       this.trajetAnnonceCriteresDto.animauxAutorises = false;
+      this.trajetAnnonceCriteresDto.voyageAvec = undefined;
     }
 
     this.filtreForm.patchValue({
@@ -77,7 +82,8 @@ export class HomePage implements OnInit  {
       bLourd: this.trajetAnnonceCriteresDto.bLourd,
       climatisation: this.trajetAnnonceCriteresDto.climatisation,
       cigaretteAutorisee: this.trajetAnnonceCriteresDto.cigaretteAutorisee,
-      animauxAutorises: this.trajetAnnonceCriteresDto.animauxAutorises
+      animauxAutorises: this.trajetAnnonceCriteresDto.animauxAutorises,
+      voyageAvec: this.trajetAnnonceCriteresDto.voyageAvec != undefined ? this.trajetAnnonceCriteresDto.voyageAvec.toString() : '99'
     });
 
     this.currentPage = 1;
@@ -108,7 +114,8 @@ export class HomePage implements OnInit  {
       bLourd: [false],
       climatisation: [false],
       cigaretteAutorisee: [false],
-      animauxAutorises: [false]
+      animauxAutorises: [false],
+      voyageAvec: ["99"]
     });
 
     this.loadAnnonces();
