@@ -44,7 +44,7 @@
 </ion-content>
 
 
-<ion-modal trigger="filter-content" (willDismiss)="onWillDismiss($event)" mode="ios">
+<ion-modal trigger="filter-content" (didDismiss)="onDidDismiss($event)" mode="ios">
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -69,7 +69,7 @@
               <!-- Trier par content -->
 
               <ion-list lines="none">
-                <ion-radio-group value="{{tri}}" formControlName="tri">
+                <ion-radio-group id="radio-tri" value="{{tri}}" formControlName="tri">
                   <ion-item>
                     <ion-icon mode="ios" name="time-outline" slot="start"></ion-icon>
                     <ion-radio value="0" justify="space-between">Départ le plus tot</ion-radio>
@@ -98,19 +98,21 @@
             </ion-item>
             <div class="ion-padding" slot="content">
               <!-- Heure content -->
-
-              <ion-radio-group value="{{at}}">
+              <ion-radio-group  id="radio-heureDepart" value="{{trajetAnnonceCriteresDto.heureDepart}}" formControlName="heureDepart">
                 <ion-item>
-                  <ion-radio value="06" justify="space-between" (click)="temps(0,6);">Avant 06:00</ion-radio>
+                  <ion-radio value="0" justify="space-between">Tous</ion-radio>
                 </ion-item>
                 <ion-item>
-                  <ion-radio value="612" justify="space-between" (click)="temps(6,12);">06:00 - 12:00</ion-radio>
+                  <ion-radio value="1" justify="space-between">Avant 06:00</ion-radio>
                 </ion-item>
                 <ion-item>
-                  <ion-radio value="1218" justify="space-between" (click)="temps(12,18);">12:01 - 18:00</ion-radio>
+                  <ion-radio value="2" justify="space-between">06:00 - 12:00</ion-radio>
                 </ion-item>
                 <ion-item>
-                  <ion-radio value="180" justify="space-between" (click)="temps(18,24);">Aprés 18:00</ion-radio>
+                  <ion-radio value="3" justify="space-between">12:01 - 18:00</ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-radio value="4" justify="space-between">Aprés 18:00</ion-radio>
                 </ion-item>
               </ion-radio-group>
               <!-- Heure par content -->
@@ -122,27 +124,24 @@
             </ion-item>
             <div class="ion-padding" slot="content">
               <!-- Services par content -->
-
-
-
               <ion-list lines="none">
                 <ion-item>
-                  <ion-checkbox justify="space-between" formControlName="superDriver" (ionChange)="filtrer('superDriver' , 'conducteur');">Super Driver</ion-checkbox>
+                  <ion-checkbox justify="space-between">Super Driver</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between" formControlName="verifie" (ionChange)="filtrer('verifie' , 'conducteur');">Profil Vérifié</ion-checkbox>
+                  <ion-checkbox justify="space-between">Profil Vérifié</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between" formControlName="max2" (ionChange)="filtrer('max2' , 'annonce');">Max. 2 à l'arriére</ion-checkbox>
+                  <ion-checkbox justify="space-between">Max. 2 à l'arriére</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
                 <ion-item>
-                  <ion-checkbox justify="space-between" formControlName="inst" (ionChange)="filtrer('inst' , 'annonce');">Réservation instantanée</ion-checkbox>
+                  <ion-checkbox justify="space-between">Réservation instantanée</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
 
@@ -150,15 +149,15 @@
                   <ion-label>Bagage</ion-label>
                   <ion-list>
                     <ion-item>
-                      <ion-checkbox justify="space-between" formControlName="leger" (ionChange)="filtrer('leger' , 'annonce');">Leger</ion-checkbox>
+                      <ion-checkbox justify="space-between">Leger</ion-checkbox>
                       <p style="margin-left: 10px; opacity: 0;">0</p>
                     </ion-item>
                     <ion-item>
-                      <ion-checkbox justify="space-between" formControlName="moyen" (ionChange)="filtrer('moyen' , 'annonce');">Moyen</ion-checkbox>
+                      <ion-checkbox justify="space-between">Moyen</ion-checkbox>
                       <p style="margin-left: 10px; opacity: 0;">0</p>
                     </ion-item>
                     <ion-item>
-                      <ion-checkbox justify="space-between" formControlName="lourd" (ionChange)="filtrer('lourd' , 'annonce');">Lourd</ion-checkbox>
+                      <ion-checkbox justify="space-between">Lourd</ion-checkbox>
                       <p style="margin-left: 10px; opacity: 0;">0</p>
                     </ion-item>
                   </ion-list>
@@ -184,9 +183,6 @@
                   <p style="margin-left: 10px; opacity: 0.2;">0</p>
                 </ion-item>
               </ion-list>
-
-
-
               <!-- Services par content -->
             </div>
           </ion-accordion>

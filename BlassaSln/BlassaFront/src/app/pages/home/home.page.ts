@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TrajetAnnonceCriteresDto } from '../../classes/trajetAnnonceCriteresDto';
 import { TrajetAnnonceTriTypeDto } from '../../classes/trajetAnnonceTriTypeDto';
 import { TrajetsAnnoncesRechercheRetourDto } from '../../classes/trajetsAnnoncesRechercheRetourDto';
+import { HeureDepartCritereTypeDto } from '../../classes/heureDepartCritereTypeDto';
 
 @Component({
   selector: 'app-home',
@@ -32,14 +33,23 @@ export class HomePage implements OnInit  {
     this.modal.dismiss(this.name, 'confirm');
   }
 
-  onWillDismiss(event: Event) {
+  onDidDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
       this.tri = +this.filtreForm.value.tri;
+      this.trajetAnnonceCriteresDto.heureDepart = +this.filtreForm.value.heureDepart;
     }
     else {
+      //this.filtreForm.controls.tri.value = "0";
       this.tri = TrajetAnnonceTriTypeDto.DEPART_PLUS_TOT;
+      this.trajetAnnonceCriteresDto.heureDepart = HeureDepartCritereTypeDto.TOUS;
     }
+
+    this.filtreForm.patchValue({
+      tri: this.tri.toString(),
+      heureDepart: this.trajetAnnonceCriteresDto.heureDepart.toString()
+    });
+
     this.currentPage = 1;
     this.loadAnnonces();
   }
@@ -54,7 +64,12 @@ export class HomePage implements OnInit  {
     private ngZone: NgZone,
     private storage : StorageService,
     private formBuilder : FormBuilder,
-  ) { 
+  ) {
+
+    this.filtreForm = this.formBuilder.group({
+      tri: ["0"],
+      heureDepart: ["0"]
+    });
 
     this.loadAnnonces();
     this.storage.get('user').then(
@@ -92,21 +107,6 @@ export class HomePage implements OnInit  {
   trajetsAnnoncesRechercheRetourDto: TrajetsAnnoncesRechercheRetourDto;
 
    async ngOnInit() {
-
-     this.filtreForm = this.formBuilder.group({
-       tri: ["0"],
-       cigarette: [false],
-       climatisation: [false],
-       max2: [false],
-       animal: [false],
-       leger: [false],
-       moyen: [false],
-       lourd: [false],
-       superDriver: [false],
-       verifie: [false],
-       inst: [false],
-     });     
-
     this.tel = this.user?.tel1;
     this.sexe = this.user?.sexe;
     console.log(this.annonces);
@@ -280,7 +280,8 @@ export class HomePage implements OnInit  {
   public tri = TrajetAnnonceTriTypeDto.DEPART_PLUS_TOT;
 
   private async loadAnnonces() {
-    this.trajetAnnonceCriteresDto = await this.storage.get('trajetAnnonceCriteresDto');
+    if (this.trajetAnnonceCriteresDto == null)
+      this.trajetAnnonceCriteresDto = await this.storage.get('trajetAnnonceCriteresDto');
     this.annonceService.trajetsAnnoncesRecherchePost(this.trajetAnnonceCriteresDto, this.tri, this.currentPage).subscribe(
           async (res) => {
             this.trajetsAnnoncesRechercheRetourDto = await res;
