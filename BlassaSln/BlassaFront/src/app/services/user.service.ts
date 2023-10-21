@@ -10,9 +10,6 @@ import { TokenStorageService } from './token-storage.service';
 })
 export class UserService {
 
-
-
-
   constructor( 
     private http: HttpClient,
     private token : TokenStorageService,
@@ -37,6 +34,8 @@ export class UserService {
   public updateUser(user : any) : Observable<any>{
     return this.http.put<any>(this.baseUrl + "/" + user.id , user);
   }
+
+  // old
 
   public getNombreTrajets(userUid:any): Observable<any>{
     return this.http.get<any>(this.baseUrl + "/nombreTrajets/" + userUid );

@@ -67,6 +67,7 @@ namespace BlassaApi.Controllers
                 aviStat.Rating = ((float)aviStat.Score * 5) / (float)maxScore;
             }
 
+            aviStat.NbreTotal = nbreTotal;
 
             return Ok(aviStat);
         }

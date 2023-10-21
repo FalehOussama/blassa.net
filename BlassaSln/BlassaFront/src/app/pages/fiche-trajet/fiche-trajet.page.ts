@@ -4,6 +4,8 @@ import { IonModal, Platform, AlertController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { AviService } from 'src/app/services/avi.service';
+import { AviConducteurService } from 'src/app/services/aviConducteur.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
@@ -11,6 +13,7 @@ import { AppAvailability, InAppBrowser } from 'ionic-native';
 import { StorageService } from 'src/app/services/storage.service';
 import { VoyageAvecType } from '../../classes/voyageAvecType';
 import { ReservationStatusType } from '../../classes/reservationStatusType';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -96,7 +99,9 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
     private route: ActivatedRoute , 
     private router : Router,
     private annonceService:AnnonceService , 
-    private reservationService : ReservationService,
+    private reservationService: ReservationService,
+    private aviService: AviService,
+    private aviConducteurService: AviConducteurService,
     public token : TokenStorageService,
     private userService : UserService,
     private callNumber: CallNumber,
@@ -144,6 +149,8 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
   months: any[] = ["Jan", "Fev", "Mar", "Avr", "Mai", "Juin", "Jui", "Aout", "Sep", "Oct", "Nov", "Dec"];
   id : any;
   annonce: any;
+  aviStat: any;
+  aviConducteurStat: any;
   idTrajetAnnonce: any;
   reservations : any;
   canBook : boolean;
@@ -194,6 +201,18 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
                     this.reserverDisabled = true;
                   }
                 }
+
+                await this.aviService.getStat(this.annonce.userId).subscribe(
+                  async resAvi => {
+                    this.aviStat = resAvi;
+                  }
+                );
+
+                await this.aviConducteurService.getStat(this.annonce.userId).subscribe(
+                  async resAviConducteur => {
+                    this.aviConducteurStat = resAviConducteur;
+                  }
+                );
               }
             );
 

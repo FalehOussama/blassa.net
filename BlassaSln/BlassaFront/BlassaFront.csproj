@@ -17,6 +17,8 @@
     <None Remove="src\app\classes\typeVehiculeType.ts" />
     <None Remove="src\app\classes\vehicule.ts" />
     <None Remove="src\app\classes\voyageAvecType.ts" />
+    <None Remove="src\app\services\avi.service.ts" />
+    <None Remove="src\app\services\aviConducteur.service.ts" />
     <None Remove="src\app\services\vehicule.service.ts" />
   </ItemGroup>
 
@@ -31,6 +33,8 @@
     <TypeScriptCompile Include="src\app\classes\typeVehiculeType.ts" />
     <TypeScriptCompile Include="src\app\classes\vehicule.ts" />
     <TypeScriptCompile Include="src\app\classes\voyageAvecType.ts" />
+    <TypeScriptCompile Include="src\app\services\avi.service.ts" />
+    <TypeScriptCompile Include="src\app\services\aviConducteur.service.ts" />
     <TypeScriptCompile Include="src\app\services\vehicule.service.ts" />
   </ItemGroup>
 
