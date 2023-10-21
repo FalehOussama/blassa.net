@@ -14,6 +14,13 @@ namespace BlassaApi.Dto
         public VoyageAvecType VoyageAvec { get; set; }
         public bool Instantane { get; set; }
         public bool VClimatise { get; set; }
+        public bool Cigarette { get; set; }
+        public bool Animaux { get; set; }
+        public bool Max2 { get; set; }
+
+        public bool Leger { get; set; }
+        public bool Moyen { get; set; }
+        public bool Lourd { get; set; }
         //User
         public int UserId { get; set; }
         public string? UImgUrl { get; set; }

@@ -11,6 +11,12 @@ export class RechTrajetAnnonceDto {
   voyageAvec: VoyageAvecType;
   instantane: boolean;
   vClimatise: boolean;
+  cigarette: boolean;
+  animaux: boolean;
+  max2: boolean;
+  leger: boolean;
+  moyen: boolean;
+  lourd: boolean;
   userId: bigint;
   uImgUrl: string;
   uId: string;

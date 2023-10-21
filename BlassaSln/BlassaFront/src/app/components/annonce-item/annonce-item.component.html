@@ -1,5 +1,26 @@
 <ion-card class="{{style}}">
   <ion-grid [fixed]="true">
+    <ion-row style="margin-top: -5px;">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-avatar slot="start" *ngIf="uVerifie" class="verifie">
+            <img alt="Silhouette of a person's head" src="{{uImgUrl}}" />
+          </ion-avatar>
+          <ion-avatar slot="start" *ngIf="uVerifie!=true">
+            <img alt="Silhouette of a person's head" src="{{uImgUrl}}" />
+          </ion-avatar>
+          <ion-label class="nom">{{uPrenom}}</ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-row>
+          <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+            <ion-img class="icon" *ngIf="uSuperDriver" src="../../../assets/images/medSuperUser.png"></ion-img>
+            <ion-img class="icon" *ngIf="uSuperDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
+          </div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col size="auto" style="margin-left: 10px;">
         <ion-row>
@@ -33,16 +54,16 @@
       </ion-col>
     </ion-row>
     <ion-row style="margin-top: -15px;">
-      <ion-item lines="none">
-        <ion-avatar slot="start" *ngIf="uVerifie" class="verifie">
-          <img alt="Silhouette of a person's head" src="{{uImgUrl}}" />
-        </ion-avatar>
-        <ion-avatar slot="start" *ngIf="uVerifie!=true">
-          <img alt="Silhouette of a person's head" src="{{uImgUrl}}" />
-        </ion-avatar>
-        <ion-label class="nom">{{uPrenom}}</ion-label>
-      </ion-item>
-      <ion-icon name="flash-outline" *ngIf="instantane==true" class="inst" size="large" color="warning"></ion-icon>
+      <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+        <ion-img class="icon" *ngIf="leger" src="../../../assets/images/bLeger.png"></ion-img>
+        <ion-img class="icon" *ngIf="moyen" src="../../../assets/images/bMoyen.png"></ion-img>
+        <ion-img class="icon" *ngIf="lourd" src="../../../assets/images/bLourd.png"></ion-img>
+        <ion-img class="icon" *ngIf="max2" src="../../../assets/images/max2.png"></ion-img>
+        <ion-img class="icon" *ngIf="animaux" src="../../../assets/images/animal.png"></ion-img>
+        <ion-img class="icon" *ngIf="cigarette" src="../../../assets/images/cigarette.png"></ion-img>
+        <ion-img class="icon" *ngIf="vClimatise" src="../../../assets/images/clim.png"></ion-img>
+        <ion-icon name="flash-outline" *ngIf="instantane" class="inst" size="large" color="warning"></ion-icon>
+      </div>
     </ion-row>
   </ion-grid>
 </ion-card>

@@ -42,7 +42,15 @@ export class AnnonceItemComponent  implements OnInit {
   @Input() nombrePlacesDispo: number[];
   @Input() uPrenom: string;
   @Input() instantane: boolean;
-  @Input() uVerifie: any;
+  @Input() vClimatise: boolean;
+  @Input() cigarette: boolean;
+  @Input() animaux: boolean;
+  @Input() max2: boolean;
+  @Input() leger: boolean;
+  @Input() moyen: boolean;
+  @Input() lourd: boolean;
+  @Input() uVerifie: boolean;
+  @Input() uSuperDriver: boolean;
   @Input() voyageAvec: number;
   @Input() dateHeureDepart:any;
 
