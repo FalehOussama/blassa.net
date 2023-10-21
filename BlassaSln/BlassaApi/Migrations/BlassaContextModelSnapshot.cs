@@ -48,7 +48,7 @@ namespace BlassaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Avis");
+                    b.ToTable("Avis", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.AviConducteur", b =>
@@ -77,7 +77,7 @@ namespace BlassaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AvisConducteur");
+                    b.ToTable("AvisConducteur", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.Commentaire", b =>
@@ -107,7 +107,7 @@ namespace BlassaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Commentaires");
+                    b.ToTable("Commentaires", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.Preferences", b =>
@@ -168,7 +168,7 @@ namespace BlassaApi.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Preferences");
+                    b.ToTable("Preferences", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.Reservation", b =>
@@ -197,7 +197,7 @@ namespace BlassaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.TrajetAnnonce", b =>
@@ -313,7 +313,7 @@ namespace BlassaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TrajetsAnnonces");
+                    b.ToTable("TrajetsAnnonces", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.User", b =>
@@ -383,7 +383,7 @@ namespace BlassaApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.Vehicule", b =>
@@ -428,7 +428,7 @@ namespace BlassaApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Vehicules");
+                    b.ToTable("Vehicules", (string)null);
                 });
 
             modelBuilder.Entity("BlassaApi.Models.Avi", b =>

@@ -29,7 +29,7 @@ namespace BlassaApi.Models
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Reservations)
-                .WithOne()
+                .WithOne(e => e.UserRes)
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);

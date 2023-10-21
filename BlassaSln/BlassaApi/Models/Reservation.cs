@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int UserId { get; set; } // Required foreign key property
+        public User? UserRes { get; set; } = null!;
         public int TrajetAnnonceId { get; set; } // Required foreign key property
         public DateTime DateReservation { get; set; }
         public ReservationStatusType Status { get; set; }

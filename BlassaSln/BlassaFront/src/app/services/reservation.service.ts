@@ -18,10 +18,15 @@ export class ReservationService {
   constructor( 
     private http: HttpClient
     ) { }
-  private baseUrl = url + "/reservation";
+  private baseUrl = url + "/Reservations";
 
-  
+  // new
+  public putReservation(reservation: any): Observable<any> {
+    return this.http.put<any>(this.baseUrl + "/" + reservation.id, reservation);
+  }
 
+
+  // old
   public save(id_Annonce : any , id_User : any) : Observable<any> {
     const user: User = {
       id_User: 0,
@@ -29,6 +34,7 @@ export class ReservationService {
     user.id_User = id_User;
     return this.http.post<any>(this.baseUrl+ '/reservationManuelle' , {id_Annonce , user});
   }
+
   public saveInst(id_Annonce : any , id_User : any) : Observable<any> {
     const user: User = {
       id_User: 0,

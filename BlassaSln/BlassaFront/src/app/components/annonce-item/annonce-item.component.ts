@@ -38,6 +38,7 @@ export class AnnonceItemComponent  implements OnInit {
   @Input() depart: string;
   @Input() destination: string;
   @Input() uImgUrl: string;
+  @Input() nombrePlaces: number[];
   @Input() nombrePlacesDispo: number[];
   @Input() uPrenom: string;
   @Input() instantane: boolean;

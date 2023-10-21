@@ -61,6 +61,7 @@ namespace BlassaApi.Controllers
                 return BadRequest();
 
             var trajetAnnonce = await _dbContext.TrajetsAnnonces.FindAsync(reservation.TrajetAnnonceId);
+
             if (trajetAnnonce == null)
                 return BadRequest("Trajet supprimée");
             if (trajetAnnonce.DateHeureDepart < DateTime.Now)
@@ -77,8 +78,11 @@ namespace BlassaApi.Controllers
 
             using (var dbContextTransaction = _dbContext.Database.BeginTransaction())
             {
-                trajetAnnonce.NombrePlacesDispo--;
-                _dbContext.Entry(trajetAnnonce).State = EntityState.Modified;
+                if (trajetAnnonce.Instantane) 
+                {
+                    trajetAnnonce.NombrePlacesDispo--;
+                    _dbContext.Entry(trajetAnnonce).State = EntityState.Modified;
+                }                    
 
                 _dbContext.Reservations.Add(reservation);
 
@@ -120,12 +124,18 @@ namespace BlassaApi.Controllers
             if (trajetAnnonce.DateHeureDepart < DateTime.Now)
                 return BadRequest("Trajet non disponible");
 
-            if(reservation.Status == reservationDb.Status)
+            if (reservation.Status == reservationDb.Status)
                 return BadRequest("Reservation status n'a pas changé");
-            if (reservation.Status == ReservationStatusType.COMFIRMEE)
+            if (reservation.Status == ReservationStatusType.COMFIRMEE) 
+            {
                 trajetAnnonce.NombrePlacesDispo--;
+                if (trajetAnnonce.NombrePlacesDispo < 0)
+                    return BadRequest("Plus de places disponible");
+            }                
             if (reservationDb.Status == ReservationStatusType.COMFIRMEE)
                 trajetAnnonce.NombrePlacesDispo++;
+
+            reservationDb.Status = reservation.Status;
 
             using (var dbContextTransaction = _dbContext.Database.BeginTransaction())
             {

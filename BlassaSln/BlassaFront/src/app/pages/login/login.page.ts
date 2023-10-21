@@ -112,7 +112,16 @@ export class LoginPage implements OnInit   {
       this.img = user.imageUrl;
       this.prenom = user.givenName;
       this.nom = user.familyName;
-      this.method="Google"
+      this.method = "Google";
+
+      //temp
+      this.uid = "uId2";
+      this.email = "user2@gmail.com";
+      this.img = "http://www.ilfracombetowncouncil.gov.uk/wp-content/uploads/2017/06/avatar-person-neutral-man-blank-face-buddy-300x267.png";
+      this.prenom = "PUser2";
+      this.nom = "User2";
+      this.method = "Google";
+
       this.getUser(this.uid, this.email);
      }
   }

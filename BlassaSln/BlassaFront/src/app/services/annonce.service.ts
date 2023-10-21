@@ -24,6 +24,11 @@ export class AnnonceService {
     return this.http.post<TrajetsAnnoncesRechercheRetourDto>(this.baseUrl + "/Recherche/?tri=" + tri + "&pageNb=" + pageNb, crietres);
   }
 
+  getTrajetAnnonceById(id: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/" + id);
+  }
+
+  //================================
 
   getAnnonces(): Observable<any[]>{
     return this.http.get<any[]>(`${this.baseUrl}` + "/allAnnonces");
@@ -33,8 +38,8 @@ export class AnnonceService {
     return this.http.get<any>(`${this.baseUrl}` + "/pag/annonces", { params });
   }
 
-  getAnnonceById(id:any) : Observable<any>{
-    return this.http.get<any>(this.baseUrl + "/" + id );
+  getAnnonceById(id: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/" + id);
   }
 
   rechercher(iduser:any , dep:any , des:any  , np:any , date:any) : Observable<any[]>{

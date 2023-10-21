@@ -201,7 +201,14 @@ namespace BlassaApi.Controllers
                 return NotFound();
             }
 
-            var trajetAnnonce = await _dbContext.TrajetsAnnonces.FindAsync(id);
+            var trajetAnnonce = await _dbContext.TrajetsAnnonces
+                .Where(u => u.Id == id)
+                .Include(u => u.User)
+                .ThenInclude(u => u.Preferences)
+                .Include(u => u.Reservations)
+                .ThenInclude(u => u.UserRes)
+                .FirstOrDefaultAsync();
+
             if (trajetAnnonce == null)
                 return NotFound();
 

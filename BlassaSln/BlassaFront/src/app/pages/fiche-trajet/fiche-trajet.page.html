@@ -1,147 +1,143 @@
 <app-menu></app-menu>
-<!-- pour passager -->
 
+<!-- pour passager -->
 <ion-content>
   <ion-row style="justify-content: center;">
-    <ion-avatar style="margin-top: 23px; z-index: 3; border: 4px solid white;" (click)="afficherMembre(annonce?.iduser);">
-      <img alt="Silhouette of a person's head" src={{annonce?.conducteur.imgUrl}} />
+    <ion-avatar style="margin-top: 23px; z-index: 3; border: 4px solid white;" (click)="afficherMembre(annonce?.userId);">
+      <img alt="Silhouette of a person's head" src={{annonce?.user.imgUrl}} />
     </ion-avatar>
   </ion-row>
   <ion-card style="margin-top: -30px; border-radius: 20px;" class={{style}}>
 
-    <ion-grid>
+    <ion-grid style="margin-top: 30px;">
+
+      <ion-row class="ion-justify-content-between">
+        <ion-col size="3">
+          <ion-row>
+            <ion-label class="nom">{{annonce?.user.prenom}}</ion-label>
+          </ion-row>
+          <ion-row class="rating">
+            <ion-img class="star" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img><ion-label class="text">5.0 | 13 ratings</ion-label>
+          </ion-row>
+        </ion-col>
+
+        <ion-col size="1" *ngIf="annonce?.user.preferences.tel">
+          <ion-img class="social" src="../../../assets/icon/phone.svg" alt="rating" (click)="call();"></ion-img>
+        </ion-col>
+        <ion-col size="1" *ngIf="annonce?.user.preferences.whatsApp">
+          <ion-img class="social" src="../../../assets/icon/whatsapp.svg" alt="rating" (click)="whatsapp();"></ion-img>
+        </ion-col>
+        <ion-col size="1" *ngIf="annonce?.user.preferences.messenger">
+          <ion-img class="social" src="../../../assets/icon/messenger.svg" alt="rating" (click)="openFacebook()"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <div class="sep"></div>
+
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-chip style="z-index: 10;">{{annonce?.prix}} DT</ion-chip>
       </ion-row>
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
           <ion-img class="seat" src="../../../assets/icon/Seat.png" slot="end"></ion-img>
-          <p class="text">{{annonce?.nombrePlaces}}</p>
+          <p class="text">{{annonce?.nombrePlacesDispo}} / {{annonce?.nombrePlaces}}</p>
         </ion-item>
       </ion-row>
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
           <ion-icon class="icons" name="calendar-outline" size="small" slot="end"></ion-icon>
-          <p class="text">{{annonce?.date_Heure_Depart[2]}} {{months[annonce?.date_Heure_Depart[1]-1]}}</p>
+          <p class="text">{{annonce?.dateHeureDepart | date:'dd'}} {{annonce?.dateHeureDepart | date:'MMM'}}</p>
         </ion-item>
       </ion-row>
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
-          <ion-icon  class="icons" name="time-outline" size="small" slot="end"></ion-icon>
-          <p class="text">{{annonce?.date_Heure_Depart[3]}}</p> <p class="text" *ngIf="annonce?.date_Heure_Depart[4]==0">:0</p><p class="text" *ngIf="annonce?.date_Heure_Depart[4]!=0">:</p> <p class="text">{{annonce?.date_Heure_Depart[4]}}</p>
+          <ion-icon class="icons" name="time-outline" size="small" slot="end"></ion-icon>
+          <p class="heure">{{annonce?.dateHeureDepart | date:'HH'}}</p>
+          <p class="heure">:</p>
+          <p class="heure">{{annonce?.dateHeureDepart | date:'mm'}}</p>
         </ion-item>
       </ion-row>
       <ion-row style="margin-top: -200px; z-index: -1; " class="ion-padding">
-          <ion-col size="auto" style="margin-top: 15px;">
-            <ion-img class="distanceIcon" src="../../../assets/icon/Distance.png" alt="Distance"></ion-img>
-          </ion-col>
-          <ion-col>
-            <ion-row>
-              <p class="trajet">Départ</p>
-            </ion-row>
-            <ion-row>
-              <p class="adresse">{{annonce?.trajet.depart}}</p>
-            </ion-row>
-            <ion-row>
-              <p class="trajet" style="margin-top: 25px;">Destination</p>
-            </ion-row>
-            <ion-row>
-              <p class="adresse"> {{annonce?.trajet.destination}}</p>
-            </ion-row>
-          </ion-col>
-          
+        <ion-col size="auto" style="margin-top: 15px;">
+          <ion-img class="distanceIcon" src="../../../assets/icon/Distance.png" alt="Distance"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <p class="trajet">Départ</p>
+          </ion-row>
+          <ion-row>
+            <p class="adresse">{{annonce?.depart}}</p>
+          </ion-row>
+          <ion-row>
+            <p class="trajet" style="margin-top: 25px;">Destination</p>
+          </ion-row>
+          <ion-row>
+            <p class="adresse"> {{annonce?.destination}}</p>
+          </ion-row>
+        </ion-col>
+
       </ion-row>
 
       <div class="sep"></div>
-      
+
       <ion-row>
-        <ion-item-divider>
         <ion-col>
 
           <ion-row>
             <ion-item style="width: 100%;">
               <ion-icon name="car-outline" slot="start"></ion-icon>
-              <ion-label class="text2">{{annonce?.vehicule.marque}} - {{annonce?.vehicule.model}}</ion-label>
+              <ion-label class="text2">{{annonce?.vMarque}} - {{annonce?.vModele}}</ion-label>
             </ion-item>
+
             <ion-item style="width: 100%;" lines="none">
               <ion-icon name="snow-outline" slot="start" size="small"></ion-icon>
-              <ion-label class="text">Climatisé </ion-label> 
-              <ion-icon *ngIf="annonce?.climatisation" slot="end" color="success" name="checkmark-circle"></ion-icon>
-              <ion-icon *ngIf="annonce?.climatisation==false" slot="end" name="close-circle"></ion-icon>
-
+              <ion-label class="text">Climatisé </ion-label>
+              <ion-icon *ngIf="annonce?.vClimatise" slot="end" color="success" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="annonce?.vClimatise==false" slot="end" name="close-circle"></ion-icon>
             </ion-item>
+
             <ion-item style="width: 100%;" lines="none">
               <ion-img slot="start" class="icon" src="../../../assets/icons/cig.svg"></ion-img>
               <ion-label class="text">Cigarette autorisée </ion-label>
               <ion-icon *ngIf="annonce?.cigarette" slot="end" color="success" name="checkmark-circle"></ion-icon>
               <ion-icon *ngIf="annonce?.cigarette==false" slot="end" name="close-circle"></ion-icon>
             </ion-item>
-          
-          <ion-item style="width: 100%;" lines="none">
-            <ion-icon name="paw-outline" slot="start" size="small"></ion-icon>
-            <ion-label class="text">Animaux de compagnie </ion-label> 
-            <ion-icon *ngIf="annonce?.animal==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
-            <ion-icon *ngIf="annonce?.animal==false" slot="end" name="close-circle"></ion-icon>
-          </ion-item>
 
-          <ion-item style="width: 100%;" lines="none">
-            <ion-icon name="people-outline" slot="start" size="small"></ion-icon>
-            <ion-label class="text">Max 2 </ion-label> 
-            <ion-icon *ngIf="annonce?.max2==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
-            <ion-icon *ngIf="annonce?.max2==false" slot="end" name="close-circle"></ion-icon>
-          </ion-item>
+            <ion-item style="width: 100%;" lines="none">
+              <ion-icon name="paw-outline" slot="start" size="small"></ion-icon>
+              <ion-label class="text">Animaux de compagnie </ion-label>
+              <ion-icon *ngIf="annonce?.animaux==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="annonce?.animaux==false" slot="end" name="close-circle"></ion-icon>
+            </ion-item>
 
+            <ion-item style="width: 100%;" lines="none">
+              <ion-icon name="people-outline" slot="start" size="small"></ion-icon>
+              <ion-label class="text">Max 2 </ion-label>
+              <ion-icon *ngIf="annonce?.max2==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="annonce?.max2==false" slot="end" name="close-circle"></ion-icon>
+            </ion-item>
 
-          <ion-item style="width: 100%;" lines="none">
-            <ion-icon name="briefcase-outline" slot="start" size="small"></ion-icon>
-            <ion-label class="text">Bagage :</ion-label> 
-            <ion-label class="text" *ngIf="annonce?.leger==true" slot="end">Leger </ion-label>
-            <ion-label class="text" *ngIf="annonce?.moyen==true" slot="end">&nbsp;| Moyen</ion-label>
-            <ion-label class="text" *ngIf="annonce?.lourd==true" slot="end">&nbsp;| lourd</ion-label>
-            
-            
-          </ion-item>
-        </ion-row>
+            <ion-item style="width: 100%;" lines="none">
+              <ion-icon name="briefcase-outline" slot="start" size="small"></ion-icon>
+              <ion-label class="text">Bagage :</ion-label>
+              <ion-label class="text" *ngIf="annonce?.leger==true" slot="end">Leger </ion-label>
+              <ion-label class="text" *ngIf="annonce?.moyen==true" slot="end">&nbsp;| Moyen</ion-label>
+              <ion-label class="text" *ngIf="annonce?.lourd==true" slot="end">&nbsp;| lourd</ion-label>
+            </ion-item>
+          </ion-row>
         </ion-col>
-      </ion-item-divider>
       </ion-row>
 
-
-
-      <ion-row class="ion-justify-content-between">
-        <ion-item-divider>
-          
-          <ion-col size="3">
-            
-            <ion-row>
-              <ion-label class="nom" >{{annonce?.conducteur.nom}}</ion-label>
-            </ion-row>
-            <ion-row class="rating">
-              <ion-img class="star" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img><ion-label class="text">5.0 | 13 ratings</ion-label>
-            </ion-row>
-          </ion-col>
-
-          <ion-col size="1" *ngIf="annonce?.conducteur.prefs.tel">
-            <ion-img class="social" src="../../../assets/icon/phone.svg" alt="rating" (click)="call();"></ion-img>
-          </ion-col>
-          <ion-col size="1" *ngIf="annonce?.conducteur.prefs.whatsapp">
-            <ion-img class="social" src="../../../assets/icon/whatsapp.svg" alt="rating" (click)="whatsapp();"></ion-img>
-          </ion-col>
-          <ion-col size="1" *ngIf="annonce?.conducteur.prefs.messenger">
-            <ion-img class="social" src="../../../assets/icon/messenger.svg" alt="rating" (click)="openFacebook()"></ion-img>
-          </ion-col>
-        </ion-item-divider>
-      </ion-row>
-
+      <div class="sep"></div>
 
       <ion-row class="ion-justify-content-center">
         <ion-label class="title">Passagers</ion-label>
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
-        <div *ngIf="annonce?.inst==true" class="inst">
+        <div *ngIf="annonce?.instantane==true" class="inst">
           <ion-item id="resInst" lines="none">
-            <ion-icon name="flash-outline"  size="large" color="warning" ></ion-icon>
+            <ion-icon name="flash-outline" size="large" color="warning"></ion-icon>
           </ion-item>
           <ion-popover trigger="resInst" side="left" alignment="start">
             <ng-template>
@@ -149,7 +145,7 @@
             </ng-template>
           </ion-popover>
         </div>
-        <div *ngIf="annonce?.inst==false" class="inst">
+        <div *ngIf="annonce?.instantane==false" class="inst">
           <ion-item id="resMan" lines="none">
             <ion-icon name="hand-left-outline" size="large" color="warning"></ion-icon>
           </ion-item>
@@ -161,25 +157,24 @@
         </div>
       </ion-row>
 
-
       <ion-row>
         <ion-item-divider>
           <ion-row style="width: 100%;">
             <ion-list style="width: 100%;" mode="ios" *ngIf="annonce?.reservations.length > 0">
               <div *ngFor="let res of annonce?.reservations">
-                <ion-item style="width: 100%;" mode="ios" button detail="true" *ngIf="res.status=='COMFIRMEE'" (click)="afficherMembre(res.id_User);">
+                <ion-item style="width: 100%;" mode="ios" button detail="true" *ngIf="res.status==1" (click)="afficherMembre(res.userId);">
                   <ion-avatar>
-                    <img alt="Silhouette of a person's head" src={{res.user.imgUrl}} />
+                    <img alt="Silhouette of a person's head" src={{res.userRes?.imgUrl}} />
                   </ion-avatar>
                   <ion-label (click)="afficherMembre(res?.user.id_User);">
-                    {{res.user.nom}}
+                    {{res.userRes?.prenom}}
                   </ion-label>
                 </ion-item>
               </div>
             </ion-list>
-           <div *ngIf="annonce?.reservations.length ==0">
+            <div *ngIf="annonce?.reservations.length ==0">
               <p>Aucune reservation</p>
-           </div> 
+            </div>
           </ion-row>
         </ion-item-divider>
       </ion-row>
@@ -187,32 +182,30 @@
   </ion-card>
 
   <app-button [disabled]="reserverDisabled" label='Reserver' (click)="reserver();" *ngIf="token.method=='Invite'"> </app-button>
-  <app-button [disabled]="reserverDisabled" label='Reserver' (click)="openReserver(true , $event)" *ngIf="user?.id_User != annonce?.iduser"> </app-button>
-  <app-button *ngIf="user?.id_User == annonce?.iduser" label='Voir reservations' (click)="openModal(true)"> </app-button>
+  <app-button [disabled]="reserverDisabled" label='Reserver' (click)="openReserver(true , $event)" *ngIf="user?.id != annonce?.userId"> </app-button>
+  <app-button *ngIf="user?.id == annonce?.userId" label='Voir reservations' (click)="openModal(true)"> </app-button>
 
   <ion-alert
-[isOpen]="reserverOpen"
-[header]="messageReserver"
-[buttons]="alertButtons1"
-(didDismiss)="openReserver(false,$event)"
-mode="ios"
-></ion-alert>
+    [isOpen]="reserverOpen"
+    [header]="messageReserver"
+    [buttons]="alertButtons1"
+    (didDismiss)="openReserver(false,$event)"
+    mode="ios">
+  </ion-alert>
 
   <ion-toast
     [isOpen]="reservationDemandeToastOpen"
     message="Manuelle : Résérvation demandée avec succes!"
     [duration]="5000"
-    (didDismiss)="setToastOpen(false)"
-  ></ion-toast>
+    (didDismiss)="setToastOpen(false)">
+  </ion-toast>
+
   <ion-toast
   [isOpen]="reservationInstToastOpen"
   message="Instantanée : Résérvation demandée avec succes!"
   [duration]="5000"
-  (didDismiss)="setInstToastOpen(false)"
-></ion-toast>
-
-
-
+  (didDismiss)="setInstToastOpen(false)">
+  </ion-toast>
 
 </ion-content>
 
@@ -222,15 +215,10 @@ mode="ios"
   subHeader="Vous devez se connecter"
   [buttons]="alertButtons"
   [isOpen]="isInviteAlert"
-  (didDismiss)="setOpen2(false)"
-></ion-alert>
-
-
-
-
+  (didDismiss)="setOpen2(false)">
+</ion-alert>
 
 <!-- pour conducteur -->
-
 <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)" mode="ios">
   <ng-template>
     <ion-header>
@@ -255,122 +243,116 @@ mode="ios"
             </ion-row>
 
             <ion-list style="width: 100%;" mode="md" lines="none">
-              <div *ngFor="let res of annonce.reservations">
-              <ion-item style="width: 100%;" mode="ios"  *ngIf="res.status =='EN_ATTENTE';">
+              <div *ngFor="let res of annonce?.reservations">
+                <ion-item style="width: 100%;" mode="ios" *ngIf="res.status ==0;">
+                  <ion-avatar>
+                    <img alt="Silhouette of a person's head" src={{res.userRes.imgUrl}} />
+                  </ion-avatar>
+                  <ion-label>
+                    {{res.userRes.prenom}}
+                  </ion-label>
+                  <ion-button slot="end" (click)="setRes(res); openAccepter(true, $event)">
+                    <ion-icon name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
+                  </ion-button>
+                  <ion-button slot="end" (click)="setRes(res); openRefuser(true, $event)">
+                    <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+                  </ion-button>
+                </ion-item>
+              </div>
 
-                <ion-avatar>
-                  <img alt="Silhouette of a person's head" src={{res.user.imgUrl}} />
-                </ion-avatar>
-                <ion-label>
-                  {{res.user.nom}}
-                </ion-label>
-                <ion-button slot="end" (click)="setRes(res); openAccepter(true , $event)">
-                  <ion-icon name="checkmark-circle-outline" slot="end" color="success"></ion-icon>
-                </ion-button>
-                <ion-button slot="end" (click)="setRes(res); openRefuser(true , $event)">
-                  <ion-icon name="close-circle-outline" slot="end" ></ion-icon>
-                </ion-button>    
-
-
-              </ion-item>
-
-            </div>
-
-            <div *ngIf="enAttente==0">
-              <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
-                Aucune reservation en attente
-              </ion-row>
-            </div>
-
+              <div *ngIf="enAttente==0">
+                <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
+                  Aucune reservation en attente
+                </ion-row>
+              </div>
             </ion-list>
-    
 
-          
             <div class="sep"></div>
 
-          <ion-row>
-            <ion-label class="text2">Acceptés</ion-label>
-          </ion-row>
-    
-          <ion-list style="width: 100%;" mode="ios" lines="none">
-            <div *ngFor="let res of annonce.reservations">
-            <ion-item style="width: 100%;" mode="ios" button detail="true" *ngIf="res.status =='COMFIRMEE';">
-              <ion-avatar>
-                <img alt="Silhouette of a person's head" src={{res.user.imgUrl}} />
-              </ion-avatar>
-              <ion-label>
-                {{res.user.nom}}
-              </ion-label>
-            </ion-item>
-          </div>
-          <div *ngIf="acceptes==0">
-            <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
-              Aucune reservation acceptée
+            <ion-row>
+              <ion-label class="text2">Acceptés</ion-label>
             </ion-row>
-          </div>
-          </ion-list>
-    
-    
-          <div class="sep"></div>
 
-          <ion-row>
-            <ion-label class="text2">Réfusés</ion-label>
-          </ion-row>
-    
-          <ion-list style="width: 100%;" mode="ios" lines="none">
-            <div *ngFor="let res of annonce.reservations">
-            <ion-item style="width: 100%;" mode="ios" button detail="true" *ngIf="res.status =='REFUSEE';">
-              <ion-avatar>
-                <img alt="Silhouette of a person's head" src={{res.user.imgUrl}} />
-              </ion-avatar>
-              <ion-label>
-                {{res.user.nom}}
-              </ion-label>
-            </ion-item>
-          </div>
-          <div *ngIf="refuses==0">
-            <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
-              Aucune reservation refusée
+            <ion-list style="width: 100%;" mode="ios" lines="none">
+              <div *ngFor="let res of annonce?.reservations">
+                <ion-item style="width: 100%;" mode="ios" *ngIf="res.status ==1;">
+                  <ion-avatar>
+                    <img alt="Silhouette of a person's head" src={{res.userRes.imgUrl}} />
+                  </ion-avatar>
+                  <ion-label>
+                    {{res.userRes.prenom}}
+                  </ion-label>
+                  <ion-button slot="end" (click)="setRes(res); openEnAttente(true, $event)">
+                    <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+                  </ion-button>
+                </ion-item>
+              </div>
+              <div *ngIf="acceptes==0">
+                <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
+                  Aucune reservation acceptée
+                </ion-row>
+              </div>
+            </ion-list>
+
+            <div class="sep"></div>
+
+            <ion-row>
+              <ion-label class="text2">Réfusés</ion-label>
             </ion-row>
+
+            <ion-list style="width: 100%;" mode="ios" lines="none">
+              <div *ngFor="let res of annonce?.reservations">
+                <ion-item style="width: 100%;" mode="ios" *ngIf="res.status ==2;">
+                  <ion-avatar>
+                    <img alt="Silhouette of a person's head" src={{res.userRes.imgUrl}} />
+                  </ion-avatar>
+                  <ion-label>
+                    {{res.userRes.prenom}}
+                  </ion-label>
+                  <ion-button slot="end" (click)="setRes(res); openEnAttente(true, $event)">
+                    <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+                  </ion-button>
+                </ion-item>
+              </div>
+              <div *ngIf="refuses==0">
+                <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
+                  Aucune reservation refusée
+                </ion-row>
+              </div>
+            </ion-list>
+
           </div>
-          </ion-list>
-    
-        </div>
         </ion-grid>
 
+        <div *ngIf="annonce?.reservations.length ==0">
+          <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
+            Aucune reservation
+          </ion-row>
+        </div>
 
+      </ion-card>
 
-     <div *ngIf="annonce.reservations.length ==0">
-      <ion-row class="ion-justify-content-center" style="margin-top: 5px;">
-        Aucune reservation 
-      </ion-row>
-     </div> 
+      <ion-alert [isOpen]="accepterOpen"
+                 [header]="messageConfirm"
+                 [buttons]="alertButtons1"
+                 (didDismiss)="openAccepter(false, $event)">
+      </ion-alert>
 
-        
-    </ion-card>
+      <ion-alert [isOpen]="refuserOpen"
+                 [header]="messageConfirmRef"
+                 [buttons]="alertButtons2"
+                 (didDismiss)="openRefuser(false, $event)">
+      </ion-alert>
 
-  
-    <ion-alert
-    [isOpen]="accepterOpen"
-    [header]="messageConfirm"
-    [buttons]="alertButtons1"
-    (didDismiss)="openAccepter(false,$event)"
-  ></ion-alert>
-
-  <ion-alert
-  [isOpen]="refuserOpen"
-  [header]="messageConfirmRef"
-  [buttons]="alertButtons2"
-  (didDismiss)="openRefuser(false,$event)"
-></ion-alert>
+      <ion-alert [isOpen]="enAttenteOpen"
+                 [header]="messageConfirmAtt"
+                 [buttons]="alertButtons3"
+                 (didDismiss)="openEnAttente(false, $event)">
+      </ion-alert>
 
     </ion-content>
 
   </ng-template>
-
-
-
-
 
 </ion-modal>
 
