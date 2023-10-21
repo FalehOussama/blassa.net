@@ -10,6 +10,7 @@ namespace BlassaApi.Dto
         public int NombrePlaces { get; set; }
         public HeureDepartCritereTypeDto HeureDepart { get; set; }
         public bool SuperDriver { get; set; }
+        public bool SuperUser { get; set; }
         public bool ProfilVerifie { get; set; }
         public bool Max2Arriere { get; set; }
         public bool ReservationInst { get; set; }

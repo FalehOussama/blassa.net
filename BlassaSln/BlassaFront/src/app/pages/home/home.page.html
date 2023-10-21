@@ -40,6 +40,7 @@
                       [lourd]="annonce?.lourd"
                       [uVerifie]="annonce?.uVerifie"
                       [uSuperDriver]="annonce?.uSuperDriver"
+                      [uSuperUser]="annonce?.uSuperUser"
                       [voyageAvec]="annonce?.voyageAvec"></app-annonce-item>
 
     <ion-row class="ion-justify-content-center">
@@ -138,6 +139,11 @@
             <div class="ion-padding" slot="content">
               <!-- Services par content -->
               <ion-list lines="none">
+                <ion-item>
+                  <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.superUser}}" formControlName="superUser">Super Utilisateur</ion-checkbox>
+                  <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreSuperUser}}</p>
+                </ion-item>
+
                 <ion-item>
                   <ion-checkbox justify="space-between" value="{{trajetAnnonceCriteresDto.superDriver}}" formControlName="superDriver">Super Driver</ion-checkbox>
                   <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.nbreSuperDriver}}</p>

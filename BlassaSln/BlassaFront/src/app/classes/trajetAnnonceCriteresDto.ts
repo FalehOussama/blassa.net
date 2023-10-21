@@ -9,6 +9,7 @@ export class TrajetAnnonceCriteresDto {
   heureDepart: HeureDepartCritereTypeDto;
 
   superDriver: boolean;
+  superUser: boolean;
   profilVerifie: boolean;
   max2Arriere: boolean;
   reservationInst: boolean;

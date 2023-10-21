@@ -59,6 +59,9 @@ namespace BlassaApi.Controllers
             if (criteres.SuperDriver)
                 query = query.Where(t => t.User.SuperDriver);
 
+            if (criteres.SuperUser)
+                query = query.Where(t => t.User.SuperUser);
+
             if (criteres.ProfilVerifie)
                 query = query.Where(t => t.User.Verifie);
 
@@ -110,6 +113,7 @@ namespace BlassaApi.Controllers
                 retour.NbreEntre12H18H = await query.Where(t => t.DateHeureDepart.Hour >= 12 && t.DateHeureDepart.Hour <= 17).CountAsync();
                 retour.NbreApres18H = await query.Where(t => t.DateHeureDepart.Hour >= 18).CountAsync();
                 retour.NbreSuperDriver = await query.Where(t => t.User.SuperDriver).CountAsync();
+                retour.NbreSuperUser = await query.Where(t => t.User.SuperUser).CountAsync();
                 retour.NbreProfilVerifie = await query.Where(t => t.User.Verifie).CountAsync();
                 retour.NbreMax2Arriere = await query.Where(t => t.Max2).CountAsync();
                 retour.NbreReservationInst = await query.Where(t => t.Instantane).CountAsync();
@@ -167,6 +171,7 @@ namespace BlassaApi.Controllers
                     UImgUrl = t.User.ImgUrl,
                     USexe = t.User.Sexe,
                     USuperDriver = t.User.SuperDriver,
+                    USuperUser = t.User.SuperUser,
                     UVerifie = t.User.Verifie
                 })
                 .Skip(skip)

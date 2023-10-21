@@ -21,6 +21,7 @@
         public bool ConditionsGenerales { get; set; }
         public bool Verifie { get; set; }
         public bool SuperDriver { get; set; }
+        public bool SuperUser { get; set; }
         public bool Nouveau { get; set; } = true;
 
         public Preferences? Preferences { get; set; } // Reference navigation to dependent

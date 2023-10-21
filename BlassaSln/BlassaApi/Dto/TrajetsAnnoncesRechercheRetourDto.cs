@@ -13,6 +13,7 @@
         public int NbreEntre12H18H { get; set; }
         public int NbreApres18H { get; set; }
         public int NbreSuperDriver { get; set; }
+        public int NbreSuperUser { get; set; }
         public int NbreProfilVerifie { get; set; }
         public int NbreMax2Arriere { get; set; }
         public int NbreReservationInst { get; set; }

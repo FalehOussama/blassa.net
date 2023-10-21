@@ -38,6 +38,7 @@ export class HomePage implements OnInit  {
       this.tri = +this.filtreForm.value.tri;
       this.trajetAnnonceCriteresDto.heureDepart = +this.filtreForm.value.heureDepart;
       this.trajetAnnonceCriteresDto.superDriver = this.filtreForm.value.superDriver;
+      this.trajetAnnonceCriteresDto.superUser = this.filtreForm.value.superUser;
       this.trajetAnnonceCriteresDto.profilVerifie = this.filtreForm.value.profilVerifie;
       this.trajetAnnonceCriteresDto.max2Arriere = this.filtreForm.value.max2Arriere;
       this.trajetAnnonceCriteresDto.reservationInst = this.filtreForm.value.reservationInst;
@@ -56,6 +57,7 @@ export class HomePage implements OnInit  {
     else {
       this.trajetAnnonceCriteresDto.heureDepart = HeureDepartCritereTypeDto.TOUS;
       this.trajetAnnonceCriteresDto.superDriver = false;
+      this.trajetAnnonceCriteresDto.superUser = false;
       this.trajetAnnonceCriteresDto.profilVerifie = false;
       this.trajetAnnonceCriteresDto.max2Arriere = false;
       this.trajetAnnonceCriteresDto.reservationInst = false;
@@ -72,6 +74,7 @@ export class HomePage implements OnInit  {
       tri: this.tri.toString(),
       heureDepart: this.trajetAnnonceCriteresDto.heureDepart.toString(),
       superDriver: this.trajetAnnonceCriteresDto.superDriver,
+      superUser: this.trajetAnnonceCriteresDto.superUser,
       profilVerifie: this.trajetAnnonceCriteresDto.profilVerifie,
       max2Arriere: this.trajetAnnonceCriteresDto.max2Arriere,
       reservationInst: this.trajetAnnonceCriteresDto.reservationInst,
@@ -102,6 +105,7 @@ export class HomePage implements OnInit  {
       tri: ["0"],
       heureDepart: ["0"],
       superDriver: [false],
+      superUser: [false],
       profilVerifie: [false],
       max2Arriere: [false],
       reservationInst: [false],

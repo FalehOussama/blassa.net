@@ -51,6 +51,7 @@ export class AnnonceItemComponent  implements OnInit {
   @Input() lourd: boolean;
   @Input() uVerifie: boolean;
   @Input() uSuperDriver: boolean;
+  @Input() uSuperUser: boolean;
   @Input() voyageAvec: number;
   @Input() dateHeureDepart:any;
 

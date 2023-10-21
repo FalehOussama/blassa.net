@@ -29,6 +29,7 @@ namespace BlassaApi.Dto
         public string? UPrenom { get; set; }
         public string? USexe { get; set; }
         public bool USuperDriver { get; set; }
+        public bool USuperUser { get; set; }
         public bool UVerifie { get; set; }
     }
 }

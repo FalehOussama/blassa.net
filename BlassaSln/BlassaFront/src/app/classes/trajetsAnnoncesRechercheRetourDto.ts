@@ -8,6 +8,7 @@ export class TrajetsAnnoncesRechercheRetourDto {
   nbreEntre12H18H: bigint;
   nbreApres18H: bigint;
   nbreSuperDriver: bigint;
+  nbreSuperUser: bigint;
   nbreProfilVerifie: bigint;
   nbreMax2Arriere: bigint;
   nbreReservationInst: bigint;
