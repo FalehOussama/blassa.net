@@ -64,13 +64,29 @@ namespace BlassaApi.Controllers
 
             if (trajetAnnonce == null)
                 return BadRequest("Trajet supprimée");
+            
             if (trajetAnnonce.DateHeureDepart < DateTime.Now)
                 return BadRequest("Trajet non disponible");
+            
             if (trajetAnnonce.NombrePlacesDispo <= 0)
                 return BadRequest("Plus de places disponible");
 
             if (ReservationUserTrajetExists(reservation.UserId, reservation.TrajetAnnonceId))
-                return BadRequest("Reservation existe déjà");
+                return BadRequest("Réservation existe déjà");
+
+            if (trajetAnnonce.VoyageAvec != VoyageAvecType.TOUS)
+            { 
+                var userRes = await _dbContext.Users
+                    .Where(u => u.Id == reservation.UserId)
+                    .Select(u => new { Sexe = u.Sexe })
+                    .FirstAsync();
+
+                if (trajetAnnonce.VoyageAvec == VoyageAvecType.FILLES && userRes.Sexe != "F")
+                    return BadRequest("Les réservations sont autorisées pour les filles uniquement.");
+
+                if (trajetAnnonce.VoyageAvec == VoyageAvecType.GARCONS && userRes.Sexe != "H")
+                    return BadRequest("Les réservations sont autorisées pour les garçons uniquement.");
+            }
 
             var nbreRes = await _dbContext.Reservations
                 .Where(r => r.TrajetAnnonceId == reservation.TrajetAnnonceId)

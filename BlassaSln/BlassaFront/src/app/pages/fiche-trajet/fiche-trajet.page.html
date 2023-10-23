@@ -250,18 +250,31 @@
                 </ion-item>
               </div>
             </ion-list>
-            <div *ngIf="annonce?.reservations.length ==0">
-              <p>Aucune reservation</p>
-            </div>
           </ion-row>
         </ion-item-divider>
       </ion-row>
+
+      <ion-row>
+        <ion-chip *ngIf="acceptes ==0" style="width: 100%" color="medium">Aucune réservation confirmée pour le moment</ion-chip>
+      </ion-row>
+
+      <ion-row>
+        <ion-chip *ngIf="user?.id == annonce?.userId && (acceptes > 0 || enAttente > 0 || refuses)"
+                  style="width: 100%" color="tertiary">
+          En attente: {{enAttente}} - Refusées: {{refuses}}
+        </ion-chip>
+      </ion-row>
+
+      <ion-row>
+        <ion-chip *ngIf="haveResAttente" style="width: 100%" color="warning">Vous avez une réservation en attente</ion-chip>
+        <ion-chip *ngIf="haveResConfirmee" style="width: 100%" color="success">Vous avez une réservation acceptée</ion-chip>
+        <ion-chip *ngIf="haveResRefusee" style="width: 100%" color="danger">Vous avez une réservation refusée</ion-chip>
+      </ion-row>
     </ion-grid>
   </ion-card>
-
-  <app-button [disabled]="reserverDisabled" label='Reserver' (click)="reserver();" *ngIf="token.method=='Invite'"> </app-button>
-  <app-button [disabled]="reserverDisabled" label='Reserver' (click)="promptReserver()" *ngIf="user?.id != annonce?.userId"> </app-button>
-  <app-button *ngIf="user?.id == annonce?.userId" label='Voir reservations' (click)="openModal(true)"> </app-button>
+  
+  <app-button label='Réserver' (click)="promptReserver()" *ngIf="user?.id != annonce?.userId || token?.method=='Invite'"> </app-button>
+  <app-button *ngIf="user?.id == annonce?.userId" label='Voir réservations ({{annonce?.reservations?.length}})' (click)="openModal(true)"> </app-button>
 
 </ion-content>
 

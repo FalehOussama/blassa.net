@@ -142,17 +142,17 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
   idTrajetAnnonce: any;
   reservations : any;
   canBook : boolean;
-  reserverDisabled : boolean = false;
 
   enAttente=0;
   acceptes=0;
   refuses=0;
-  style="tous";
+  style = "tous";
 
-  async ionViewWillEnter() {
+  haveResAttente = false;
+  haveResConfirmee = false;
+  haveResRefusee = false;
 
-       
-  }
+  async ionViewWillEnter() { }
 
   async ngOnInit() {
 
@@ -169,11 +169,18 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
                 this.annonce = await res
 
                 for (let reservation of this.annonce.reservations) {
-                  if (reservation.userRes.id == this.user.id) { this.reserverDisabled = true }
-
-                  if (reservation.status == 0) this.enAttente++;
-                  else if (reservation.status == 1) this.acceptes++;
-                  else if (reservation.status == 2) this.refuses++;
+                  if (reservation.status == 0) {
+                    this.enAttente++;
+                    if (this.user.id == reservation.userId) this.haveResAttente = true;
+                  }
+                  else if (reservation.status == 1) {
+                    this.acceptes++;
+                    if (this.user.id == reservation.userId) this.haveResConfirmee = true;
+                  }
+                  else if (reservation.status == 2) {
+                    this.refuses++;
+                    if (this.user.id == reservation.userId) this.haveResRefusee = true;
+                  }                    
                 }
                 console.log(this.acceptes);
 
@@ -183,12 +190,6 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
                 console.log(this.annonce)
                 this.reservations = this.annonce.reservations;
                 this.canBook = this.annonce.userId != this.user.id;
-
-                if (this.annonce.instantane) {
-                  if (this.annonce.reservations.length >= this.annonce.nombrePlacesDispo) {
-                    this.reserverDisabled = true;
-                  }
-                }
 
                 await this.aviService.getStat(this.annonce.userId).subscribe(
                   async resAvi => {
@@ -208,9 +209,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
         );
 
       }
-    ); 
-
-    
+    );    
   }
 
   //Alert Logic
@@ -228,7 +227,6 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
         this.reservationService.postReservation({ userId: this.user?.id, trajetAnnonceId: this.annonce?.id }).subscribe(
           async (res) => {
             location.reload();
-            this.reserverDisabled = await true;
             this.presentToast('Reservation enregistrée avec succès !', 'bottom');
           },
           async (err) => {
