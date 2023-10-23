@@ -21,6 +21,10 @@ export class ReservationService {
   private baseUrl = url + "/Reservations";
 
   // new
+  public postReservation(reservation: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl, reservation);
+  }
+
   public putReservation(reservation: any): Observable<any> {
     return this.http.put<any>(this.baseUrl + "/" + reservation.id, reservation);
   }

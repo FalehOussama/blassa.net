@@ -1,6 +1,6 @@
 import {  Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonModal, Platform, AlertController } from '@ionic/angular';
+import { IonModal, Platform, AlertController, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
@@ -13,7 +13,6 @@ import { AppAvailability, InAppBrowser } from 'ionic-native';
 import { StorageService } from 'src/app/services/storage.service';
 import { VoyageAvecType } from '../../classes/voyageAvecType';
 import { ReservationStatusType } from '../../classes/reservationStatusType';
-import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -26,74 +25,19 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
 
   @ViewChild(IonModal) modal: IonModal;
 
-  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
-  name: string;
-
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
   confirm() {
-    this.modal.dismiss(this.name, 'confirm');
+    this.modal.dismiss(null, 'confirm');
   }
 
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
-      this.message = `Hello, ${ev.detail.data}!`;
     }
   }
-
-  public alertButtons1 = [
-    {
-      text: 'Cancel',
-      role: 'cancel',
-      handler: () => {
-        console.log('Alert canceled');
-      },
-    },
-    {
-      text: 'OK',
-      role: 'confirm',
-      handler: () => {
-        console.log('Alert confirmed');
-      },
-    },
-  ];
-
-  public alertButtons2 = [
-    {
-      text: 'Cancel',
-      role: 'cancel',
-      handler: () => {
-        console.log('Alert canceled');
-      },
-    },
-    {
-      text: 'OK',
-      role: 'confirm',
-      handler: () => {
-        console.log('Alert confirmed');
-      },
-    },
-  ];
-
-  public alertButtons3 = [
-    {
-      text: 'Cancel',
-      role: 'cancel',
-      handler: () => {
-        console.log('Alert canceled');
-      },
-    },
-    {
-      text: 'OK',
-      role: 'confirm',
-      handler: () => {
-        console.log('Alert confirmed');
-      },
-    },
-  ];
   
   constructor(
     private route: ActivatedRoute , 
@@ -107,9 +51,53 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
     private callNumber: CallNumber,
     public platform: Platform,
     private storage: StorageService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
     ) { 
       
+  }
+
+  async presentToast(msg: string, position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 1500,
+      position: position,
+    });
+
+    await toast.present();
+  }
+
+  async presentAlert(header: string, msg: string) {
+    const alert = await this.alertController.create({
+      header: 'Blassa message',
+      subHeader: header,
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentConfirm(header: string, msg: string, onConfirm: () => void) {
+    const alert = await this.alertController.create({
+      header: 'Blassa message',
+      subHeader: header,
+      message: msg,
+      buttons: [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Confirmer',
+          handler: () => {
+            const boundOnconfirm = onConfirm.bind(this);
+            boundOnconfirm();
+          },
+        }
+      ],
+    });
+
+    await alert.present();
   }
 
   @HostListener('unloaded')
@@ -227,55 +215,32 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
 
   //Alert Logic
 
-  //Reservation Logic 
-  reserver(){
-      if(this.token.method == "Invite"){
-        this.setOpen2(true);
-        return 0;
-      }
-      else{
-        if(this.reserverDisabled == false){
-          if(this.annonce?.reservations.length < 10){
-            if(this.annonce?.inst){
-              return this.reservationService.saveInst(this.annonce?.id_Annonce , this.user?.id_User).subscribe(
-                async ()=>{
-                  location.reload();
-                  this.reserverDisabled = await true;
-                  this.setInstToastOpen(true);
-                }
-              );
-            }
-            else{
-              return this.reservationService.save(this.annonce?.id_Annonce , this.user?.id_User).subscribe(
-               async  ()=>{
-                  location.reload();
-                  this.reserverDisabled = await true;
-                  this.setToastOpen(true);
-                }
-              );
-            }
-
-          }else{
-            console.log("max reservations")
-            return 0;
-          }
-        }else{
-          console.log("reservation refusée")
-          return 0;
-        }
-      }
+  //Reservation Logic
+  async promptReserver() {
+    await this.presentConfirm('Confirmer réservation', 'Veuillez confirmer votre réservation.', this.reserver);
   }
 
-  refuser(ev , idRes: any){
-      console.log("refused")
-      this.refuses++;
-      if(ev.detail.role == "confirm"){
-        console.log("refused")
-        this.reservationService.refuserReservation(idRes).subscribe(
-          ()=>{
+  async reserver(){
+      if(this.token.method == "Invite"){
+        await this.presentConfirm('Mode invité', 'Veuillez vous connecter', this.inviteToConnect);
+      }
+      else{
+        this.reservationService.postReservation({ userId: this.user?.id, trajetAnnonceId: this.annonce?.id }).subscribe(
+          async (res) => {
+            location.reload();
+            this.reserverDisabled = await true;
+            this.presentToast('Reservation enregistrée avec succès !', 'bottom');
+          },
+          async (err) => {
+            console.log(err);
+            await this.presentAlert('Erreur ajout réservation', err.error);
           }
         );
       }
+  }
+
+  inviteToConnect() {
+    this.router.navigate(['/']);
   }
 
   call(){
@@ -303,171 +268,88 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
       )    
   }
 
-  isInviteAlert = false;
-  public alertButtons = [
-      {
-        text: 'Pas maintenant',
-        role: 'cancel',
-        handler: () => {
-          console.log('Alert canceled');
-        },
-      },
-      {
-        text: 'Se connecter',
-        role: 'confirm',
-        handler: () => {
-          this.router.navigate(['/']);
-        },
-      },
-    ];
-
-  setOpen2(isInvite: boolean) {
-    this.isInviteAlert = isInvite;
-  }
-
   isModalOpen = false;
 
   openModal(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
-  setResult(ev) {
-    console.log(`Dismissed with role: ${ev.detail.role}`);
+  resParam: any;
+  async promptAccepterRes(res) {
+    this.resParam = res;
+    await this.presentConfirm("Confirmer la réservation de " + res.userRes.prenom + " ?",
+      'Veuillez confirmer la réservation.',
+      this.accepterRes);
   }
 
-  accepterOpen = false;
-  messageConfirm = "";
-  res1: any;
-
-  setRes(res){
-    this.res1=res
+  async accepterRes() {
+    this.resParam.status = ReservationStatusType.COMFIRMEE;
+    console.log(this.resParam);
+    this.reservationService.putReservation(this.resParam).subscribe(
+      async (resp) => {
+        this.acceptes++;
+        this.enAttente--;
+        this.annonce.nombrePlacesDispo--;
+        console.log(resp)
+      },
+      async (err) => {
+        console.log(err);
+        await this.presentAlert('Acceptation réservation', err.error);
+      }
+    );
   }
 
-  openAccepter(isOpen: boolean, ev) {
-    this.messageConfirm="Confirmer la réservation de " + this.res1.userRes.prenom + " ?"
-    this.accepterOpen = isOpen;
-    console.log(`Dismissed with role: ${ev.detail.role}`);
+  async promptRefuserRes(res) {
+    this.resParam = res;
+    await this.presentConfirm("Refuser la réservation de " + res.userRes.prenom + " ?",
+      'Veuillez confirmer le refu de la réservation.',
+      this.refuserRes);
+  }
 
-    if (ev.detail.role == "confirm") {
-      this.res1.status = ReservationStatusType.COMFIRMEE;
-      console.log(this.res1)
-      this.reservationService.putReservation(this.res1).subscribe(
-        async(res)=>{          
-          this.acceptes++;
-          this.enAttente--;
-          this.annonce.nombrePlacesDispo--;
-          console.log(res)
-        },
-        async (err) => {
-          console.log(err);
-          this.res1.status = ReservationStatusType.EN_ATTENTE;
-          const alert = await this.alertController.create({
-            header: 'Blassa message',
-            subHeader: 'Acceptation réservation',
-            message: err.error,
-            buttons: ['OK'],
-          });
+  async refuserRes() {
+    this.resParam.status = ReservationStatusType.REFUSEE;
+    console.log(this.resParam);
+    this.reservationService.putReservation(this.resParam).subscribe(
+      async (resp) => {
+        this.refuses++;
+        this.enAttente--;
+        console.log(resp)
+      },
+      async (err) => {
+        console.log(err);
+        await this.presentAlert('Refus réservation', err.error);
+      }
+    );
+  }
 
-          await alert.present();
+  async promptEnAttenteRes(res: any) {
+    this.resParam = res;
+    await this.presentConfirm("Mettre la réservation de " + res.userRes.prenom + " en attente ?",
+      'Veuillez confirmer la mise en attente de la réservation.',
+      this.enAttenteRes);
+  }
+
+  enAttenteRes() {
+    let statusRes = this.resParam.status;
+    this.resParam.status = ReservationStatusType.EN_ATTENTE;
+    console.log(this.resParam);
+    this.reservationService.putReservation(this.resParam).subscribe(
+      async (res) => {
+        if (statusRes == ReservationStatusType.COMFIRMEE) {
+          this.acceptes--;
+          this.annonce.nombrePlacesDispo++;
         }
-      );
-    }
+        if (statusRes == ReservationStatusType.REFUSEE)
+          this.refuses--;
+        this.enAttente++;
+        console.log(res)
+      },
+      async (err) => {
+        console.log(err);
+        this.resParam.status = statusRes;
+        await this.presentAlert('Mise en attente réservation', err.error);
+      }
+    );
   }
-
-  refuserOpen = false;
-  messageConfirmRef = "";
-
-  openRefuser(isOpen: boolean , ev) {
-    this.messageConfirmRef="Refuser la réservation de " + this.res1.userRes.prenom + " ?"
-    this.refuserOpen = isOpen;
-    console.log(`Dismissed with role: ${ev.detail.role}`);
-
-    if(ev.detail.role == "confirm"){
-      this.res1.status = ReservationStatusType.REFUSEE;
-      console.log(this.res1);
-      this.reservationService.putReservation(this.res1).subscribe(
-        async (res) => {
-          this.refuses++;
-          this.enAttente--;
-          console.log(res)
-        },
-        async (err) => {
-          console.log(err);
-          this.res1.status = ReservationStatusType.EN_ATTENTE;
-          const alert = await this.alertController.create({
-            header: 'Blassa message',
-            subHeader: 'Refus réservation',
-            message: err.error,
-            buttons: ['OK'],
-          });
-
-          await alert.present();          
-        }
-      );
-    }
-  }
-
-  enAttenteOpen = false;
-  messageConfirmAtt = "";
-  openEnAttente(isOpen: boolean, ev) {
-    this.messageConfirmAtt = "Mettre la réservation de " + this.res1.userRes.prenom + " en attente ?"
-    this.enAttenteOpen = isOpen;
-    console.log(`Dismissed with role: ${ev.detail.role}`);
-
-    if (ev.detail.role == "confirm") {
-      let statusRes = this.res1.status;
-      this.res1.status = ReservationStatusType.EN_ATTENTE;
-      console.log(this.res1);
-      this.reservationService.putReservation(this.res1).subscribe(
-        async (res) => {
-          if (statusRes == ReservationStatusType.COMFIRMEE) {
-            this.acceptes--;
-            this.annonce.nombrePlacesDispo++;
-          }
-          if (statusRes == ReservationStatusType.REFUSEE)
-            this.refuses--;
-          this.enAttente++;
-          console.log(res)
-        },
-        async (err) => {
-          console.log(err);
-          this.res1.status = statusRes;
-          const alert = await this.alertController.create({
-            header: 'Blassa message',
-            subHeader: 'Mise en attente réservation',
-            message: err.error,
-            buttons: ['OK'],
-          });
-
-          await alert.present();
-        }
-      );
-    }
-  }
-
-  
-  reserverOpen = false;
-  messageReserver = "";
-  openReserver(isOpen: boolean , ev) {
-    
-    this.messageReserver="Demander une reservation ?"
-    this.reserverOpen = isOpen;
-    console.log(`Dismissed with role: ${ev.detail.role}`);
-
-    if(ev.detail.role == "confirm"){
-      this.reserver();
-    }
-  }
-
-  reservationDemandeToastOpen = false;
-  setToastOpen(isOpen: boolean) {
-    this.reservationDemandeToastOpen = isOpen;
-  }
-
-  reservationInstToastOpen = false;
-  setInstToastOpen(isOpen: boolean) {
-    this.reservationInstToastOpen = isOpen;
-  }
-
 }
 

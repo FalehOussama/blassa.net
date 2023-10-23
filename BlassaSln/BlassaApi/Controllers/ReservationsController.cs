@@ -58,7 +58,7 @@ namespace BlassaApi.Controllers
         public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
         {
             if (!UserExists(reservation.UserId))
-                return BadRequest();
+                return BadRequest("User introuvable");
 
             var trajetAnnonce = await _dbContext.TrajetsAnnonces.FindAsync(reservation.TrajetAnnonceId);
 
@@ -68,13 +68,22 @@ namespace BlassaApi.Controllers
                 return BadRequest("Trajet non disponible");
             if (trajetAnnonce.NombrePlacesDispo <= 0)
                 return BadRequest("Plus de places disponible");
+
+            if (ReservationUserTrajetExists(reservation.UserId, reservation.TrajetAnnonceId))
+                return BadRequest("Reservation existe déjà");
+
+            var nbreRes = await _dbContext.Reservations
+                .Where(r => r.TrajetAnnonceId == reservation.TrajetAnnonceId)
+                .CountAsync();
+
+            if (nbreRes >= 10)
+                return BadRequest("Limite réservations atteind");
+
+            reservation.DateReservation = DateTime.Now;
             if (trajetAnnonce.Instantane)
                 reservation.Status = ReservationStatusType.COMFIRMEE;
             else
                 reservation.Status = ReservationStatusType.EN_ATTENTE;
-
-            if (ReservationUserTrajetExists(reservation.UserId, reservation.TrajetAnnonceId))
-                return BadRequest("Reservation existe déjà");
 
             using (var dbContextTransaction = _dbContext.Database.BeginTransaction())
             {
@@ -95,7 +104,7 @@ namespace BlassaApi.Controllers
                     dbContextTransaction.Rollback();
 
                     if (!TrajetAnnonceExists(reservation.TrajetAnnonceId))
-                        return NotFound();
+                        return NotFound("Trajet supprimée");
                     else
                         throw;
                 }
@@ -199,7 +208,8 @@ namespace BlassaApi.Controllers
         {
             return (_dbContext.Reservations?
                 .Any(u => u.UserId == userId && 
-                            u.TrajetAnnonceId == trajetAnnonceId)).GetValueOrDefault();
+                            u.TrajetAnnonceId == trajetAnnonceId))
+                            .GetValueOrDefault();
         }
     }
 }

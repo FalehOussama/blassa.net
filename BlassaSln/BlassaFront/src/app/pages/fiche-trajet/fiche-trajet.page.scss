@@ -23,9 +23,11 @@ ion-content{
     margin-top: -12px;
 }
 
-.seat{
-    height:19px;
-    opacity: 0.78;
+.seat {
+  height: 19px;
+  width: 19px;
+  margin-left: 15px;
+  opacity: 0.78;
 }
 
 .social{
@@ -37,6 +39,18 @@ ion-content{
 .star{
     height: 15px;
     width: 15px;
+}
+
+.superUser {
+  height: 30px;
+  width: 30px;
+}
+
+.superDriver {
+  height: 30px;
+  width: 30px;
+  margin-left: auto;
+  margin-right: 0px;
 }
 
 .title{
