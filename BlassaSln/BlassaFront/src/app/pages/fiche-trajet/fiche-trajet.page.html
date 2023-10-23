@@ -50,10 +50,7 @@
             <ion-img class="star" *ngIf="aviStat?.rating >= 4.5 && aviStat?.rating < 5" src="../../../assets/images/Socials/halfStar.png" alt="rating"></ion-img>
             <ion-img class="star" *ngIf="aviStat?.rating >= 5" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img>
 
-          </ion-row>
-
-          <ion-row class="rating">
-            <ion-label class="text">{{aviStat?.rating.toFixed(2) }} | {{aviStat?.nbreTotal}} notes</ion-label>
+            <ion-label class="textNotes">{{aviStat?.rating.toFixed(2) }} | {{aviStat?.nbreTotal}} notes</ion-label>
           </ion-row>
 
           <ion-popover trigger="avis" side="left" alignment="start">
@@ -84,10 +81,7 @@
             <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 4.5 && aviConducteurStat?.rating < 5" src="../../../assets/images/Socials/halfStarBlue.png" alt="rating"></ion-img>
             <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 5" src="../../../assets/images/Socials/starBlue.png" alt="rating"></ion-img>
 
-          </ion-row>
-
-          <ion-row class="rating">
-            <ion-label class="text">{{aviConducteurStat?.rating.toFixed(2) }} | {{aviConducteurStat?.nbreTotal}} notes</ion-label>
+            <ion-label class="textNotes">{{aviConducteurStat?.rating.toFixed(2) }} | {{aviConducteurStat?.nbreTotal}} notes</ion-label>
           </ion-row>
 
           <ion-popover trigger="avisCond" side="left" alignment="start">
@@ -116,21 +110,19 @@
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
           <ion-img class="seat" src="../../../assets/icon/Seat.png" slot="end"></ion-img>
-          <p class="text">{{annonce?.nombrePlacesDispo}} / {{annonce?.nombrePlaces}}</p>
-        </ion-item>
+          <p class="text" color="dark">{{annonce?.nombrePlacesDispo}} / {{annonce?.nombrePlaces}}</p>
+      </ion-item>
       </ion-row>
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
           <ion-icon class="icons" name="calendar-outline" size="small" slot="end"></ion-icon>
-          <p class="text">{{annonce?.dateHeureDepart | date:'dd'}} {{annonce?.dateHeureDepart | date:'MMM'}}</p>
-        </ion-item>
+          <p class="text" color="dark">{{annonce?.dateHeureDepart | date:'dd'}} {{annonce?.dateHeureDepart | date:'MMM'}}</p>
+      </ion-item>
       </ion-row>
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
           <ion-icon class="icons" name="time-outline" size="small" slot="end"></ion-icon>
-          <p class="heure">{{annonce?.dateHeureDepart | date:'HH'}}</p>
-          <p class="heure">:</p>
-          <p class="heure">{{annonce?.dateHeureDepart | date:'mm'}}</p>
+          <p class="text" color="dark">{{annonce?.dateHeureDepart | date:'HH'}} : {{annonce?.dateHeureDepart | date:'mm'}}</p>
         </ion-item>
       </ion-row>
       <ion-row style="margin-top: -200px; z-index: -1; " class="ion-padding">
@@ -142,13 +134,13 @@
             <p class="trajet">Départ</p>
           </ion-row>
           <ion-row>
-            <p class="adresse">{{annonce?.depart}}</p>
+            <ion-chip class="adresse" color="dark">{{annonce?.depart}}</ion-chip>
           </ion-row>
           <ion-row>
             <p class="trajet" style="margin-top: 25px;">Destination</p>
           </ion-row>
           <ion-row>
-            <p class="adresse"> {{annonce?.destination}}</p>
+            <ion-chip class="adresse" color="dark">{{annonce?.destination}}</ion-chip>
           </ion-row>
         </ion-col>
 
