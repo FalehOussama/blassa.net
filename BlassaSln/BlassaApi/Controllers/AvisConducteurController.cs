@@ -39,7 +39,7 @@ namespace BlassaApi.Controllers
             foreach (var r in results)
             {
 
-                aviStat.Score += (int)r.Categorie * r.Nbre;
+                aviStat.Score += ((int)r.Categorie + 1) * r.Nbre;
                 nbreTotal += r.Nbre;
                 switch (r.Categorie)
                 {
@@ -63,7 +63,7 @@ namespace BlassaApi.Controllers
 
             if (nbreTotal > 0)
             {
-                var maxScore = ((int)CategorieAvisType.EXCELLENT) * nbreTotal;
+                var maxScore = ((int)CategorieAvisType.EXCELLENT + 1) * nbreTotal;
                 aviStat.Rating = ((float)aviStat.Score * 5) / (float)maxScore;
             }
 
