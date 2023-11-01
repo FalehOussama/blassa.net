@@ -86,3 +86,24 @@ ion-popover{
   margin-left: auto;
   margin-right: 0px;
 }
+.star {
+  height: 15px;
+  width: 15px;
+}
+.rating {
+  font-family: font4;
+  font-size: small;
+}
+
+ion-col.stats {
+  flex: 0 0 150px;
+  padding: 0;
+  margin-right: 10px;
+}
+
+ion-col.right {
+  flex: 0 0 150px;
+  padding: 0;
+  margin-left: auto;
+  margin-right: 0px;
+}
