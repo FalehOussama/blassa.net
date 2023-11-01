@@ -1,3 +1,10 @@
+hr {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .card1{
     border-radius: 20px; 
     width: 100%;
@@ -54,6 +61,16 @@
     margin: auto;
 }
 
+.textInput {
+    font-family:'Times New Roman';
+  font-size: 1.2rem;
+  margin: auto;
+}
 
+ion-popover{
+    --width: 350px;
+}
 
-
+.icon {
+  width: 20px;
+}

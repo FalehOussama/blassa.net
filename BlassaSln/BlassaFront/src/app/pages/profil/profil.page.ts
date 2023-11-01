@@ -1,12 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonModal } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
-import { userModel } from '../../modules/user/user.module';
 import { StorageService } from 'src/app/services/storage.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 
 @Component({
   selector: 'app-profil',
@@ -15,114 +11,70 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class ProfilPage implements OnInit  {
 
+  readonly phoneMask: MaskitoOptions = {
+    mask: [/\d/, /\d/, ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/],
+  };
+
+  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
+
+
   constructor(
     private userService : UserService,
     private router : Router,
-    private storage : StorageService,
-    private formBuilder : FormBuilder
+    private storage : StorageService
   ) { 
 
-    
-  }
+    this.storage.get('user').then(
+      async (data) => {
+        let userStorage = await data;
 
-  user:any;
-
-  async ionViewWillEnter(){
-
-    await this.storage.get('user').then(
-      async data => this.user = await data
-    )
-    this.ngOnInit()
-  }
-
-  async ngOnInit() {
-    // console.log(this.user.prefs)
-    this.sexe=this.user?.sexe
-    this.updateProfile = this.formBuilder.group({
-      nom: [this.user?.nom],
-      desc: [this.user?.description],
-      sim: [this.user?.tel1],
-      dateNaissance:[this.user?.date_Naissance]
-    })
-
-    if(this.user?.date_Naissance==null){
-      this.updateProfile.value['dateNaissance']='';
-    }
-  }
-
-  toggleResMode(){
-    if(this.user?.prefs.inst == null){
-      this.user.prefs.inst = false
-      this.storage.set('user' , this.user)
-      this.userService.updateUser(this.user).subscribe();
-    }else{
-      this.user.prefs.inst = !this.user.prefs.inst;
-      this.storage.set('user' , this.user)
-      this.userService.updateUser(this.user).subscribe();
-    }
-    
-  }
-
-  @ViewChild(IonModal) modal: IonModal;
-
-  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
-  
-  onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-      this.message = `Hello, ${ev.detail.data}!`;
-    }
-  }
-  
-  cancel() {
-    this.modal.dismiss(null, 'cancel');
-  }
-
-  confirm() {
-    this.modal.dismiss('confirm');
-  }
-
-
-  @ViewChild(IonModal) modal2: IonModal;
-
-  message2 = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
-  onWillDismissEdit(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-      this.message2 = `Hello, ${ev.detail.data}!`;
-    }
-  }
-  
-  cancelEdit() {
-    this.modal2.dismiss('cancel');
-  }
-
-
-
-  confirmEdit() {
-    console.log(this.updateProfile.value['nom'])
-    this.user.sexe=this.sexe;
-    this.user.nom=this.updateProfile.value['nom']
-    this.user.description=this.updateProfile.value['desc']
-    this.user.tel1=this.updateProfile.value['sim']
-    this.user.date_Naissance=this.updateProfile.value['dateNaissance']
-
-    this.userService.updateUser(this.user).subscribe(
-      async ()=>{
-        await this.storage.set('user' , this.user)
-        console.log("updated!");
-        this.modal2.dismiss('confirm');
+        this.userService.getUserById(userStorage.id).subscribe(
+          async (res) => {
+            this.user = await res;
+            this.user.preferences.voyageAvec = this.user.preferences.voyageAvec.toString();
+          }
+        );
       }
     );
     
   }
+  
+  user: any = {
+    nom: '',
+    prenom: '',
+    sexe: '',
+    email: '',
+    tel1: '',
+    dateNaissance: new Date(),
+    description: '',
+    preferences: {
+      passager: false,
+      tel: false,
+      whatsApp: false,
+      messenger: false,
+      instantane: false,
+      voyageAvec: "0",
+      leger: false,
+      moyen: false,
+      lourd: false,
+      max2: false,
+      cigarette: false,
+      animaux: false,
+      verifies: false
+    },
+    vehicules: []
+  };
 
-  //Edit profile
+  async ionViewWillEnter(){
 
-  updateProfile:FormGroup
-  sexe:string = 'H';
-  modeRes:boolean=false;
+    
+    this.ngOnInit()
+  }
 
+  async ngOnInit() {  }
 
+  enregistrer() {
+    let prefs = this.user.preferences;
+  }
 
 }
