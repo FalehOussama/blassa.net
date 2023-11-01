@@ -1,7 +1,6 @@
 <app-menu></app-menu>
 
 <ion-content class="ion-padding">
-  <div >
     <ion-label class="title">Profile</ion-label>
     <ion-row style="margin: auto; margin-left: 30px; margin-top: 10px; float: right;">
       <ion-button shape="round" (click)="enregistrer()">Enregistrer</ion-button>
@@ -10,9 +9,17 @@
     <ion-grid>
       <ion-col size="auto">
         <ion-row class="ion-padding ion-justify-content-center">
-          <ion-avatar style="width: 100px; height: 100px;">
-            <img alt="Silhouette of a person's head" src={{user.imgUrl}} />
-          </ion-avatar>
+          <ion-col size="auto">
+            <ion-img class="superUser" *ngIf="user.superUser" src="../../../assets/images/medSuperUser.png"></ion-img>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-avatar style="width: 100px; height: 100px;">
+              <img alt="Silhouette of a person's head" src={{user.imgUrl}} />
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="auto">
+            <ion-img class="superDriver" *ngIf="user.superDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
+          </ion-col>          
         </ion-row>
         <ion-row class="ion-justify-content-center" style="width: 100%;">
           <ion-label class="nom">{{user.prenom}} {{user.nom}}</ion-label>
@@ -246,5 +253,4 @@
                     [car2]="user.vehicules[1]"
                     [car3]="user.vehicules[2]"></app-car-card>
     </ion-grid>
-    </div>
 </ion-content>
