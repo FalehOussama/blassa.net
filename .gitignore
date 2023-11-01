@@ -1,0 +1,11 @@
+﻿################################################################################
+# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
+################################################################################
+
+/BlassaSln/BlassaApi/bin/Debug/net6.0/BlassaApi.exe
+/BlassaSln/BlassaApi/obj/BlassaApi.csproj.nuget.dgspec.json
+/BlassaSln/BlassaApi/obj/BlassaApi.csproj.nuget.g.props
+/BlassaSln/BlassaApi/obj/Debug/net6.0/.NETCoreApp,Version=v6.0.AssemblyAttributes.cs
+/BlassaSln/BlassaApi/obj/Debug/net6.0/apphost.exe
+/BlassaSln/BlassaApi/obj/Debug/net6.0/BlassaApi.GeneratedMSBuildEditorConfig.editorconfig
+/BlassaSln/BlassaApi/obj/project.assets.json
