@@ -14,7 +14,7 @@
       alt="Blassa Logo"></ion-img>
     <ion-buttons slot="secondary">
       <ion-button [routerLink]="['/profil']" id="profil">
-        <ion-avatar slot="start" style="height: 30px; width: 30px;">
+        <ion-avatar class="{{user?.verifie ? 'verifie' : 'nonVerifie'}}" slot="start" style="height: 30px; width: 30px;">
           <img alt="Silhouette of a person's head" src={{user?.imgUrl}} />
         </ion-avatar>
       </ion-button>

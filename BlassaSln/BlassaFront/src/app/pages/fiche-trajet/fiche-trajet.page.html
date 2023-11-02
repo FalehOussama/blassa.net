@@ -3,7 +3,7 @@
 <!-- pour passager -->
 <ion-content>
   <ion-row style="justify-content: center;">
-    <ion-avatar style="margin-top: 23px; z-index: 3; border: 4px solid white;" (click)="afficherMembre(annonce?.userId);">
+    <ion-avatar class="{{annonce?.user.verifie ? 'verifie' : 'nonVerifie'}}" style="margin-top: 23px; z-index: 3;" (click)="afficherMembre(annonce?.userId);">
       <img alt="Silhouette of a person's head" src={{annonce?.user.imgUrl}} />
     </ion-avatar>
   </ion-row>
@@ -190,7 +190,7 @@
               <div *ngFor="let res of annonce?.reservations">
                 <ion-item style="width: 100%" mode="ios" button detail="true" *ngIf="res.status==1" (click)="afficherMembre(res.userId);">
                   <ion-img *ngIf="res.userRes?.superUser" class="icon" style="position: absolute; z-index: 999; margin-top: 30px" src="../../../assets/images/medSuperUser.png"></ion-img>
-                  <ion-avatar>
+                  <ion-avatar class="{{res.userRes?.verifie ? 'verifie' : 'nonVerifie'}}">
                     <img alt="Silhouette of a person's head" src={{res.userRes?.imgUrl}} />
                   </ion-avatar>
                   <ion-label style="margin-left: 10px" (click)="afficherMembre(res?.user.id_User);">
@@ -255,7 +255,7 @@
               <div *ngFor="let res of annonce?.reservations">
                 <ion-item style="width: 100%;" mode="ios" *ngIf="res.status ==0;">
                   <ion-img *ngIf="res.userRes.superUser" class="icon" style="position: absolute; z-index: 999; margin-top: 40px" src="../../../assets/images/medSuperUser.png"></ion-img>
-                  <ion-avatar>
+                  <ion-avatar class="{{res.userRes?.verifie ? 'verifie' : 'nonVerifie'}}">
                     <img alt="Silhouette of a person's head" src={{res.userRes.imgUrl}} />
                   </ion-avatar>
                   <ion-label style="margin-left: 10px">
@@ -287,7 +287,7 @@
               <div *ngFor="let res of annonce?.reservations">
                 <ion-item style="width: 100%;" mode="ios" *ngIf="res.status ==1;">
                   <ion-img *ngIf="res.userRes.superUser" class="icon" style="position: absolute; z-index: 999; margin-top: 40px" src="../../../assets/images/medSuperUser.png"></ion-img>
-                  <ion-avatar>
+                  <ion-avatar class="{{res.userRes?.verifie ? 'verifie' : 'nonVerifie'}}">
                     <img alt="Silhouette of a person's head" src={{res.userRes.imgUrl}} />
                   </ion-avatar>
                   <ion-label style="margin-left: 10px">
@@ -315,7 +315,7 @@
               <div *ngFor="let res of annonce?.reservations">
                 <ion-item style="width: 100%;" mode="ios" *ngIf="res.status ==2;">
                   <ion-img *ngIf="res.userRes.superUser" class="icon" style="position: absolute; z-index: 999; margin-top: 40px" src="../../../assets/images/medSuperUser.png"></ion-img>
-                  <ion-avatar>
+                  <ion-avatar  class="{{res.userRes?.verifie ? 'verifie' : 'nonVerifie'}}">
                     <img alt="Silhouette of a person's head" src={{res.userRes.imgUrl}} />
                   </ion-avatar>
                   <ion-label style="margin-left: 10px">
