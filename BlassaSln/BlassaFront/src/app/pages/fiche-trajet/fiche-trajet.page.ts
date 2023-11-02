@@ -4,7 +4,6 @@ import { IonModal, Platform, AlertController, ToastController } from '@ionic/ang
 import { OverlayEventDetail } from '@ionic/core';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
-import { AviService } from 'src/app/services/avi.service';
 import { AviConducteurService } from 'src/app/services/aviConducteur.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,6 +12,7 @@ import { AppAvailability, InAppBrowser } from 'ionic-native';
 import { StorageService } from 'src/app/services/storage.service';
 import { VoyageAvecType } from '../../classes/voyageAvecType';
 import { ReservationStatusType } from '../../classes/reservationStatusType';
+import { AvisComponent } from '../../components/avis/avis.component';
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -24,6 +24,7 @@ import { ReservationStatusType } from '../../classes/reservationStatusType';
 export class FicheTrajetPage implements OnInit , OnDestroy {
 
   @ViewChild(IonModal) modal: IonModal;
+  @ViewChild(AvisComponent) compAvis: AvisComponent;
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -44,7 +45,6 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
     private router : Router,
     private annonceService:AnnonceService , 
     private reservationService: ReservationService,
-    private aviService: AviService,
     private aviConducteurService: AviConducteurService,
     public token : TokenStorageService,
     private userService : UserService,
@@ -191,11 +191,8 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
                 this.reservations = this.annonce.reservations;
                 this.canBook = this.annonce.userId != this.user.id;
 
-                await this.aviService.getStat(this.annonce.userId).subscribe(
-                  async resAvi => {
-                    this.aviStat = resAvi;
-                  }
-                );
+                this.compAvis.userId = this.annonce.userId;
+                this.compAvis.ngOnInit();
 
                 await this.aviConducteurService.getStat(this.annonce.userId).subscribe(
                   async resAviConducteur => {

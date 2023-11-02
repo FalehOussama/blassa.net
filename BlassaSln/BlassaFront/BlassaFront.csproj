@@ -38,4 +38,8 @@
     <TypeScriptCompile Include="src\app\services\vehicule.service.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="src\app\components\avis\" />
+  </ItemGroup>
+
 </Project>

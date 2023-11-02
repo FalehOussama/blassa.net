@@ -24,31 +24,7 @@
 
         <ion-row class="rating ion-justify-content-between">
           <ion-col class="stats">
-            <ion-row>
-              <!--star 1-->
-              <ion-img class="star" *ngIf="aviStat?.rating >= 0 && aviStat?.rating < 0.5" src="../../../assets/images/Socials/emptyStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 0.5 && aviStat?.rating < 1" src="../../../assets/images/Socials/halfStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 1" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img>
-              <!--star 2-->
-              <ion-img class="star" *ngIf="aviStat?.rating < 1.5" src="../../../assets/images/Socials/emptyStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 1.5 && aviStat?.rating < 2" src="../../../assets/images/Socials/halfStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 2" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img>
-              <!--star 3-->
-              <ion-img class="star" *ngIf=" aviStat?.rating < 2.5" src="../../../assets/images/Socials/emptyStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 2.5 && aviStat?.rating < 3" src="../../../assets/images/Socials/halfStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 3" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img>
-              <!--star 4-->
-              <ion-img class="star" *ngIf="aviStat?.rating < 3.5" src="../../../assets/images/Socials/emptyStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 3.5 && aviStat?.rating < 4" src="../../../assets/images/Socials/halfStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 4" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img>
-              <!--star 5-->
-              <ion-img class="star" *ngIf="aviStat?.rating < 4.5" src="../../../assets/images/Socials/emptyStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 4.5 && aviStat?.rating < 5" src="../../../assets/images/Socials/halfStar.png" alt="rating"></ion-img>
-              <ion-img class="star" *ngIf="aviStat?.rating >= 5" src="../../../assets/images/Socials/star.png" alt="rating"></ion-img>
-            </ion-row>
-            <ion-row>
-              <ion-label class="textNotes">{{aviStat?.rating.toFixed(2) }} | {{aviStat?.nbreTotal}} notes</ion-label>
-            </ion-row>
+              <app-avis #compAvis></app-avis>
           </ion-col>
 
           <ion-col size="auto">
