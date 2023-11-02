@@ -18,11 +18,12 @@ import { CarCardComponent } from './car-card/car-card.component';
 import { InviteComponent } from './invite/invite.component';
 import { RouterModule } from '@angular/router';
 import { AvisComponent } from './avis/avis.component';
+import { AvisCondComponent } from './avis-cond/avis-cond.component';
 
 @NgModule({
-  declarations: [InviteComponent, AvisComponent, CarCardComponent, MenuComponent,InputComponent, ButtonComponent, IconButtonComponent , IconButton2Component , AnnonceItemComponent , InfoConducteurComponent , InfoTrajetComponent , InfoReservationsComponent , CreerAnnonceStepsComponent],
+  declarations: [InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent,InputComponent, ButtonComponent, IconButtonComponent , IconButton2Component , AnnonceItemComponent , InfoConducteurComponent , InfoTrajetComponent , InfoReservationsComponent , CreerAnnonceStepsComponent],
   imports: [CommonModule, IonicModule , FontAwesomeModule , NgxPaginationModule , RouterModule],
   providers :[CallNumber],
-  exports: [InviteComponent, AvisComponent ,CarCardComponent, MenuComponent ,InputComponent, ButtonComponent, IconButtonComponent , IconButton2Component , AnnonceItemComponent , InfoConducteurComponent , InfoTrajetComponent , InfoReservationsComponent ,CreerAnnonceStepsComponent],
+  exports: [InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent ,InputComponent, ButtonComponent, IconButtonComponent, IconButton2Component, AnnonceItemComponent, InfoConducteurComponent, InfoTrajetComponent, InfoReservationsComponent, CreerAnnonceStepsComponent],
 })
 export class SharedModule {}

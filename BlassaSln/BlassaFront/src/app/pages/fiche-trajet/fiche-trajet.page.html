@@ -38,28 +38,7 @@
           </ion-popover>
 
           <ion-row id="avisCond" class="rating">
-            <!--star 1-->
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 0 && aviConducteurStat?.rating < 0.5" src="../../../assets/images/Socials/emptyStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 0.5 && aviConducteurStat?.rating < 1" src="../../../assets/images/Socials/halfStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 1" src="../../../assets/images/Socials/starBlue.png" alt="rating"></ion-img>
-            <!--star 2-->
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating < 1.5" src="../../../assets/images/Socials/emptyStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 1.5 && aviConducteurStat?.rating < 2" src="../../../assets/images/Socials/halfStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 2" src="../../../assets/images/Socials/starBlue.png" alt="rating"></ion-img>
-            <!--star 3-->
-            <ion-img class="star" *ngIf=" aviConducteurStat?.rating < 2.5" src="../../../assets/images/Socials/emptyStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 2.5 && aviConducteurStat?.rating < 3" src="../../../assets/images/Socials/halfStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 3" src="../../../assets/images/Socials/starBlue.png" alt="rating"></ion-img>
-            <!--star 4-->
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating < 3.5" src="../../../assets/images/Socials/emptyStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 3.5 && aviConducteurStat?.rating < 4" src="../../../assets/images/Socials/halfStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 4" src="../../../assets/images/Socials/starBlue.png" alt="rating"></ion-img>
-            <!--star 5-->
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating < 4.5" src="../../../assets/images/Socials/emptyStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 4.5 && aviConducteurStat?.rating < 5" src="../../../assets/images/Socials/halfStarBlue.png" alt="rating"></ion-img>
-            <ion-img class="star" *ngIf="aviConducteurStat?.rating >= 5" src="../../../assets/images/Socials/starBlue.png" alt="rating"></ion-img>
-
-            <ion-label class="textNotes">{{aviConducteurStat?.rating.toFixed(2) }} | {{aviConducteurStat?.nbreTotal}} notes</ion-label>
+            <app-avis-cond #compAvisCond [sameRow]="true"></app-avis-cond>
           </ion-row>
 
           <ion-popover trigger="avisCond" side="left" alignment="start">

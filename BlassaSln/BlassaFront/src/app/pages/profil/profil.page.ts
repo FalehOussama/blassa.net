@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
-import { AviConducteurService } from 'src/app/services/aviConducteur.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 import { AvisComponent } from '../../components/avis/avis.component';
+import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
 
 @Component({
   selector: 'app-profil',
@@ -20,10 +20,10 @@ export class ProfilPage implements OnInit  {
   readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
 
   @ViewChild(AvisComponent) compAvis: AvisComponent;
+  @ViewChild(AvisCondComponent) compAvisCond: AvisCondComponent;
 
   constructor(
     private userService: UserService,
-    private aviConducteurService: AviConducteurService,
     private router : Router,
     private storage : StorageService
   ) { 
@@ -31,19 +31,17 @@ export class ProfilPage implements OnInit  {
     this.storage.get('user').then(
       async (data) => {
         let userStorage = await data;
+
         this.compAvis.userId = userStorage.id;
         this.compAvis.ngOnInit();
+
+        this.compAvisCond.userId = userStorage.id;
+        this.compAvisCond.ngOnInit();
 
         this.userService.getUserById(userStorage.id).subscribe(
           async (res) => {
             this.user = await res;
             this.user.preferences.voyageAvec = this.user.preferences.voyageAvec.toString();
-
-            await this.aviConducteurService.getStat(this.user.id).subscribe(
-              async resAviConducteur => {
-                this.aviConducteurStat = resAviConducteur;
-              }
-            );
           }
         );
       }

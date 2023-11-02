@@ -4,7 +4,6 @@ import { IonModal, Platform, AlertController, ToastController } from '@ionic/ang
 import { OverlayEventDetail } from '@ionic/core';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
-import { AviConducteurService } from 'src/app/services/aviConducteur.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
@@ -13,6 +12,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { VoyageAvecType } from '../../classes/voyageAvecType';
 import { ReservationStatusType } from '../../classes/reservationStatusType';
 import { AvisComponent } from '../../components/avis/avis.component';
+import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -25,6 +25,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
 
   @ViewChild(IonModal) modal: IonModal;
   @ViewChild(AvisComponent) compAvis: AvisComponent;
+  @ViewChild(AvisCondComponent) compAvisCond: AvisCondComponent;
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -45,7 +46,6 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
     private router : Router,
     private annonceService:AnnonceService , 
     private reservationService: ReservationService,
-    private aviConducteurService: AviConducteurService,
     public token : TokenStorageService,
     private userService : UserService,
     private callNumber: CallNumber,
@@ -194,11 +194,8 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
                 this.compAvis.userId = this.annonce.userId;
                 this.compAvis.ngOnInit();
 
-                await this.aviConducteurService.getStat(this.annonce.userId).subscribe(
-                  async resAviConducteur => {
-                    this.aviConducteurStat = resAviConducteur;
-                  }
-                );
+                this.compAvisCond.userId = this.annonce.userId;
+                this.compAvisCond.ngOnInit();
               }
             );
 
