@@ -77,16 +77,68 @@ export class ProfilPage implements OnInit  {
   aviStat: any;
   aviConducteurStat: any;
 
-  async ionViewWillEnter(){
-
-    
-    //this.ngOnInit()
-  }
+  async ionViewWillEnter() { }
 
   async ngOnInit() {  }
 
   enregistrer() {
     let prefs = this.user.preferences;
+    this.user.preferences.voyageAvec = parseInt(this.user.preferences.voyageAvec);
+    this.user.filePermisConduire = this.filePermisConduire;
+    this.user.fileCin = this.fileCin;
+    this.user.filePasseport = this.filePasseport;
+    this.userService.updateUser(this.user).subscribe(
+      async (res) => {
+        await this.storage.set('user', this.user);
+      }
+    );
+  }
+
+  private filePermisConduire: string;
+  onFilePermisConduireChange(fileChangeEvent) {
+    let file = fileChangeEvent.target.files[0];
+    this.readFile(file, this.onFilePermisConduireLoaded);
+  }
+
+  onFilePermisConduireLoaded(fileBtoa: string) {
+    this.filePermisConduire = fileBtoa;
+  }
+
+  private fileCin: string;
+  onFileCinChange(fileChangeEvent) {
+    let file = fileChangeEvent.target.files[0];
+    this.readFile(file, this.onFileCinLoaded);
+  }
+
+  onFileCinLoaded(fileBtoa: string) {
+    this.fileCin = fileBtoa;
+  }
+
+  private filePasseport: string;
+  onFilePasseportChange(fileChangeEvent) {
+    let file = fileChangeEvent.target.files[0];
+    this.readFile(file, this.onFilePasseportLoaded);
+  }
+
+  onFilePasseportLoaded(fileBtoa: string) {
+    this.filePasseport = fileBtoa;
+  }
+
+  readFile(file, onLoad: (fileByteArray: string) => void) {
+    const boundOnLoad = onLoad.bind(this);
+    let reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+
+    reader.onload = function () {
+      let arrayBuffer = <ArrayBuffer>reader.result;
+      let str = btoa(new Uint8Array(arrayBuffer).toString());
+      boundOnLoad(str);
+    };
+
+    reader.onerror = function () {
+      console.log(reader.error);
+    };
+
   }
 
 }

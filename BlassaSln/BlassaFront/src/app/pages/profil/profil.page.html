@@ -243,16 +243,30 @@
               </ion-item>
             </ion-list>
           </ion-card-content>
-        </ion-card>
+        </ion-card>        
+      </ion-row>
 
+      <hr />
+      <ion-row>
+        <ion-label class="font1">Vérification du profil</ion-label>
         <ion-card style="width: 100%;">
-          <ion-list>
-            <ion-item button detail="true" lines="none" routerLink="/verification-profil">
-              <ion-label>Vérification du profil</ion-label>
+          <ion-card-content>
+            <ion-card-title>Permis de conduire :</ion-card-title>
+            <ion-item>
+              <input type="file" (change)="onFilePermisConduireChange($event)" />
             </ion-item>
-          </ion-list>
+            <ion-card-title>Carte d'identité :</ion-card-title>
+            <ion-item>
+              <input type="file" (change)="onFileCinChange($event)" />
+            </ion-item>
+            <ion-card-title>Passeport :</ion-card-title>
+            <ion-item>
+              <input type="file" (change)="onFilePasseportChange($event)" />
+            </ion-item>
+          </ion-card-content>
         </ion-card>
       </ion-row>
+
       <hr *ngIf="!user.preferences.passager" />
       <ion-row *ngIf="!user.preferences.passager">
         <ion-label class="font1">Mes véhicules</ion-label>

@@ -23,6 +23,9 @@
         public bool SuperDriver { get; set; }
         public bool SuperUser { get; set; }
         public bool Nouveau { get; set; } = true;
+        public byte[]? FilePermisConduire { get; set; }
+        public byte[]? FileCin { get; set; }
+        public byte[]? FilePasseport { get; set; }
 
         public Preferences? Preferences { get; set; } // Reference navigation to dependent
         public ICollection<Vehicule> Vehicules { get; } = new List<Vehicule>(); // Collection navigation containing dependents
