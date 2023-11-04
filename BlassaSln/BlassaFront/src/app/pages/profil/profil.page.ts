@@ -5,6 +5,8 @@ import { StorageService } from 'src/app/services/storage.service';
 import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 import { AvisComponent } from '../../components/avis/avis.component';
 import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
+import { Base64 } from 'js-base64';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profil',
@@ -25,7 +27,8 @@ export class ProfilPage implements OnInit  {
   constructor(
     private userService: UserService,
     private router : Router,
-    private storage : StorageService
+    private storage: StorageService,
+    private alertController: AlertController
   ) { 
 
     this.storage.get('user').then(
@@ -41,12 +44,19 @@ export class ProfilPage implements OnInit  {
         this.userService.getUserById(userStorage.id).subscribe(
           async (res) => {
             this.user = await res;
-            this.user.preferences.voyageAvec = this.user.preferences.voyageAvec.toString();
+            this.userLoaded();
           }
         );
       }
-    );
-    
+    );    
+  }
+
+  async userLoaded() {
+    await this.storage.set('user', this.user);
+    this.user.preferences.voyageAvec = this.user.preferences.voyageAvec.toString();
+    this.filePermisConduireProces();
+    this.fileCinProces();
+    this.filePasseportProces();
   }
 
   user: any = {
@@ -77,62 +87,169 @@ export class ProfilPage implements OnInit  {
   aviStat: any;
   aviConducteurStat: any;
 
+  async presentAlert(header: string, msg: string) {
+    const alert = await this.alertController.create({
+      header: 'Blassa message',
+      subHeader: header,
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  async presentConfirm(header: string, msg: string, onConfirm: () => void) {
+    const alert = await this.alertController.create({
+      header: 'Blassa message',
+      subHeader: header,
+      message: msg,
+      buttons: [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Confirmer',
+          handler: () => {
+            const boundOnconfirm = onConfirm.bind(this);
+            boundOnconfirm();
+          },
+        }
+      ],
+    });
+
+    await alert.present();
+  }
+
   async ionViewWillEnter() { }
 
   async ngOnInit() {  }
 
-  enregistrer() {
+  async enregistrer() {
+    await this.presentConfirm('Confirmer profil', 'Veuillez confirmer l\'enregistrement des changements apportées sur votre profil.', this.enregistrerConfim);
+  }
+
+  async enregistrerConfim() {
     let prefs = this.user.preferences;
     this.user.preferences.voyageAvec = parseInt(this.user.preferences.voyageAvec);
-    this.user.filePermisConduire = this.filePermisConduire;
-    this.user.fileCin = this.fileCin;
-    this.user.filePasseport = this.filePasseport;
     this.userService.updateUser(this.user).subscribe(
-      async (res) => {
-        await this.storage.set('user', this.user);
+      async (resPut) => {
+        this.userService.getUserById(this.user.id).subscribe(
+          async (res) => {
+            this.user = await res;
+            this.userLoaded();
+          }
+        );
+      },
+      async (err) => {
+        console.log(err);
+        await this.presentAlert('Erreur enregistrement profil', err.error);
       }
     );
   }
 
-  private filePermisConduire: string;
   onFilePermisConduireChange(fileChangeEvent) {
     let file = fileChangeEvent.target.files[0];
     this.readFile(file, this.onFilePermisConduireLoaded);
   }
 
   onFilePermisConduireLoaded(fileBtoa: string) {
-    this.filePermisConduire = fileBtoa;
+    this.user.filePermisConduire = fileBtoa;
   }
 
-  private fileCin: string;
   onFileCinChange(fileChangeEvent) {
     let file = fileChangeEvent.target.files[0];
     this.readFile(file, this.onFileCinLoaded);
   }
 
   onFileCinLoaded(fileBtoa: string) {
-    this.fileCin = fileBtoa;
+    this.user.fileCin = fileBtoa;
   }
 
-  private filePasseport: string;
   onFilePasseportChange(fileChangeEvent) {
     let file = fileChangeEvent.target.files[0];
     this.readFile(file, this.onFilePasseportLoaded);
   }
 
   onFilePasseportLoaded(fileBtoa: string) {
-    this.filePasseport = fileBtoa;
+    this.user.filePasseport = fileBtoa;
   }
 
-  readFile(file, onLoad: (fileByteArray: string) => void) {
+  /*****************************************/
+
+  public filePermisConduireObj: any;
+  filePermisConduireProces() {
+    this.filePermisConduireObj = null;
+    if (!this.user.filePermisConduire)
+      return;
+
+    this.writeFile(this.user.filePermisConduire, this.onWFilePermisConduireLoaded);
+  }
+
+  onWFilePermisConduireLoaded(hRef: string, ext: string) {
+    this.filePermisConduireObj = { href: hRef, ext: ext };;
+  }
+
+  deletePermisConduire() {
+    this.filePermisConduireObj = null;
+    this.user.filePermisConduire = null;
+    this.presentAlert('Suppression Permis de conduire', 'Veuillez enregistrer pour que la suppression soit effective.');
+  }
+
+  /*****************************************/
+
+  public fileCinObj: any;
+  fileCinProces() {
+    this.fileCinObj = null;
+    if (!this.user.fileCin)
+      return;
+
+    this.writeFile(this.user.fileCin, this.onWFileCinLoaded);
+  }
+
+  onWFileCinLoaded(hRef: string, ext: string) {
+    this.fileCinObj = { href: hRef, ext: ext };;
+  }
+
+  deleteCin() {
+    this.fileCinObj = null;
+    this.user.fileCin = null;
+    this.presentAlert('Suppression Carte d\identité nationale', 'Veuillez enregistrer pour que la suppression soit effective.');
+  }
+
+  /*****************************************/
+
+  public filePasseportObj: any;
+  filePasseportProces() {
+    this.filePasseportObj = null;
+    if (!this.user.filePasseport)
+      return;
+      
+    this.writeFile(this.user.filePasseport, this.onWFilePasseportLoaded);
+  }
+
+  onWFilePasseportLoaded(hRef: string, ext: string) {
+    this.filePasseportObj = { href: hRef, ext: ext };;
+  }
+
+  deletePasseport() {
+    this.filePasseportObj = null;
+    this.user.filePasseport = null;
+    this.presentAlert('Suppression passeport', 'Veuillez enregistrer pour que la suppression soit effective.');
+  }
+
+  /*****************************************/
+
+  readFile(file, onLoad: (fileBtoa: string) => void) {
     const boundOnLoad = onLoad.bind(this);
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsArrayBuffer(file);
 
     reader.onload = function () {
       let arrayBuffer = <ArrayBuffer>reader.result;
-      let str = btoa(new Uint8Array(arrayBuffer).toString());
-      boundOnLoad(str);
+      let uint8Array = new Uint8Array(arrayBuffer);
+
+      let b64encoded = Base64.fromUint8Array(uint8Array);
+      boundOnLoad(b64encoded);
     };
 
     reader.onerror = function () {
@@ -141,4 +258,76 @@ export class ProfilPage implements OnInit  {
 
   }
 
+  writeFile(fileStr: string, onLoad: (hRef: string, ext: string) => void) {
+    const boundOnLoad = onLoad.bind(this);
+
+    let fileType = this.detectMimeType(fileStr);
+    let ext = this.detectExtension(fileStr);
+
+    let uint8Array = Base64.toUint8Array(fileStr);
+    let arrayBuffer = uint8Array.buffer;
+    const dataView = new DataView(arrayBuffer);
+    const blob = new Blob([dataView], { type: fileType });
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      let hRef: string = <string>reader.result;
+      boundOnLoad(hRef, ext);
+    };
+
+    reader.onerror = function () {
+      console.log(reader.error);
+    };
+
+    reader.readAsDataURL(blob);
+  }
+
+  detectMimeType(base64String: string) {
+    const signatures = {
+      JVBERi0: "application/pdf",
+      R0lGODdh: "image/gif",
+      R0lGODlh: "image/gif",
+      iVBORw0KGgo: "image/png",
+      TU0AK: "image/tiff",
+      "/9j/": "image/jpg",
+      UEs: "application/vnd.openxmlformats-officedocument.", //?? doc - docx - ppt - xls
+      PK: "application/zip",
+    };
+
+    for (let s in signatures) {
+      if (base64String.indexOf(s) === 0) {
+        let x = signatures[s];
+
+        // return
+        return x;
+      }
+    }
+    return '';
+
+  }
+
+  detectExtension(base64String: string) {
+    const extSign = {
+      JVBERi0: ".pdf",
+      R0lGODdh: ".gif",
+      R0lGODlh: ".gif",
+      iVBORw0KGgo: ".png",
+      TU0AK: ".tiff",
+      "/9j/": ".jpg",
+      UEs: ".docx", //?? doc - docx - ppt - xls
+      PK: ".zip",
+    };
+
+    for (let s in extSign) {
+      if (base64String.indexOf(s) === 0) {
+        let ext = extSign[s];
+
+        // return
+        return ext;
+      }
+    }
+    return '';
+
+  }
 }

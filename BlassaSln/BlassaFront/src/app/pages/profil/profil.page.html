@@ -252,17 +252,55 @@
         <ion-card style="width: 100%;">
           <ion-card-content>
             <ion-card-title>Permis de conduire :</ion-card-title>
-            <ion-item>
+            <ion-item *ngIf="!filePermisConduireObj">
               <input type="file" (change)="onFilePermisConduireChange($event)" />
             </ion-item>
+            <div *ngIf="filePermisConduireObj">
+              <a href="{{filePermisConduireObj.href}}" download="PermisConduire{{filePermisConduireObj.ext ? filePermisConduireObj.ext : ''}}">
+                <ion-button color="success" shape="round" class="buttonVerif">
+                  <ion-icon slot="start" name="star"></ion-icon>
+                  Télécharger
+                </ion-button>
+              </a>
+              <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deletePermisConduire();">
+                Supprimer
+                <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+              </ion-button>
+            </div>
+
             <ion-card-title>Carte d'identité :</ion-card-title>
-            <ion-item>
+            <ion-item *ngIf="!fileCinObj">
               <input type="file" (change)="onFileCinChange($event)" />
             </ion-item>
+            <div *ngIf="fileCinObj">
+              <a href="{{fileCinObj.href}}" download="Cin{{fileCinObj.ext ? fileCinObj.ext : ''}}">
+                <ion-button color="success" shape="round" class="buttonVerif">
+                  <ion-icon slot="start" name="star"></ion-icon>
+                  Télécharger
+                </ion-button>
+              </a>
+              <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deleteCin();">
+                Supprimer
+                <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+              </ion-button>
+            </div>
+
             <ion-card-title>Passeport :</ion-card-title>
-            <ion-item>
+            <ion-item *ngIf="!filePasseportObj">
               <input type="file" (change)="onFilePasseportChange($event)" />
             </ion-item>
+            <div *ngIf="filePasseportObj">
+              <a href="{{filePasseportObj.href}}" download="Passeport{{filePasseportObj.ext ? filePasseportObj.ext : ''}}">
+                <ion-button color="success" shape="round" class="buttonVerif">
+                  <ion-icon slot="start" name="star"></ion-icon>
+                  Télécharger
+                </ion-button>
+              </a>
+              <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deletePasseport();">
+                Supprimer
+                <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+              </ion-button>
+            </div>
           </ion-card-content>
         </ion-card>
       </ion-row>

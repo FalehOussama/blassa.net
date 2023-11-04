@@ -71,6 +71,7 @@ namespace BlassaApi.Controllers
         {
             user.DateCreation = DateTime.Now;
             user.Nouveau = true;
+            user.Verifie = user.FilePermisConduire != null || user.FileCin != null || user.FilePasseport != null;
             if (user.Preferences == null)
                 user.Preferences = new Preferences();
             _dbContext.Users.Add(user);
@@ -87,6 +88,8 @@ namespace BlassaApi.Controllers
             { 
                 return BadRequest();
             }
+
+            user.Verifie = user.FilePermisConduire != null || user.FileCin != null || user.FilePasseport != null;
 
             _dbContext.Entry(user).State = EntityState.Modified;
             _dbContext.Entry(user.Preferences).State = EntityState.Modified;
