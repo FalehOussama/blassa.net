@@ -1,0 +1,74 @@
+<app-menu></app-menu>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-img class="cover" src="../../../assets/images/Background/mesReservations.png" alt="Header"></ion-img>
+  <ion-label class="nombre">{{nbreReservation}} Reservations</ion-label>
+
+    <div *ngIf="mesReservations?.length==0">
+      <ion-row class="ion-justify-content-center">
+        <video preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
+          <source src="../../../assets/videos/noReservation.mp4" type="video/mp4" />
+         </video>
+      </ion-row>
+    </div>
+    <app-annonce-item *ngFor="let annonce of mesReservations"  
+              (click)="afficherFiche(annonce.id)"
+              [uImgUrl]="annonce.uImgUrl"
+              [uPrenom]="annonce.uPrenom"
+              [userId]="annonce?.userId"
+              [prix]="annonce?.prix"
+              [depart]="annonce?.depart"
+              [destination]="annonce?.destination"
+              [dateHeureDepart]="annonce?.dateHeureDepart"
+              [nombrePlaces]="annonce?.nombrePlaces"
+              [nombrePlacesDispo]="annonce?.nombrePlacesDispo"
+              [instantane]="annonce?.instantane"
+              [vClimatise]="annonce?.vClimatise"
+              [cigarette]="annonce?.cigarette"
+              [animaux]="annonce?.animaux"
+              [max2]="annonce?.max2"
+              [leger]="annonce?.leger"
+              [moyen]="annonce?.moyen"
+              [lourd]="annonce?.lourd"
+              [uVerifie]="annonce?.uVerifie"
+              [uSuperDriver]="annonce?.uSuperDriver"
+              [uSuperUser]="annonce?.uSuperUser"
+              [voyageAvec]="annonce?.voyageAvec"
+    ></app-annonce-item>
+  
+    <ion-accordion-group>
+      <ion-accordion value="historiqueAnnonces" (click)="chargerHistoriqueReservations()">
+        <ion-item slot="header" color="light">
+          <ion-label>Historique reservations</ion-label>
+        </ion-item>
+        <div slot="content">
+          <app-annonce-item *ngFor="let annonce of mesReservationsHistorique" 
+                    (click)="afficherFiche(annonce.id)"
+                    [uImgUrl]="annonce.uImgUrl"
+                    [uPrenom]="annonce.uPrenom"
+                    [userId]="annonce?.userId"
+                    [prix]="annonce?.prix"
+                    [depart]="annonce?.depart"
+                    [destination]="annonce?.destination"
+                    [dateHeureDepart]="annonce?.dateHeureDepart"
+                    [nombrePlaces]="annonce?.nombrePlaces"
+                    [nombrePlacesDispo]="annonce?.nombrePlacesDispo"
+                    [instantane]="annonce?.instantane"
+                    [vClimatise]="annonce?.vClimatise"
+                    [cigarette]="annonce?.cigarette"
+                    [animaux]="annonce?.animaux"
+                    [max2]="annonce?.max2"
+                    [leger]="annonce?.leger"
+                    [moyen]="annonce?.moyen"
+                    [lourd]="annonce?.lourd"
+                    [uVerifie]="annonce?.uVerifie"
+                    [uSuperDriver]="annonce?.uSuperDriver"
+                    [uSuperUser]="annonce?.uSuperUser"
+                    [voyageAvec]="annonce?.voyageAvec"
+          ></app-annonce-item>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  
+</ion-content>

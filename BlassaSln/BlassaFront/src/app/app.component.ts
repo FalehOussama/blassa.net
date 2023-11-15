@@ -30,6 +30,11 @@ export class AppComponent implements OnInit{
       title: 'Mes trajet',
       url: '/mes-trajets',
       icon: 'compass'
+    },
+    {
+      title: 'Mes reservations',
+      url: '/mes-reservations',
+      icon: 'compass'
     }
   ];
 

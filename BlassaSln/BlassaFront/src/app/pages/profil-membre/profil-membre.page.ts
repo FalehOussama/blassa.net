@@ -5,6 +5,9 @@ import { UserService } from 'src/app/services/user.service';
 import { userModel } from '../../modules/user/user.module'
 import { StorageService } from 'src/app/services/storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
+import { RatingComponent } from 'src/app/components/rating/rating.component';
+import { RatingModalComponent } from 'src/app/components/rating-modal/rating-modal.component';
 
 @Component({
   selector: 'app-profil-membre',
@@ -18,6 +21,7 @@ export class ProfilMembrePage implements OnInit {
     private userService : UserService,
     private storage : StorageService,
     private formBuilder :FormBuilder,
+    private modalCtrl : ModalController
   ) {
     this.storage.get('user').then(
       async data => {
@@ -29,10 +33,20 @@ export class ProfilMembrePage implements OnInit {
   idMembre:number;
   membre:any;
   user:any;
-  rating : any[];
+  avis : any[];
+  conduite : any[];
   commentaires : any[];
   nombreTrajets:number;
   commentaireForm :FormGroup;
+
+  nombreAvis:number;
+  nombreAvisConduite:number;
+
+  noteAvis : any;
+  noteConduite : any;
+
+  avisStars: any[]=[];
+  conduiteStars: any[]=[];
 
   async ionViewWillEnter(){
 
@@ -40,7 +54,25 @@ export class ProfilMembrePage implements OnInit {
       async data => {
         this.membre = await data;
         this.idMembre = await data.id_User;
-        console.log(data.annonces)
+
+        console.log(data.noteAvis)
+        let j=0;
+        for(let i = 4 ; i >= 0 ; i--){
+          if(data.noteAvis>=1) this.avisStars[j] = 'star'
+          else if(data.noteAvis<=0) this.avisStars[j] = 'star-outline'
+          else if(data.noteAvis<1 && data.noteAvis >0)  this.avisStars[j] = 'star-half-outline'
+          j++;
+          data.noteAvis--;
+        }
+
+        let k=0;
+        for(let i = 4 ; i >= 0 ; i--){
+          if(data.noteConduite>=1) this.conduiteStars[k] = 'star'
+          else if(data.noteConduite<=0) this.conduiteStars[k] = 'star-outline'
+          else if(data.noteConduite<1 && data.noteConduite >0)  this.conduiteStars[k] = 'star-half-outline'
+          k++;
+          data.noteConduite--;
+        }
       }
     )
 
@@ -51,20 +83,31 @@ export class ProfilMembrePage implements OnInit {
     this.userService.getCommentaires(this.idMembre).subscribe(
       async (res)=>{
         this.commentaires = await res.reverse();
-        console.log(res)
       }
     )
    await  this.ngOnInit();
   }
   async ngOnInit() {
     if(this.membre?.avis == undefined || this.membre?.avis == null){
-      this.rating = userModel.avis;
+      this.avis = userModel.avis;
     }
     else {
-      this.rating = await this.membre?.avis;
+      this.avis = await this.membre?.avis;
+      this.nombreAvis = this.avis[0] + this.avis[1] + this.avis[2] + this.avis[3] +this.avis[4]
+    }
+
+    if(this.membre?.conduite == undefined || this.membre?.conduite == null){
+      this.conduite = userModel.conduite;
+    }
+    else {
+      this.conduite = await this.membre?.conduite;
+      this.nombreAvisConduite = this.conduite[0] + this.conduite[1] + this.conduite[2] + this.conduite[3] +this.conduite[4]
     }
       
-      console.log(this.rating)
+      console.log(this.avis)
+      console.log(this.conduite)
+      console.log(this.nombreAvis)
+      console.log(this.nombreAvisConduite)
 
 
 
@@ -143,4 +186,15 @@ export class ProfilMembrePage implements OnInit {
      ()=> location.reload()
     )
   }
+
+  // Rating
+
+    async openRatingModal(){
+      const modal = await this.modalCtrl.create({
+        component : RatingModalComponent,
+        cssClass :  'ratingModal'
+      })
+
+      await modal.present();
+    }
 }

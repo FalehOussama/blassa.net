@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnimationController, IonContent } from '@ionic/angular';
-import type { Animation } from '@ionic/angular';
+import { Animation, MenuController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 import { VehiculeService } from 'src/app/services/vehicule.service';
 import { Vehicule } from '../../classes/vehicule';
@@ -52,7 +52,8 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
     public userService: UserService,
     public vehiculeService: VehiculeService,
     public router : Router,
-    private storage : StorageService,
+    private storage: StorageService,
+    public menuCtrl: MenuController
     ) {
 
       this.storage.get('user').then(
@@ -70,7 +71,11 @@ readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTML
     @Input() sexe : string;
     user: any;
     vehicule: Vehicule;
-  
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
+  }
+
   ngOnInit() {
 
     this.ionicForm1 = this.formBuilder.group({

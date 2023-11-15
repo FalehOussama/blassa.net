@@ -14,6 +14,7 @@ import { getAuth, signInAnonymously } from "firebase/auth";
 import { preferences , avis } from 'src/app/modules/preferences/preferences.module';
 import { userModel } from '../../modules/user/user.module'
 import { StorageService } from 'src/app/services/storage.service';
+import { MenuController } from '@ionic/angular';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class LoginPage implements OnInit   {
   constructor(
     private fireauth: AngularFireAuth,
     private router: Router,
-    private userService : UserService,
+    private userService: UserService,
+    public menuCtrl: MenuController,
     private storage : StorageService
     
   ) { 
@@ -63,6 +65,7 @@ export class LoginPage implements OnInit   {
   }
   ionViewDidEnter() {
     GoogleAuth.initialize();
+    this.menuCtrl.enable(false);
   }
 
 

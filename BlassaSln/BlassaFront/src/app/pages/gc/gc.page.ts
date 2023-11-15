@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
 import { browserRefresh } from '../../app.component';
+import { MenuController } from '@ionic/angular';
 
 
 
@@ -14,36 +15,31 @@ import { browserRefresh } from '../../app.component';
 export class GCPage implements OnInit {
 
   checkbox:boolean=false;
+  user : any ;
   userback : any ;
   public browserRefresh: boolean;
 
   constructor(
     private userService : UserService,
     private router: Router,
+    public menuCtrl: MenuController,
     private storage : StorageService
   ) { }
 
-  async ngOnInit() {
-    let user = await this.storage.get('user');
 
-    if (user.uId !=null){
-      this.userService.getUserByUid(user.uId).subscribe(
-        res =>{
-          return this.userback = res;
-        }
-      );
-    }
-    else if(user.id!=null){
-      this.userService.getUserById(user.id).subscribe(
-        res =>{
-          return this.userback = res;
-        }
-      );
-    }
-    else{
-      this.userService.getUserByUid(user.user.uid).subscribe(
-        res =>{
-          return this.userback = res;
+  async ionViewWillEnter(){
+    this.menuCtrl.enable(false);
+    await this.storage.get('user').then(
+      async data => this.user = await data
+    )
+    console.log(this.user);
+  }
+
+  async ngOnInit() {
+    if (this.user?.uId !=null){
+      this.userService.getUserByUid(this.user?.uId).subscribe(
+        async res =>{
+          return this.user = await res;
         }
       );
     }
@@ -55,13 +51,13 @@ export class GCPage implements OnInit {
   }
 
   async onSubmit() {
-    this.userback.conditionsGenerales = true;
-    this.userService.updateUser(this.userback).subscribe(
+    this.user.conditionsGenerales = true;
+    this.userService.updateUser(this.user).subscribe(
       async (res) => {
-        await this.storage.set('user', this.userback);
-        this.userback = await this.storage.get('user');
+        await this.storage.set('user', this.user);
+        this.user = await this.storage.get('user');
         
-        this.redirectByUser(this.userback);
+        this.redirectByUser(this.user);
       }
     );
   }

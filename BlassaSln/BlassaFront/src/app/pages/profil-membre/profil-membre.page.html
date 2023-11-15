@@ -33,19 +33,13 @@
           <ion-col size="col-4">
             <ion-row class="text">Avis</ion-row>
             <ion-row class="text2">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
+              <ion-icon *ngFor="let num of [0,1,2,3,4]" name={{avisStars[num]}}></ion-icon>
             </ion-row>
           </ion-col>
           <ion-col size="col-4">
             <ion-row class="text">Conduite</ion-row>
             <ion-row class="text2">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
+              <ion-icon *ngFor="let num of [0,1,2,3,4]" name={{conduiteStars[num]}}></ion-icon>
             </ion-row>
           </ion-col>
         </ion-row>
@@ -68,59 +62,69 @@
         <ion-img class="social" src="../../../assets/icon/messenger.svg"></ion-img>
       </ion-col>
       <ion-col size="auto" class="noter">
-        <ion-button (click)="openNoter(true , $event)">Noter</ion-button>
+        <ion-button (click)="openRatingModal()">Noter</ion-button>
       </ion-col>
     </ion-row>
 
-    <ion-label class="text">Mes préferences de voyage :</ion-label>
-    <ion-row>
-      <ion-item style="width: 100%;" lines="none">
-        <ion-icon color="dark" name="snow-outline" slot="start" size="small"></ion-icon>
-        <ion-label class="text">Climatisé </ion-label> 
-        <ion-icon *ngIf="membre?.prefs.climatisation" slot="end" color="success" name="checkmark-circle"></ion-icon>
-        <ion-icon *ngIf="membre?.prefs.climatisation==false || membre?.prefs.climatisation==null" slot="end" name="close-circle"></ion-icon>
-      </ion-item>
-
-      <ion-item style="width: 100%;" lines="none">
-        <ion-img color="dark" slot="start" class="icon" src="../../../assets/icons/cig.svg"></ion-img>
-        <ion-label class="text">Cigarette autorisée </ion-label>
-        <ion-icon *ngIf="membre?.prefs.cigarette" slot="end" color="success" name="checkmark-circle"></ion-icon>
-        <ion-icon *ngIf="membre?.prefs.cigarette==false || membre?.prefs.cigarette==null" slot="end" name="close-circle"></ion-icon>
-      </ion-item>
-    
-    <ion-item style="width: 100%;" lines="none">
-      <ion-icon color="dark" name="paw-outline" slot="start" size="small"></ion-icon>
-      <ion-label class="text">Animaux de compagnie </ion-label> 
-      <ion-icon *ngIf="membre?.prefs.animal==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
-      <ion-icon *ngIf="membre?.prefs.animal==false || membre?.prefs.animal==null" slot="end" name="close-circle"></ion-icon>
-    </ion-item>
-
-    <ion-item style="width: 100%;" lines="none">
-      <ion-icon color="dark" name="people-outline" slot="start" size="small"></ion-icon>
-      <ion-label class="text">Max 2 </ion-label> 
-      <ion-icon *ngIf="membre?.prefs.max2==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
-      <ion-icon *ngIf="membre?.prefs.max2==false ||membre?.prefs.max2==null" slot="end" name="close-circle"></ion-icon>
-    </ion-item>
-
-
-    <ion-item style="width: 100%;" lines="none">
-      <ion-icon color="dark" name="briefcase-outline" slot="start" size="small"></ion-icon>
-      <ion-label class="text">Bagage :</ion-label> 
-      <ion-label class="text" *ngIf="membre?.prefs.leger==true" slot="end">Leger </ion-label>
-      <ion-label class="text" *ngIf="membre?.prefs.moyen==true" slot="end">&nbsp;| Moyen</ion-label>
-      <ion-label class="text" *ngIf="membre?.prefs.lourd==true" slot="end">&nbsp;| lourd</ion-label>
-    </ion-item>
-
-
-    <ion-row style="width: 100%;">
-      <ion-label class="text">Mes véhicules</ion-label> 
-    </ion-row>
-
-        <ion-item *ngFor="let car of membre?.vehicules " style="width: 51%;">
-          <ion-label class="text">{{car.marque}} - {{car.model}}</ion-label>
+    <ion-accordion-group>
+      <ion-accordion value="preferences">
+        <ion-item slot="header" color="light">
+          <ion-label class="text">Mes préferences de voyage :</ion-label>
         </ion-item>
-  </ion-row>
+        <div class="ion-padding" slot="content">
+          <ion-item style="width: 100%;" lines="none">
+            <ion-icon color="dark" name="snow-outline" slot="start" size="small"></ion-icon>
+            <ion-label class="text">Climatisé </ion-label> 
+            <ion-icon *ngIf="membre?.prefs.climatisation" slot="end" color="success" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="membre?.prefs.climatisation==false || membre?.prefs.climatisation==null" slot="end" name="close-circle"></ion-icon>
+          </ion-item>
+    
+          <ion-item style="width: 100%;" lines="none">
+            <ion-img color="dark" slot="start" class="icon" src="../../../assets/icons/cig.svg"></ion-img>
+            <ion-label class="text">Cigarette autorisée </ion-label>
+            <ion-icon *ngIf="membre?.prefs.cigarette" slot="end" color="success" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="membre?.prefs.cigarette==false || membre?.prefs.cigarette==null" slot="end" name="close-circle"></ion-icon>
+          </ion-item>
+        
+        <ion-item style="width: 100%;" lines="none">
+          <ion-icon color="dark" name="paw-outline" slot="start" size="small"></ion-icon>
+          <ion-label class="text">Animaux de compagnie </ion-label> 
+          <ion-icon *ngIf="membre?.prefs.animal==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
+          <ion-icon *ngIf="membre?.prefs.animal==false || membre?.prefs.animal==null" slot="end" name="close-circle"></ion-icon>
+        </ion-item>
+    
+        <ion-item style="width: 100%;" lines="none">
+          <ion-icon color="dark" name="people-outline" slot="start" size="small"></ion-icon>
+          <ion-label class="text">Max 2 </ion-label> 
+          <ion-icon *ngIf="membre?.prefs.max2==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
+          <ion-icon *ngIf="membre?.prefs.max2==false ||membre?.prefs.max2==null" slot="end" name="close-circle"></ion-icon>
+        </ion-item>
+    
+    
+        <ion-item style="width: 100%;" lines="none">
+          <ion-icon color="dark" name="briefcase-outline" slot="start" size="small"></ion-icon>
+          <ion-label class="text">Bagage :</ion-label> 
+          <ion-label class="text" *ngIf="membre?.prefs.leger==true" slot="end">Leger </ion-label>
+          <ion-label class="text" *ngIf="membre?.prefs.moyen==true" slot="end">&nbsp;| Moyen</ion-label>
+          <ion-label class="text" *ngIf="membre?.prefs.lourd==true" slot="end">&nbsp;| lourd</ion-label>
+        </ion-item>
+    
+        </div>
+      </ion-accordion>
+      <ion-accordion value="vehicules">
+        <ion-item slot="header" color="light">
+          <ion-label class="text">Mes véhicules</ion-label> 
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-item *ngFor="let car of membre?.vehicules " style="width: 51%;">
+            <ion-label class="text">{{car.marque}} - {{car.model}}</ion-label>
+          </ion-item>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
 
+
+    <app-rating></app-rating>
     <div class="ion-padding">
 
       
@@ -162,13 +166,4 @@
 
   </ion-grid>
 
-  <ion-alert
-  class="noterAlert"
-  [isOpen]="isNoterOpen"
-  trigger="noter-alert"
-  header="Noter {{membre?.nom}}"
-  [buttons]="alertButtons"
-  [inputs]="alertInputs"
-  (didDismiss)="openNoter(false , $event)"
-></ion-alert>
 </ion-content>

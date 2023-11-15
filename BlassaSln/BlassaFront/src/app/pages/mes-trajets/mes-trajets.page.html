@@ -4,67 +4,74 @@
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-img class="cover" src="../../../assets/images/Background/mesTrajets.png" alt="Header"></ion-img>
-  
-<ion-segment [(ngModel)]="segment">
-  <ion-segment-button value="trajets">
-    <ion-label>Trajets</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="reservations">
-    <ion-label>Réservations</ion-label>
-  </ion-segment-button>
-</ion-segment>
+  <ion-label class="nombre">{{nbreAnnonces}} trajets</ion-label>
 
-  
-<div *ngIf="segment=='trajets'">
   <div *ngIf="mesAnnonces?.length==0">
-    <ion-row class="ion-justify-content-center" style="margin-top: -50px;">
+    <ion-row class="ion-justify-content-center">
       <video preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
         <source src="../../../assets/videos/noAnnonce.mp4" type="video/mp4" />
        </video>
     </ion-row>
   </div>
-  <!--<app-annonce-item *ngFor="let annonce of mesAnnonces" 
-  (click)="afficherFiche(annonce.id_Annonce)" 
-  [IMG]="annonce.conducteur?.imgUrl"
-  [Nom]="annonce.conducteur?.nom"
-  [idUser]="annonce.iduser" 
-  [prix]="annonce.prix"
-  [Dep]="annonce.trajet.depart" 
-  [Des]="annonce.trajet.destination" 
-  [dateHeure]="annonce.date_Heure_Depart"  
-  [NBP]="annonce.nombrePlaces" 
-  [inst]="annonce.inst"
-  [verifie]="annonce.profilVerife" 
-  [filles]="annonce.filles" 
-  [garcons]="annonce.garcons" 
-  [tous]="annonce.tous"
-  ></app-annonce-item>-->
-</div>
 
-<div *ngIf="segment=='reservations'">
-  <div *ngIf="mesReservations.length==0">
-    <ion-row class="ion-justify-content-center" style="margin-top: -50px;">
-      <video preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
-        <source src="../../../assets/videos/noReservation.mp4" type="video/mp4" />
-       </video>
-    </ion-row>
-  </div>
-  <!--<app-annonce-item *ngFor="let annonce of mesReservations"  
-  (click)="afficherFiche(annonce.id_Annonce)" 
-  [IMG]="annonce.conducteur.imgUrl"
-  [Nom]="annonce.conducteur.nom"
-  [idUser]="annonce.iduser" 
-  [prix]="annonce.prix"
-  [Dep]="annonce.trajet.depart" 
-  [Des]="annonce.trajet.destination" 
-  [dateHeure]="annonce.date_Heure_Depart"  
-  [NBP]="annonce.nombrePlaces" 
-  [inst]="annonce.inst"
-  [verifie]="annonce.profilVerife" 
-  [filles]="annonce.filles" 
-  [garcons]="annonce.garcons" 
-  [tous]="annonce.tous"
-  ></app-annonce-item>-->
-</div>
+  <app-annonce-item *ngFor="let annonce of mesAnnonces" 
+            (click)="afficherFiche(annonce.id)"
+            [uImgUrl]="annonce.uImgUrl"
+            [uPrenom]="annonce.uPrenom"
+            [userId]="annonce?.userId"
+            [prix]="annonce?.prix"
+            [depart]="annonce?.depart"
+            [destination]="annonce?.destination"
+            [dateHeureDepart]="annonce?.dateHeureDepart"
+            [nombrePlaces]="annonce?.nombrePlaces"
+            [nombrePlacesDispo]="annonce?.nombrePlacesDispo"
+            [instantane]="annonce?.instantane"
+            [vClimatise]="annonce?.vClimatise"
+            [cigarette]="annonce?.cigarette"
+            [animaux]="annonce?.animaux"
+            [max2]="annonce?.max2"
+            [leger]="annonce?.leger"
+            [moyen]="annonce?.moyen"
+            [lourd]="annonce?.lourd"
+            [uVerifie]="annonce?.uVerifie"
+            [uSuperDriver]="annonce?.uSuperDriver"
+            [uSuperUser]="annonce?.uSuperUser"
+            [voyageAvec]="annonce?.voyageAvec"
+  ></app-annonce-item>
+
+  <ion-accordion-group>
+    <ion-accordion value="historiqueAnnonces" (click)="chargerHistoriqueAnnonces()">
+      <ion-item slot="header" color="light">
+        <ion-label>Historique annonces</ion-label>
+      </ion-item>
+      <div slot="content">
+        <app-annonce-item *ngFor="let annonce of mesAnnoncesHistorique" 
+                (click)="afficherFiche(annonce.id)"
+                [uImgUrl]="annonce.uImgUrl"
+                [uPrenom]="annonce.uPrenom"
+                [userId]="annonce?.userId"
+                [prix]="annonce?.prix"
+                [depart]="annonce?.depart"
+                [destination]="annonce?.destination"
+                [dateHeureDepart]="annonce?.dateHeureDepart"
+                [nombrePlaces]="annonce?.nombrePlaces"
+                [nombrePlacesDispo]="annonce?.nombrePlacesDispo"
+                [instantane]="annonce?.instantane"
+                [vClimatise]="annonce?.vClimatise"
+                [cigarette]="annonce?.cigarette"
+                [animaux]="annonce?.animaux"
+                [max2]="annonce?.max2"
+                [leger]="annonce?.leger"
+                [moyen]="annonce?.moyen"
+                [lourd]="annonce?.lourd"
+                [uVerifie]="annonce?.uVerifie"
+                [uSuperDriver]="annonce?.uSuperDriver"
+                [uSuperUser]="annonce?.uSuperUser"
+                [voyageAvec]="annonce?.voyageAvec"
+        ></app-annonce-item>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
 
 </ion-content>

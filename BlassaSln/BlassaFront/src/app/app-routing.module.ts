@@ -79,6 +79,10 @@ const routes: Routes = [
   {
     path: 'nouveau-compte',
     loadChildren: () => import('./pages/nouveau-compte/nouveau-compte.module').then( m => m.NouveauComptePageModule)
+  },
+  {
+    path: 'mes-reservations',
+    loadChildren: () => import('./pages/mes-reservations/mes-reservations.module').then( m => m.MesReservationsPageModule)
   }
 ];
 @NgModule({
