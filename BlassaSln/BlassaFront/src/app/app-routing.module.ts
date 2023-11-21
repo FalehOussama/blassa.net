@@ -53,20 +53,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profil/profil.module').then( m => m.ProfilPageModule)
   },
   {
-    path: 'preferences',
-    loadChildren: () => import('./pages/preferences/preferences.module').then( m => m.PreferencesPageModule)
-  },
-  {
     path: 'add-car',
     loadChildren: () => import('./pages/add-car/add-car.module').then( m => m.AddCarPageModule)
   },
   {
     path: 'car-info/:i',
     loadChildren: () => import('./pages/car-info/car-info.module').then( m => m.CarInfoPageModule)
-  },
-  {
-    path: 'verification-profil',
-    loadChildren: () => import('./pages/verification-profil/verification-profil.module').then( m => m.VerificationProfilPageModule)
   },
   {
     path: 'profil-membre',
