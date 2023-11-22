@@ -250,14 +250,9 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
   }
 
   afficherMembre(idMembre){
-      console.log(idMembre);
-      this.userService.getUserById(idMembre).subscribe(
-         async res => {
-            console.log(res);
-            await  this.storage.set('membre',res)
-            this.router.navigate(['/profil-membre']);
-          }
-      )    
+    console.log(idMembre);
+    this.storage.set('idMembre', idMembre);
+    this.router.navigate(['/profil-membre']);  
   }
 
   isModalOpen = false;

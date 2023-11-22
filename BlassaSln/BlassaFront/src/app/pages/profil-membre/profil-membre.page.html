@@ -7,39 +7,45 @@
     <ion-row>
       <ion-col>
         <ion-row class="ion-padding ion-justify-content-center">
-          <ion-avatar style="width: 100px; height: 100px;">
+          <ion-img class="superUser" *ngIf="membre?.superUser" src="../../../assets/images/medSuperUser.png"></ion-img>
+          <ion-img class="superDriver" *ngIf="membre?.superDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
+          <ion-avatar class="{{membre?.verifie ? 'verifie' : 'nonVerifie'}}" style="width: 100px; height: 100px;">
             <img alt="Silhouette of a person's head" src={{membre?.imgUrl}} />
           </ion-avatar>
         </ion-row>
         <ion-row class="ion-justify-content-center" style="width: 100%;">
-          <ion-label class="nom">{{membre?.nom}}</ion-label>
+          <ion-label class="nom">{{membre?.prenom}}</ion-label>
         </ion-row>
-        <ion-row class="ion-justify-content-center" >
-          <ion-label class="role" *ngIf="membre?.prefs.passager == false"> Conducteur</ion-label>
-          <ion-label class="role" *ngIf="membre?.prefs.passager == true" > Passager</ion-label>
-          <ion-label class="age">21 ans</ion-label>
+        <ion-row class="ion-justify-content-center">
+          <ion-label class="role" *ngIf="membre?.passager == false"> Conducteur</ion-label>
+          <ion-label class="role" *ngIf="membre?.passager == true"> Passager</ion-label>
+          <ion-label class="age">{{membre?.age}} ans</ion-label>
         </ion-row>
       </ion-col>
       <ion-col>
         <ion-row style="width: 100%; justify-content: center;">
           <ion-col size="col-4">
             <ion-row class="text">Trajets publiés</ion-row>
-            <ion-row class="text2">{{nombreTrajets}}</ion-row>
+            <ion-row class="text2">{{membre?.nbTrajetsPubliees}}</ion-row>
           </ion-col>
           <ion-col size="col-4">
             <ion-row class="text">Membre depuis</ion-row>
-            <ion-row class="text2">Juin 2023</ion-row>
+            <ion-row class="text2">{{membre?.membreDepuis}}</ion-row>
           </ion-col>
           <ion-col size="col-4">
             <ion-row class="text">Avis</ion-row>
             <ion-row class="text2">
-              <ion-icon *ngFor="let num of [0,1,2,3,4]" name={{avisStars[num]}}></ion-icon>
+              <ion-button id="btn-avi" class="aviBtn" (click)="openAvisModal(false)">
+                <app-avis #compAvis></app-avis>
+              </ion-button>
             </ion-row>
           </ion-col>
-          <ion-col size="col-4">
+          <ion-col *ngIf="!membre?.passager" size="col-4">
             <ion-row class="text">Conduite</ion-row>
             <ion-row class="text2">
-              <ion-icon *ngFor="let num of [0,1,2,3,4]" name={{conduiteStars[num]}}></ion-icon>
+              <ion-button id="btn-avi-cond" class="aviBtn" (click)="openAvisModal(true)">
+                <app-avis-cond #compAvisCond></app-avis-cond>
+              </ion-button>
             </ion-row>
           </ion-col>
         </ion-row>
@@ -50,84 +56,85 @@
   <ion-grid>
 
     <div class="sep"></div>
-    <ion-label class="text">Vous pouvez me contacter par :</ion-label>
+    <ion-label class="text">Vous pouvez contacter {{membre?.prenom}} par :</ion-label>
     <ion-row>
-      <ion-col size="auto" *ngIf="membre?.prefs.tel">
+      <ion-col size="auto" *ngIf="membre?.tel">
         <ion-img class="social" src="../../../assets/icon/phone.svg"></ion-img>
       </ion-col>
-      <ion-col size="auto">
+      <ion-col size="auto" *ngIf="membre?.whatsApp">
         <ion-img class="social" src="../../../assets/icon/whatsapp.svg"></ion-img>
       </ion-col>
-      <ion-col size="auto">
+      <ion-col size="auto" *ngIf="membre?.messenger">
         <ion-img class="social" src="../../../assets/icon/messenger.svg"></ion-img>
-      </ion-col>
-      <ion-col size="auto" class="noter">
-        <ion-button (click)="openRatingModal()">Noter</ion-button>
       </ion-col>
     </ion-row>
 
     <ion-accordion-group>
       <ion-accordion value="preferences">
         <ion-item slot="header" color="light">
-          <ion-label class="text">Mes préferences de voyage :</ion-label>
+          <ion-label class="text">Ses préferences de voyage :</ion-label>
         </ion-item>
         <div class="ion-padding" slot="content">
           <ion-item style="width: 100%;" lines="none">
             <ion-icon color="dark" name="snow-outline" slot="start" size="small"></ion-icon>
-            <ion-label class="text">Climatisé </ion-label> 
-            <ion-icon *ngIf="membre?.prefs.climatisation" slot="end" color="success" name="checkmark-circle"></ion-icon>
-            <ion-icon *ngIf="membre?.prefs.climatisation==false || membre?.prefs.climatisation==null" slot="end" name="close-circle"></ion-icon>
+            <ion-label class="text">Climatisé </ion-label>
+            <ion-icon *ngIf="membre?.climatise" slot="end" color="success" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="membre?.climatise==false" slot="end" name="close-circle"></ion-icon>
           </ion-item>
-    
+
           <ion-item style="width: 100%;" lines="none">
             <ion-img color="dark" slot="start" class="icon" src="../../../assets/icons/cig.svg"></ion-img>
             <ion-label class="text">Cigarette autorisée </ion-label>
-            <ion-icon *ngIf="membre?.prefs.cigarette" slot="end" color="success" name="checkmark-circle"></ion-icon>
-            <ion-icon *ngIf="membre?.prefs.cigarette==false || membre?.prefs.cigarette==null" slot="end" name="close-circle"></ion-icon>
+            <ion-icon *ngIf="membre?.cigarette" slot="end" color="success" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="membre?.cigarette==false" slot="end" name="close-circle"></ion-icon>
           </ion-item>
-        
-        <ion-item style="width: 100%;" lines="none">
-          <ion-icon color="dark" name="paw-outline" slot="start" size="small"></ion-icon>
-          <ion-label class="text">Animaux de compagnie </ion-label> 
-          <ion-icon *ngIf="membre?.prefs.animal==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
-          <ion-icon *ngIf="membre?.prefs.animal==false || membre?.prefs.animal==null" slot="end" name="close-circle"></ion-icon>
-        </ion-item>
-    
-        <ion-item style="width: 100%;" lines="none">
-          <ion-icon color="dark" name="people-outline" slot="start" size="small"></ion-icon>
-          <ion-label class="text">Max 2 </ion-label> 
-          <ion-icon *ngIf="membre?.prefs.max2==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
-          <ion-icon *ngIf="membre?.prefs.max2==false ||membre?.prefs.max2==null" slot="end" name="close-circle"></ion-icon>
-        </ion-item>
-    
-    
-        <ion-item style="width: 100%;" lines="none">
-          <ion-icon color="dark" name="briefcase-outline" slot="start" size="small"></ion-icon>
-          <ion-label class="text">Bagage :</ion-label> 
-          <ion-label class="text" *ngIf="membre?.prefs.leger==true" slot="end">Leger </ion-label>
-          <ion-label class="text" *ngIf="membre?.prefs.moyen==true" slot="end">&nbsp;| Moyen</ion-label>
-          <ion-label class="text" *ngIf="membre?.prefs.lourd==true" slot="end">&nbsp;| lourd</ion-label>
-        </ion-item>
-    
+
+          <ion-item style="width: 100%;" lines="none">
+            <ion-icon color="dark" name="paw-outline" slot="start" size="small"></ion-icon>
+            <ion-label class="text">Animaux de compagnie </ion-label>
+            <ion-icon *ngIf="membre?.animaux==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="membre?.animaux==false" slot="end" name="close-circle"></ion-icon>
+          </ion-item>
+
+          <ion-item style="width: 100%;" lines="none">
+            <ion-icon color="dark" name="people-outline" slot="start" size="small"></ion-icon>
+            <ion-label class="text">Max 2 </ion-label>
+            <ion-icon *ngIf="membre?.max2==true" slot="end" color="success" name="checkmark-circle"></ion-icon>
+            <ion-icon *ngIf="membre?.max2==false" slot="end" name="close-circle"></ion-icon>
+          </ion-item>
+
+
+          <ion-item style="width: 100%;" lines="none">
+            <ion-icon color="dark" name="briefcase-outline" slot="start" size="small"></ion-icon>
+            <ion-label class="text">Bagage :</ion-label>
+            <ion-label class="text" *ngIf="membre?.leger==true" slot="end">Leger </ion-label>
+            <ion-label class="text" *ngIf="membre?.moyen==true" slot="end">&nbsp;| Moyen</ion-label>
+            <ion-label class="text" *ngIf="membre?.lourd==true" slot="end">&nbsp;| lourd</ion-label>
+          </ion-item>
+
         </div>
       </ion-accordion>
       <ion-accordion value="vehicules">
         <ion-item slot="header" color="light">
-          <ion-label class="text">Mes véhicules</ion-label> 
+          <ion-label class="text">Ses véhicules</ion-label>
         </ion-item>
-        <div class="ion-padding" slot="content">
-          <ion-item *ngFor="let car of membre?.vehicules " style="width: 51%;">
-            <ion-label class="text">{{car.marque}} - {{car.model}}</ion-label>
-          </ion-item>
+        <div class="ion-padding" slot="content">          
+          <ion-card *ngFor="let car of membre?.vehicules">
+            <ion-card-header>
+              <ion-card-title>{{car.marque}} - {{car.modele}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div>
+                <ion-img style="margin-left: auto; margin-right: 1px; display: flex; flex-direction: justify-content" class="icon" *ngIf="car.climatise" src="../../../assets/images/clim.png"></ion-img>
+              </div>
+            </ion-card-content>
+          </ion-card>
         </div>
       </ion-accordion>
     </ion-accordion-group>
 
-
-    <app-rating></app-rating>
     <div class="ion-padding">
 
-      
       <ion-label style="font-family: font2;">Commentaires</ion-label>
       <form [formGroup]="commentaireForm" novalidate>
         <ion-item style="margin-top: 20px;" lines="none">
@@ -141,28 +148,25 @@
       <ion-button (click)="commenter()" style="float: right;">Commenter</ion-button>
 
       <div style="margin-top:55px ;">
-        <ion-card *ngFor="let comment of commentaires">
-          <ion-item>
-            <ion-avatar slot="start">
-              <img alt="Silhouette of mountains" src="{{comment.de.imgUrl}}" />
-            </ion-avatar>
-            <ion-label>
-              <h3>{{comment.de.nom}}</h3>
-              <p>{{comment.dateCommentaire | date}}</p>
-            </ion-label>
-          </ion-item>
+        <ion-card *ngFor="let comment of membre?.commentaires">
           <ion-card-header>
-            <ion-card-title>{{comment.categorieCommentaire}}</ion-card-title>
+            <ion-item>
+              <ion-avatar slot="start">
+                <img alt="Silhouette of mountains" src="{{comment.imgUrl}}" />
+              </ion-avatar>
+              <ion-label>
+                <ion-card-title>{{comment.prenom}}</ion-card-title>
+                <p>{{comment.dateComm | date}}</p>
+              </ion-label>
+            </ion-item>
           </ion-card-header>
           <ion-card-content>
-            {{comment.commentaire}}
+            {{comment.texte}}
           </ion-card-content>
         </ion-card>
       </div>
 
     </div>
-
-
 
   </ion-grid>
 

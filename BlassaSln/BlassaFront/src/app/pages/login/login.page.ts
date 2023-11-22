@@ -118,11 +118,11 @@ export class LoginPage implements OnInit   {
       this.method = "Google";
 
       //temp
-      this.uid = "uId2";
-      this.email = "user2@gmail.com";
+      this.uid = "uId12";
+      this.email = "user12@gmail.com";
       this.img = "../../assets/images/profil.png";
-      this.prenom = "PUser2";
-      this.nom = "User2";
+      this.prenom = "PUser12";
+      this.nom = "User12";
       this.method = "Google";
 
       this.getUser(this.uid, this.email);

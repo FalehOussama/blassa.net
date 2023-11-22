@@ -23,12 +23,16 @@ export class UserService {
     return this.http.post<User>(this.baseUrl, user);
   }
 
-  public getUserByUid(uid:any): Observable<any>{
+  public getUserById(id:any): Observable<any>{
+    return this.http.get<any>(this.baseUrl + "/" + id );
+  }
+
+  public getUserByUid(uid: any): Observable<any> {
     return this.http.get<any>(this.baseUrl + "/Uid/?Uid=" + uid);
   }
 
-  public getUserById(id:any): Observable<any>{
-    return this.http.get<any>(this.baseUrl + "/" + id );
+  public getUserMembre(idMembre: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/Membre/?id=" + idMembre);
   }
 
   public updateUser(user : any) : Observable<any>{
@@ -36,14 +40,6 @@ export class UserService {
   }
 
   // old
-
-  public getNombreTrajets(userUid:any): Observable<any>{
-    return this.http.get<any>(this.baseUrl + "/nombreTrajets/" + userUid );
-  }
-
-  public updatePrefs(user : any ) : Observable<any>{
-      return this.http.put<any>(this.baseUrl + "/updatePreferences"  , user );
-  }
 
   public addVehicule(idUser : number , climatise : any , verifie : any, couleur : any , type : any , mis : any , model : any , marque : any , mat : any ) : Observable<any>{
     return this.http.put<any>(this.baseUrl + "/addVehicule/" + idUser, {

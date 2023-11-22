@@ -1,0 +1,29 @@
+<ion-content>
+  <ion-toolbar>
+    <ion-title>{{isConduite ? 'Votre avi sur la conduite de' : 'Votre avi sur'}} {{membre?.prenom}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="closeModal()">Fermer</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-list>
+    <ion-item>
+      <ion-avatar slot="start">
+        <ion-img src="{{membre?.imgUrl}}"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h2>{{membre?.prenom}}</h2>
+        <p>{{membre?.passager ? "Passager" : "Conducteur"}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-item style="margin-left: 50px">
+      <ion-icon size="large" name="star" *ngFor="let num of [1,2,3,4,5]" (click)="rateAvis(num)" [ngStyle]="{'color':getColorAvis(num)}"></ion-icon>
+    </ion-item>
+    <ion-item style="margin-left: 50px">
+      <ion-label>
+        <h2>{{descAvi}}</h2>
+        <p>Note : {{ratingAvis}} / 5</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button style="margin-left: 60px" (click)="valider()">Valider</ion-button>
+</ion-content>

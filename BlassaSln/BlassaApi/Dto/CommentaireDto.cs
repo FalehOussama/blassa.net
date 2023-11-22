@@ -1,0 +1,16 @@
+﻿namespace BlassaApi.Dto
+{
+    public class CommentaireDto
+    {
+        public int Id { get; set; }
+        //User qui a reçu le comm
+        public int UserId { get; set; }
+        //User qui a posté le comm
+        public int UserCommId { get; set; }
+        public string? ImgUrl { get; set; }
+        public string? Nom { get; set; }
+        public string? Prenom { get; set; }
+        public DateTime DateComm { get; set; }
+        public string Texte { get; set; }
+    }
+}

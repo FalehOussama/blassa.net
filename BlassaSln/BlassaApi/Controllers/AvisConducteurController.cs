@@ -107,10 +107,12 @@ namespace BlassaApi.Controllers
         [HttpPost]
         public async Task<ActionResult<AviConducteur>> PostAviConducteur(AviConducteur avi)
         {
+            if (avi.UserId == avi.UserAviId)
+                return BadRequest("Un utiisateur ne peut pas donner un avi sur lui.");
             if (!UserExists(avi.UserId))
-                return BadRequest();
+                return BadRequest("Utilisateur inexistant");
             if (!UserExists(avi.UserAviId))
-                return BadRequest();
+                return BadRequest("Utilisateur avi inexistant");
             if (AviUserExists(avi.UserId, avi.UserAviId))
                 return BadRequest("Avi existe déjà");
 
@@ -118,6 +120,16 @@ namespace BlassaApi.Controllers
 
             _dbContext.AvisConducteur.Add(avi);
             await _dbContext.SaveChangesAsync();
+
+            var aviStat = await GetAviUserStat(avi.UserId);
+            var user = await _dbContext.Users.FindAsync(avi.UserId);
+            if (user != null)
+            {
+                var objAviStat = (AviDto)((ObjectResult)aviStat.Result).Value;
+                user.SuperDriver = (objAviStat?.Rating >= 4);
+                _dbContext.Entry(user).State = EntityState.Modified;
+                await _dbContext.SaveChangesAsync();
+            }
 
             return CreatedAtAction(nameof(GetAviConducteur), new { id = avi.Id }, avi);
         }
@@ -176,7 +188,10 @@ namespace BlassaApi.Controllers
         {
             return (_dbContext.AvisConducteur?
                 .Any(u => u.UserId == userId &&
-                            u.UserAviId == userAviId)).GetValueOrDefault();
+                            u.UserAviId == userAviId &&
+                            DateTime.Now.Year == u.DateAvi.Year &&
+                            DateTime.Now.Month == u.DateAvi.Month &&
+                            DateTime.Now.Day == u.DateAvi.Day)).GetValueOrDefault();
         }
     }
 }

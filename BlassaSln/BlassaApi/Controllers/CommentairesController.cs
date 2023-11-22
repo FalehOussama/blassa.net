@@ -51,9 +51,11 @@ namespace BlassaApi.Controllers
         public async Task<ActionResult<Commentaire>> PostCommentaire(Commentaire commentaire)
         {
             if (!UserExists(commentaire.UserId))
-                return BadRequest();
+                return BadRequest("Utilisateur inexistant");
             if (!UserExists(commentaire.UserCommId))
-                return BadRequest();
+                return BadRequest("Utilisateur commentaire inexistant");
+            if(string.IsNullOrWhiteSpace(commentaire.Texte))
+                return BadRequest("Commentaire vide");
 
             commentaire.DateComm = DateTime.Now;
 

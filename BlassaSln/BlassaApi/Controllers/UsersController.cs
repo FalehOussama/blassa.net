@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlassaApi.Models;
+using BlassaApi.Dto;
+using System.Globalization;
 
 namespace BlassaApi.Controllers
 {
@@ -47,7 +49,7 @@ namespace BlassaApi.Controllers
             return Ok(user);
         }
 
-        //GET : api/Users/5
+        //GET : api/Users/Uid/5
         [HttpGet("Uid")]
         public async Task<ActionResult<User>> GetUserByUid(string uId)
         {
@@ -57,6 +59,61 @@ namespace BlassaApi.Controllers
             var user = await _dbContext.Users
                 .Where(u => u.UId == uId)
                 .Include(u => u.Preferences)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+                return Ok();
+
+            return Ok(user);
+        }
+
+        //GET : api/Users/Membre/5
+        [HttpGet("Membre")]
+        public async Task<ActionResult<UserMembreDto>> GetUserMembre(int id)
+        {
+            if (_dbContext.Users == null)
+                return NotFound();
+
+            var user = await _dbContext.Users
+                .Where(u => u.Id == id)
+                .Include(u => u.Preferences)
+                .Include(u => u.Vehicules)
+                .Include(u => u.Commentaires)
+                .ThenInclude(c => c.UserComm)
+                .Select(u => new UserMembreDto() { 
+                    Id = u.Id,
+                    ImgUrl = u.ImgUrl,
+                    Nom = u.Nom,
+                    Prenom = u.Prenom,
+                    MembreDepuis = FormatDateMounthYear(u.DateCreation),
+                    Age = GetAge(u.DateNaissance),
+                    Verifie = u.Verifie,
+                    SuperDriver = u.SuperDriver,
+                    SuperUser = u.SuperUser,
+                    NbTrajetsPubliees = u.TrajetsAnnonces.Count(),
+                    Passager = u.Preferences.Passager,
+                    Tel = u.Preferences.Tel,
+                    WhatsApp = u.Preferences.WhatsApp,
+                    Messenger = u.Preferences.Messenger,
+                    Cigarette = u.Preferences.Cigarette,
+                    Animaux = u.Preferences.Animaux,
+                    Max2 = u.Preferences.Max2,
+                    Climatise = u.Preferences.Climatise,
+                    Leger = u.Preferences.Leger,
+                    Moyen = u.Preferences.Moyen,
+                    Lourd = u.Preferences.Lourd,
+                    Vehicules = u.Vehicules.ToList(),
+                    Commentaires = u.Commentaires.OrderByDescending(x => x.DateComm).Select(c => new CommentaireDto() { 
+                        Id = c.Id,
+                        UserId = c.UserId,
+                        UserCommId = c.UserCommId,
+                        ImgUrl = c.UserComm.ImgUrl,
+                        Nom = c.UserComm.Nom,
+                        Prenom = c.UserComm.Prenom,
+                        DateComm = c.DateComm,
+                        Texte = c.Texte
+                    }).ToList()
+                })
                 .FirstOrDefaultAsync();
 
             if (user == null)
@@ -128,6 +185,22 @@ namespace BlassaApi.Controllers
         private bool UserExists(int id)
         { 
             return (_dbContext.Users?.Any(u => u.Id == id)).GetValueOrDefault();
+        }
+
+        private static int GetAge(DateTime? dateNaissance)
+        { 
+            if (dateNaissance == null)
+                return 0;
+            int years = (int) (DateTime.Now.Subtract(dateNaissance.Value).TotalDays / 365);
+            return years;
+        }
+
+        private static string FormatDateMounthYear(DateTime? date)
+        {
+            if (date == null)
+                return string.Empty;
+
+            return date.Value.ToString("MMMM yyyy", new CultureInfo("fr-FR"));
         }
     }
 }

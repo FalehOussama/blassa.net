@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserService } from 'src/app/services/user.service';
-import { userModel } from '../../modules/user/user.module'
+import { AviService } from 'src/app/services/avi.service';
+import { AviConducteurService } from 'src/app/services/aviConducteur.service';
+import { CommentaireService } from 'src/app/services/commentaire.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import { RatingComponent } from 'src/app/components/rating/rating.component';
-import { RatingModalComponent } from 'src/app/components/rating-modal/rating-modal.component';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { AvisComponent } from '../../components/avis/avis.component';
+import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
+import { AvisModalComponent } from '../../components/avis-modal/avis-modal.component';
+import el from 'date-fns/locale/el';
 
 @Component({
   selector: 'app-profil-membre',
@@ -16,185 +19,142 @@ import { RatingModalComponent } from 'src/app/components/rating-modal/rating-mod
 })
 export class ProfilMembrePage implements OnInit {
 
+  @ViewChild(AvisComponent) compAvis: AvisComponent;
+  @ViewChild(AvisCondComponent) compAvisCond: AvisCondComponent;
+
   constructor(
     private route: ActivatedRoute,
-    private userService : UserService,
+    private userService: UserService,
+    private aviService: AviService,
+    private aviConducteurService: AviConducteurService,
+    private commentaireService: CommentaireService,
     private storage : StorageService,
     private formBuilder :FormBuilder,
-    private modalCtrl : ModalController
+    private modalCtrl: ModalController,
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {
     this.storage.get('user').then(
       async data => {
         this.user = await data;
       }
-    )
+    );
+    this.storage.get('idMembre').then(
+      async data => {
+        this.idMembre = await data;
+
+        this.compAvis.userId = this.idMembre;
+        this.compAvis.ngOnInit();
+
+        this.compAvisCond.userId = this.idMembre;
+        this.compAvisCond.ngOnInit();
+        this.loadMembre();        
+      }
+    );
   }
 
-  idMembre:number;
+  loadMembre() {
+    this.userService.getUserMembre(this.idMembre).subscribe(
+      async (res) => {
+        this.membre = await res;
+      }
+    );
+  }
+
+  idMembre:bigint;
   membre:any;
   user:any;
-  avis : any[];
-  conduite : any[];
-  commentaires : any[];
-  nombreTrajets:number;
   commentaireForm :FormGroup;
 
-  nombreAvis:number;
-  nombreAvisConduite:number;
-
-  noteAvis : any;
-  noteConduite : any;
-
-  avisStars: any[]=[];
-  conduiteStars: any[]=[];
-
   async ionViewWillEnter(){
-
-    await this.storage.get('membre').then(
-      async data => {
-        this.membre = await data;
-        this.idMembre = await data.id_User;
-
-        console.log(data.noteAvis)
-        let j=0;
-        for(let i = 4 ; i >= 0 ; i--){
-          if(data.noteAvis>=1) this.avisStars[j] = 'star'
-          else if(data.noteAvis<=0) this.avisStars[j] = 'star-outline'
-          else if(data.noteAvis<1 && data.noteAvis >0)  this.avisStars[j] = 'star-half-outline'
-          j++;
-          data.noteAvis--;
-        }
-
-        let k=0;
-        for(let i = 4 ; i >= 0 ; i--){
-          if(data.noteConduite>=1) this.conduiteStars[k] = 'star'
-          else if(data.noteConduite<=0) this.conduiteStars[k] = 'star-outline'
-          else if(data.noteConduite<1 && data.noteConduite >0)  this.conduiteStars[k] = 'star-half-outline'
-          k++;
-          data.noteConduite--;
-        }
-      }
-    )
-
-    await this.userService.getNombreTrajets(this.membre?.uid).subscribe(
-     async  (res)=>this.nombreTrajets = await res
-    )
-    await console.log(this.membre?.annonces)
-    this.userService.getCommentaires(this.idMembre).subscribe(
-      async (res)=>{
-        this.commentaires = await res.reverse();
-      }
-    )
    await  this.ngOnInit();
   }
+
   async ngOnInit() {
-    if(this.membre?.avis == undefined || this.membre?.avis == null){
-      this.avis = userModel.avis;
-    }
-    else {
-      this.avis = await this.membre?.avis;
-      this.nombreAvis = this.avis[0] + this.avis[1] + this.avis[2] + this.avis[3] +this.avis[4]
-    }
-
-    if(this.membre?.conduite == undefined || this.membre?.conduite == null){
-      this.conduite = userModel.conduite;
-    }
-    else {
-      this.conduite = await this.membre?.conduite;
-      this.nombreAvisConduite = this.conduite[0] + this.conduite[1] + this.conduite[2] + this.conduite[3] +this.conduite[4]
-    }
-      
-      console.log(this.avis)
-      console.log(this.conduite)
-      console.log(this.nombreAvis)
-      console.log(this.nombreAvisConduite)
-
-
-
-      
     this.commentaireForm = this.formBuilder.group({
-      commentaire: [''],
-      dateCommentaire: [Date.now()],
-      de: [this.user],
-      pour: [this.membre],
+      commentaire: ['']
     });
 
   }
 
+  async presentToast(msg: string, position: 'top' | 'middle' | 'bottom') {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 1500,
+      position: position,
+    });
 
-  //Noter
-
-  isNoterOpen = false;
-  public alertButtons = [
-    {
-      text: 'Annuler',
-      role: 'cancel',
-      handler: () => {
-        console.log('Alert canceled');
-      },
-    },
-    {
-      text: 'Noter',
-      role: 'confirm',
-      handler: () => {
-        
-      },
-    },
-  ];
-
-  public alertInputs = [
-    {
-      type: 'radio',
-      value : 1,
-      label : "Très décevant"
-    },
-    {
-      type: 'radio',
-      value : 2,
-      label : "Décevant"
-    },
-    {
-      type: 'radio',
-      value : 3,
-      label : "Correct"
-    },
-    {
-      type: 'radio',
-      value : 4,
-      label : "Bien"
-    },
-    {
-      type: 'radio',
-      value : 5,
-      label : "Excellent"
-    },
-  ];
-
-  openNoter(isOpen: boolean , ev) {
-    this.isNoterOpen = isOpen;
-
-    if(ev.detail.role == "confirm"){
-      console.log(this.alertInputs)
-    }
+    await toast.present();
   }
 
+  async presentAlert(header: string, msg: string) {
+    const alert = await this.alertController.create({
+      header: 'Blassa message',
+      subHeader: header,
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 
   //Commenter
-
-  commenter(){
-    this.userService.addCommentaire(this.commentaireForm.value).subscribe(
-     ()=> location.reload()
-    )
+  commenter() {
+    let comm = { userId: this.membre.id, userCommId: this.user.id, texte: this.commentaireForm.value.commentaire };
+    this.commentaireService.post(comm).subscribe(
+      async (res) => {
+        this.loadMembre();
+        this.commentaireForm.patchValue({ commentaire: '' });
+        await this.presentToast('Commentaire enregistré avec succès !', 'bottom');
+      },
+      async (err) => {
+        console.log(err);
+        await this.presentAlert('Erreur ajout commentaire', err.error);
+      }
+    );
   }
 
   // Rating
+  async openAvisModal(isConduite: boolean) {
+    const modal = await this.modalCtrl.create({
+      component: AvisModalComponent,
+      componentProps: { membre: this.membre, isConduite: isConduite }
+    })
 
-    async openRatingModal(){
-      const modal = await this.modalCtrl.create({
-        component : RatingModalComponent,
-        cssClass :  'ratingModal'
-      })
-
-      await modal.present();
-    }
+    await modal.present();
+    modal.onDidDismiss().then((modelData) => {
+      if (modelData !== null && modelData.data !== undefined && modelData.data.ratingAvis > 0) {
+        //this.modelData = modelData.data;
+        console.log('Modal Data : ' + modelData.data);
+        console.log('ratingAvis : ' + modelData.data.ratingAvis);
+        let avi = { userId: this.membre.id, userAviId: this.user.id, categorie: (modelData.data.ratingAvis - 1) };
+        if (isConduite) {
+          this.aviConducteurService.post(avi).subscribe(
+            async (res) => {
+              this.compAvisCond.ngOnInit();
+              this.loadMembre();
+              await this.presentToast('Avi conduite enregistré avec succès !', 'bottom');
+            },
+            async (err) => {
+              console.log(err);
+              await this.presentAlert('Erreur ajout avi conduite', err.error);
+            }
+          );
+        }
+        else {
+          this.aviService.post(avi).subscribe(
+            async (res) => {
+              this.compAvis.ngOnInit();
+              this.loadMembre();
+              await this.presentToast('Avi enregistré avec succès !', 'bottom');
+            },
+            async (err) => {
+              console.log(err);
+              await this.presentAlert('Erreur ajout avi', err.error);
+            }
+          );
+        }
+      }
+    });
+  }
 }
