@@ -129,8 +129,7 @@ namespace BlassaApi.Controllers
             user.DateCreation = DateTime.Now;
             user.Nouveau = true;
             user.Verifie = user.FilePermisConduire != null || user.FileCin != null || user.FilePasseport != null;
-            if (user.Preferences == null)
-                user.Preferences = new Preferences();
+            user.Preferences ??= new Preferences();
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
 

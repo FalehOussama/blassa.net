@@ -20,7 +20,7 @@ export class VehiculeService {
   }
 
   public getByUserId(uid: any): Observable<any> {
-    return this.http.get<any>(this.baseUrl + "/User/?userId=" + uid);
+    return this.http.get<any>(this.baseUrl + "/User/" + uid);
   }
 
   public post(vehicule: Vehicule) {

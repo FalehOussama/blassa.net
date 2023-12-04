@@ -1,9 +1,7 @@
 <app-menu></app-menu>
 
-
-
 <!-- ETAPE 1 -->
-<ion-content [fullscreen]="true" class="ion-padding" *ngIf="etape == 1">
+<ion-content class="ion-padding" *ngIf="etape == 1">
   <ion-img class="cover" src="../../../assets/images/Background/mnt.jpg" alt="Header"></ion-img>
 
 
@@ -23,9 +21,9 @@
       <ion-grid>
         <ion-row>
             <ion-item lines="none">
-              <ion-input [(ngModel)]="depart" class="text" placeholder="Depart" value="{{depart}}"  [(ngModel)]="autocompleteDep.input" (ionInput)="UpdateSearchResultsDep()"></ion-input>
+              <ion-input [(ngModel)]="trajetAnnonce.depart" class="text" placeholder="Depart" value="{{trajetAnnonce.depart}}"  (ionInput)="UpdateSearchResultsDep()"></ion-input>
               <ion-icon  name="locate-outline" slot="start" style="color: rgb(89, 89, 233);"></ion-icon>
-            </ion-item> 
+            </ion-item>
 
             <ion-list [hidden]="autocompleteItemsDep.length == 0">
               <ion-item *ngFor="let item of autocompleteItemsDep" tappable (click)="SelectSearchResultDep(item)">
@@ -36,7 +34,7 @@
 
           <ion-row>
             <ion-item lines="none">
-              <ion-input [(ngModel)]="destination" class="text" placeholder="Destination" value="{{destination}}" [(ngModel)]="autocompleteDes.input" (ionInput)="UpdateSearchResultsDes()"></ion-input>
+              <ion-input [(ngModel)]="trajetAnnonce.destination" class="text" placeholder="Destination" value="{{trajetAnnonce.destination}}" (ionInput)="UpdateSearchResultsDes()"></ion-input>
               <ion-icon name="location-outline" slot="start" style="color: rgb(206, 72, 72);"></ion-icon>
             </ion-item>
 
@@ -54,7 +52,9 @@
       <ion-grid>
         <ion-row>
             <ion-item mode="ios" lines="none" id="date" class="text">
-              <ion-datetime [(ngModel)]="today" displayFormat="YYYY-MM-DDTHH:mm" [min]="sliced" value="sliced" minuteValues="0,15,30,45" class="text"><span slot="time-label">Heure</span></ion-datetime>
+              <ion-datetime [(ngModel)]="trajetAnnonce.dateHeureDepartStr" displayFormat="YYYY-MM-DDTHH:mm" [min]="today" minuteValues="0,15,30,45" [firstDayOfWeek]="1" class="text">
+                <span slot="time-label">Heure</span>
+              </ion-datetime>
             </ion-item>
         </ion-row>
       </ion-grid>
@@ -68,7 +68,7 @@
               <ion-icon class="bullet small" name="people-outline" slot="start"></ion-icon>
               <p class="row3text text">Passagers</p>
               <ion-icon name="remove-circle-outline" style="color:blue;" (click)="minusPa()"></ion-icon>
-              <p style="color:blue; text-align: center; font-size: 2rem; width: 60px ; margin: auto;" >{{passagers}}</p>
+              <p style="color:blue; text-align: center; font-size: 2rem; width: 60px ; margin: auto;">{{trajetAnnonce.nombrePlaces}}</p>
               <ion-icon name="add-circle-outline" style="color:blue;" (click)="plusPa()"></ion-icon>
             </ion-item>
           </ion-col>
@@ -78,7 +78,7 @@
               <ion-icon class="bullet small" name="cash-outline" slot="start"></ion-icon>
               <p class="row3text text">Prix </p>
               <ion-icon name="remove-circle-outline" style="color:blue;" (click)="minusPrix()" slot="end"></ion-icon>
-              <ion-input type="number" placeholder="{{prix}}" slot="end" style="color:blue; width: 60px; font-size: 2rem; text-align: center;" [(ngModel)]="prix"></ion-input>
+              <ion-input type="number" placeholder="{{trajetAnnonce.prix}}" slot="end" style="color:blue; width: 60px; font-size: 2rem; text-align: center;" [(ngModel)]="trajetAnnonce.prix"></ion-input>
               <ion-icon name="add-circle-outline" style="color:blue;" (click)="plusPrix()" slot="end"></ion-icon>
             </ion-item>
           </ion-col>
@@ -93,16 +93,10 @@
     </ion-grid>
 
   </ion-content>
-<!-- fin -->
-
-
 
 <!-- ETAPE 2 -->
-
-<ion-content [fullscreen]="true" class="ion-padding" *ngIf="etape == 2">
+<ion-content class="ion-padding" *ngIf="etape == 2">
   <ion-img class="cover" src="../../../assets/images/Background/see2.jpg" alt="Header"></ion-img>
-
-
 
   <div class="stepper-wrapper">
     <div class="stepper-item completed">
@@ -120,62 +114,48 @@
 
     <ion-row class="groupInputs">
       <ion-card class="groupInputs bulletCard">
-        <ion-radio-group value="car1">
-          <ion-item *ngIf="car0!=undefined">
-            <ion-radio value="car1" slot="start" (click)="getCar(0);"></ion-radio>
-            <ion-label class="text">{{car0.marque}} - {{car0.model}}</ion-label>
+        <ion-radio-group value="{{vehiculeSelectId}}">
+          <ion-item *ngFor="let car of vehicules">
+            <ion-radio value="{{car.id}}" slot="start" (click)="selectVehicule(car.id);"></ion-radio>
+            <ion-label class="text">{{car.marque}} - {{car.modele}}</ion-label>
+            <ion-img *ngIf="car.climatise" class="icon" slot="end" src="../../../assets/images/clim.png"></ion-img>
           </ion-item>
-          <ion-item *ngIf="car1!=undefined"> 
-            <ion-radio value="car2" slot="start" (click)="getCar(1);"></ion-radio>
-            <ion-label class="text">{{car1.marque}} - {{car1.model}}</ion-label>
-          </ion-item>
-          <ion-item *ngIf="car2!=undefined">
-            <ion-radio value="car3" slot="start" (click)="getCar(2);"></ion-radio>
-            <ion-label class="text">{{car2.marque}} - {{car2.model}}</ion-label>
-          </ion-item>
-        <form [formGroup]="vehiculeForm" novalidate>
-          <ion-item *ngIf="car0==undefined">
+        </ion-radio-group>
+
+        <form *ngIf="vehicules.length <= 0" [formGroup]="vehiculeForm" novalidate>
+          <ion-item>
             <ion-label class="text" position="floating">Marque véhicule</ion-label>
             <ion-input class="text" formControlName="marque"></ion-input>
             <ion-icon name="car-outline" slot="start"></ion-icon>
           </ion-item>
-          <ion-item lines="none" *ngIf="vehicule==undefined">
-            <ion-label class="text" position="floating">Modéle véhicule</ion-label>
+          <ion-item lines="none">
+            <ion-label class="text" position="floating">Modèle véhicule</ion-label>
             <ion-input class="text" formControlName="model"></ion-input>
             <ion-icon name="car-outline" slot="start"></ion-icon>
           </ion-item>
         </form>
-        </ion-radio-group>
+
       </ion-card>
     </ion-row>
-
-<ion-card>
-    <ion-grid>
-      <ion-row>        
-        <ion-item mode="ios" lines="none">
-          <ion-label class="text">Bagage autorisé</ion-label>
-          <ion-icon name="briefcase-outline" slot="start"></ion-icon>
-        </ion-item>
-      </ion-row>
-      <ion-row>
-        <form [formGroup]="bagageForm" novalidate>
-        <ion-col size-md="6"><ion-checkbox class="text" id="leger" mode="ios" labelPlacement="end" formControlName="leger" (click)="updateCheckBox('leger')">Leger</ion-checkbox></ion-col>
-        <ion-col size-md="6"><ion-checkbox class="text" id="moyen" mode="ios" labelPlacement="end" formControlName="moyen" (click)="updateCheckBox('moyen')">Moyen</ion-checkbox></ion-col>
-        <ion-col size-md="6"><ion-checkbox class="text" id="lourd" mode="ios" labelPlacement="end" formControlName="lourd" (click)="updateCheckBox('lourd')">Lourd</ion-checkbox></ion-col>
-        </form>
-      </ion-row>
-
-    </ion-grid>
-    
-</ion-card>
-
 
     <ion-card>
       <ion-grid>
         <ion-row>
-          <ion-col push-sm="6"><ion-checkbox class="text" mode="ios" labelPlacement="end" [(ngModel)]="max">Max 2 à l'arriere</ion-checkbox></ion-col>
-          <ion-col pull-sm="6"><ion-checkbox class="text" mode="ios" labelPlacement="end" [(ngModel)]="cig">Cigarette
-              autorisée</ion-checkbox></ion-col>
+          <ion-item mode="ios" lines="none">
+            <ion-label class="text">Bagage autorisé</ion-label>
+            <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+          <ion-col size-md="6">
+            <ion-checkbox class="text" id="leger" mode="ios" labelPlacement="end" [(ngModel)]="trajetAnnonce.leger" (ionChange)="changeBagageLeger()">Leger</ion-checkbox>
+          </ion-col>
+          <ion-col size-md="6">
+            <ion-checkbox class="text" id="moyen" mode="ios" labelPlacement="end" [(ngModel)]="trajetAnnonce.moyen" (ionChange)="changeBagageMoyen()">Moyen</ion-checkbox>
+          </ion-col>
+          <ion-col size-md="6">
+            <ion-checkbox class="text" id="lourd" mode="ios" labelPlacement="end" [(ngModel)]="trajetAnnonce.lourd" (ionChange)="changeBagageLourd()">Lourd</ion-checkbox>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card>
@@ -183,8 +163,17 @@
     <ion-card>
       <ion-grid>
         <ion-row>
-          <ion-col push-sm="6"><ion-checkbox class="text" mode="ios" labelPlacement="end" [(ngModel)]="climatisation">Climatisation</ion-checkbox></ion-col>
-          <ion-col pull-sm="6"><ion-checkbox class="text" mode="ios" labelPlacement="end" [(ngModel)]="animaux">Animaux de compagnie</ion-checkbox></ion-col>
+          <ion-col push-sm="6">
+            <ion-checkbox class="text" mode="ios" labelPlacement="end" [(ngModel)]="trajetAnnonce.max2">Max 2 à l'arriere</ion-checkbox>
+          </ion-col>
+          <ion-col pull-sm="6">
+            <ion-checkbox class="text" mode="ios" labelPlacement="end" [(ngModel)]="trajetAnnonce.cigarette">Cigarette autorisée</ion-checkbox>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col pull-sm="6">
+            <ion-checkbox class="text" mode="ios" labelPlacement="end" [(ngModel)]="trajetAnnonce.animaux">Animaux de compagnie</ion-checkbox>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card>
@@ -196,17 +185,12 @@
       </ion-row>
     </ion-grid>
 
-
   </ion-grid>
 </ion-content>
 
-
 <!-- ETAPE 3 -->
-
-<ion-content [fullscreen]="true" class="ion-padding" *ngIf="etape == 3">
+<ion-content class="ion-padding" *ngIf="etape == 3">
   <ion-img class="cover" src="../../../assets/images/Background/res2.png" alt="Header"></ion-img>
-
-
 
   <div class="stepper-wrapper">
     <div class="stepper-item completed">
@@ -229,7 +213,7 @@
         <ion-row class="ion-justify-content-center" style="margin-top: 10px;">
           <ion-icon name="hand-left-outline" size="small" ></ion-icon>
           <ion-label class="text">Manuelle</ion-label>
-          <ion-toggle [(ngModel)]="inst"></ion-toggle>
+          <ion-toggle [(ngModel)]="trajetAnnonce.instantane"></ion-toggle>
           <ion-label class="text">Instantanée</ion-label>
           <ion-icon name="flash-outline" class="inst" size="small" color="warning"></ion-icon>
         </ion-row>
@@ -257,24 +241,15 @@
           </ion-col>
         </ion-row> -->
         <ion-row class="ion-justify-content-center">
-            <ion-button *ngIf="comm.value['tel']==false" fill="outline" id="tel" #tog class="togBtn" (click)="toggle('tel')">
+            <ion-button fill="{{trajetAnnonce.tel ? 'solid' : 'outline'}}" id="tel" #tog class="togBtn" (click)="toggleTel()">
               <img alt="" style="width: 40px; margin: auto;" src="../../../assets/images/Socials/phone.png" />
             </ion-button>
-            <ion-button *ngIf="comm.value['tel']==true" fill="solid" id="tel" #tog class="togBtn" (click)="toggle('tel')">
-              <img alt="" style="width: 40px; margin: auto;" src="../../../assets/images/Socials/phone.png" />
-            </ion-button>
-      
-            <ion-button *ngIf="comm.value['whatsapp']==false" fill="outline" id="whatsapp" #tog class="togBtn" (click)="toggle('whatsapp')">
+
+            <ion-button fill="{{trajetAnnonce.whatsApp ? 'solid' : 'outline'}}" id="whatsapp" #tog class="togBtn" (click)="toggleWhatsApp()">
               <img alt="" style="width: 40px; margin: auto;" src="../../../assets/images/Socials/whatsapp.png" />
             </ion-button>
-            <ion-button *ngIf="comm.value['whatsapp']==true" fill="solid" id="whatsapp" #tog class="togBtn" (click)="toggle('whatsapp')">
-              <img alt="" style="width: 40px; margin: auto;" src="../../../assets/images/Socials/whatsapp.png" />
-            </ion-button>
-            
-            <ion-button *ngIf="comm.value['messenger']==false && user?.methode!='Google'" fill="outline" id="messenger" #tog class="togBtn" (click)="toggle('messenger')">
-              <img alt="" style="width: 40px; margin: auto;" src="../../../assets/images/Socials/messenger.png" />
-            </ion-button>
-            <ion-button *ngIf="comm.value['messenger']==true && user?.methode!='Google'" fill="solid" id="messenger" #tog class="togBtn" (click)="toggle('messenger')">
+
+            <ion-button fill="{{trajetAnnonce.messenger ? 'solid' : 'outline'}}" id="messenger" #tog class="togBtn" (click)="toggleMessenger()">
               <img alt="" style="width: 40px; margin: auto;" src="../../../assets/images/Socials/messenger.png" />
             </ion-button>
         </ion-row>
@@ -286,29 +261,33 @@
         <ion-label>Je veux voyager avec :</ion-label>
       </ion-row>
 
-    <ion-radio-group [(ngModel)]="gender">
+    <ion-radio-group [(ngModel)]="trajetAnnonce.voyageAvecStr">
       <ion-row class="ion-justify-content-center">
         <ion-item lines="none" class="ion-no-padding" >
           <ion-label position="stacked" class="textStacked">Femmes</ion-label>
-          <ion-radio value="F" style="margin-left: 5px;"></ion-radio>
+          <ion-radio value="1" style="margin-left: 5px;"></ion-radio>
           <ion-icon name="woman-outline" slot="start" style="margin-right: 5px;"></ion-icon>
         </ion-item>
         <ion-item lines="none" class="ion-no-padding" >
           <ion-label position="stacked" class="textStacked">Tous</ion-label>
-          <ion-radio value="T" style="margin-left: 5px;"></ion-radio>
+          <ion-radio value="0" style="margin-left: 5px;"></ion-radio>
           <ion-icon name="people-outline" slot="start" style="margin-right: 5px;"></ion-icon>
         </ion-item>
         <ion-item lines="none" class="ion-no-padding" >
           <ion-label position="stacked" class="textStacked">Hommes</ion-label>
-          <ion-radio value="H" style="margin-left: 5px;" ></ion-radio>
+          <ion-radio value="2" style="margin-left: 5px;" ></ion-radio>
           <ion-icon  name="man-outline" slot="start" style="margin-right: 5px;"></ion-icon>
         </ion-item>
-        
+
       </ion-row>
     </ion-radio-group>
 
   <ion-list>
-    <ion-item><ion-icon name="shield-checkmark-outline" slot="start"></ion-icon><ion-label class="text">Vérifiés uniquement</ion-label><ion-toggle slot="end" [(ngModel)]="verifies"></ion-toggle></ion-item>
+    <ion-item>
+      <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+      <ion-label class="text">Vérifiés uniquement</ion-label>
+      <ion-toggle slot="end" [(ngModel)]="trajetAnnonce.verifies"></ion-toggle>
+    </ion-item>
   </ion-list>
 
     <ion-grid>
@@ -318,21 +297,13 @@
       </ion-row>
     </ion-grid>
 
-
-
-
   </ion-grid>
-
-
 
 </ion-content>
 
-
 <!-- ETAPE 4 -->
-
-<ion-content [fullscreen]="true" class="ion-padding" *ngIf="etape == 4">
+<ion-content class="ion-padding" *ngIf="etape == 4">
   <ion-img class="cover" src="../../../assets/images/Background/pvt2.png" alt="Header"></ion-img>
-
 
   <div class="stepper-wrapper">
     <div class="stepper-item completed">
@@ -346,11 +317,166 @@
     </div>
   </div>
 
-
   <!-- Code Fiche  -->
+  <ion-chip color="success">Votre annonce est prête pour la publication, veuillez consulter le récapitulatif et cliquer sur bouton publier.</ion-chip>
 
-  <ion-card>
+  <ion-row style="justify-content: center;">
+    <ion-avatar class="{{user.verifie ? 'verifie' : 'nonVerifie'}}" style="z-index: 3;">
+      <img alt="Silhouette of a person's head" src={{user.imgUrl}} />
+    </ion-avatar>
+  </ion-row>
+
+  <ion-card style="margin-top: -30px; border-radius: 20px;">
     <ion-grid>
+      <ion-row *ngIf="user.superUser || user.superDriver">
+        <ion-col>
+          <ion-img class="superUser" *ngIf="user.superUser" src="../../../assets/images/medSuperUser.png"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-img class="superDriver" *ngIf="user.superDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-between">
+
+        <ion-col size="7">
+          <ion-row>
+            <ion-label class="nom">{{user.prenom}}</ion-label>
+          </ion-row>
+        </ion-col>
+
+        <ion-col *ngIf="trajetAnnonce.tel" size="1">
+          <ion-img class="socialRecap" src="../../../assets/icon/phone.svg" alt="rating"></ion-img>
+        </ion-col>
+        <ion-col *ngIf="trajetAnnonce.whatsApp" size="1">
+          <ion-img class="socialRecap" src="../../../assets/icon/whatsapp.svg" alt="rating"></ion-img>
+        </ion-col>
+        <ion-col *ngIf="trajetAnnonce.messenger" size="1">
+          <ion-img class="socialRecap" src="../../../assets/icon/messenger.svg" alt="rating"></ion-img>
+        </ion-col>
+      </ion-row>
+
+      <div class="sep"></div>
+
+      <ion-row style="justify-content: end; z-index: 999; position:relative;">
+        <ion-chip color="warning" style="font-weight: bold; z-index: 10;">{{trajetAnnonce.prix}} DT</ion-chip>
+      </ion-row>
+      <ion-row style="justify-content: end; z-index: 999; position:relative;">
+        <ion-item style="z-index: 10;" lines="none">
+          <ion-img class="seat" src="../../../assets/icon/Seat.png" slot="end"></ion-img>
+          <p class="text" color="dark">{{trajetAnnonce.nombrePlaces}} / {{trajetAnnonce.nombrePlaces}}</p>
+        </ion-item>
+      </ion-row>
+      <ion-row style="justify-content: end; z-index: 999; position:relative;">
+        <ion-item style="z-index: 10;" lines="none">
+          <ion-icon class="icons" name="calendar-outline" size="small" slot="end"></ion-icon>
+          <p class="text" color="dark">{{trajetAnnonce.dateHeureDepart | date:'dd'}} {{trajetAnnonce.dateHeureDepart | date:'MMM'}}</p>
+        </ion-item>
+      </ion-row>
+      <ion-row style="justify-content: end; z-index: 999; position:relative;">
+        <ion-item style="z-index: 10;" lines="none">
+          <ion-icon class="icons" name="time-outline" size="small" slot="end"></ion-icon>
+          <p class="text" color="dark">{{trajetAnnonce.dateHeureDepart | date:'HH'}} : {{trajetAnnonce.dateHeureDepart | date:'mm'}}</p>
+        </ion-item>
+      </ion-row>
+      <ion-row style="margin-top: -200px; z-index: -1; " class="ion-padding">
+        <ion-col size="auto" style="margin-top: 15px;">
+          <ion-img class="distanceIcon" src="../../../assets/icon/Distance.png" alt="Distance"></ion-img>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <p class="trajet">Départ</p>
+          </ion-row>
+          <ion-row>
+            <ion-chip class="adresse" color="dark">{{trajetAnnonce.depart}}</ion-chip>
+          </ion-row>
+          <ion-row>
+            <p class="trajet" style="margin-top: 25px;">Destination</p>
+          </ion-row>
+          <ion-row>
+            <ion-chip class="adresse" color="dark">{{trajetAnnonce.destination}}</ion-chip>
+          </ion-row>
+        </ion-col>
+
+      </ion-row>
+
+      <div class="sep"></div>
+
+      <ion-row>
+        <ion-col>
+
+          <ion-row>
+            <!--<ion-list></ion-list>-->
+            <ion-item style="width: 100%;">
+              <ion-img class="icon" slot="start" src="../../../assets/images/car.png"></ion-img>
+              <ion-label class="text2">{{vehiculeSelect?.marque}} - {{vehiculeSelect?.modele}}</ion-label>
+              <ion-img *ngIf="vehiculeSelect?.climatise" class="icon" slot="end" src="../../../assets/images/clim.png"></ion-img>
+            </ion-item>
+
+            <ion-item style="width: 100%;">
+              <ion-img class="icon" slot="start" src="../../../assets/images/cigarette.png"></ion-img>
+              <ion-label class="text">Cigarette autorisée </ion-label>
+              <ion-icon *ngIf="trajetAnnonce.cigarette" slot="end" color="success" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="!trajetAnnonce.cigarette" slot="end" name="close-circle"></ion-icon>
+            </ion-item>
+
+            <ion-item style="width: 100%;">
+              <ion-img class="icon" slot="start" src="../../../assets/images/animal.png"></ion-img>
+              <ion-label class="text">Animaux de compagnie </ion-label>
+              <ion-icon *ngIf="trajetAnnonce.animaux" slot="end" color="success" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="!trajetAnnonce.animaux" slot="end" name="close-circle"></ion-icon>
+            </ion-item>
+
+            <ion-item style="width: 100%;">
+              <ion-img class="icon" slot="start" src="../../../assets/images/max2.png"></ion-img>
+              <ion-label class="text">Max 2 </ion-label>
+              <ion-icon *ngIf="trajetAnnonce.max2" slot="end" color="success" name="checkmark-circle"></ion-icon>
+              <ion-icon *ngIf="!trajetAnnonce.max2" slot="end" name="close-circle"></ion-icon>
+            </ion-item>
+
+            <ion-item style="width: 100%;" lines="none">
+              <ion-img class="icon" slot="start" src="../../../assets/images/bMoyen.png"></ion-img>
+              <ion-label class="text">Bagage :</ion-label>
+              <ion-label class="text" *ngIf="trajetAnnonce.leger" slot="end">Leger </ion-label>
+              <ion-label class="text" *ngIf="trajetAnnonce.moyen" slot="end">&nbsp;| Moyen</ion-label>
+              <ion-label class="text" *ngIf="trajetAnnonce.lourd" slot="end">&nbsp;| lourd</ion-label>
+            </ion-item>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <div class="sep"></div>
+
+      <ion-row>
+        <ion-item style="width: 100%;">
+          <ion-label class="text">Mode Réservation :</ion-label>
+          <ion-label class="text" *ngIf="trajetAnnonce.instantane" slot="end"> Instantanée <ion-icon name="flash-outline" class="inst" size="small" color="warning"></ion-icon></ion-label>
+          <ion-label class="text" *ngIf="!trajetAnnonce.instantane" slot="end"> Manuelle <ion-icon name="hand-left-outline" size="small"></ion-icon></ion-label>
+        </ion-item>
+        <ion-item style="width: 100%;">
+          <ion-label class="text">Voyage avec :</ion-label>
+          <ion-label class="text" *ngIf="trajetAnnonce.voyageAvecStr == '0'" slot="end"> Tous <ion-icon name="people-outline" size="small"></ion-icon></ion-label>
+          <ion-label class="text" *ngIf="trajetAnnonce.voyageAvecStr == '1'" slot="end"> Femmes <ion-icon name="woman-outline" size="small"></ion-icon></ion-label>
+          <ion-label class="text" *ngIf="trajetAnnonce.voyageAvecStr == '2'" slot="end"> Hommes <ion-icon name="man-outline" size="small"></ion-icon></ion-label>
+        </ion-item>
+        <ion-item style="width: 100%;" lines="none">
+          <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+          <ion-label class="text">Vérifiés uniquement</ion-label>
+          <ion-icon *ngIf="trajetAnnonce.verifies" slot="end" color="success" name="checkmark-circle"></ion-icon>
+          <ion-icon *ngIf="!trajetAnnonce.verifies" slot="end" name="close-circle"></ion-icon>
+        </ion-item>
+      </ion-row>
+
+      <div class="sep"></div>
+
+      <ion-row>
+        <ion-button style="float: left;" (click)="toEtape3()" class="text prevBtn" shape="round">Précedent</ion-button>
+        <ion-button style="float: right;" (click)="publierAnnonce()" class="text nextBtn" shape="round">Publier</ion-button>
+      </ion-row>
+
+    </ion-grid>
+
+    <!--<ion-grid>
 
       <ion-row>
       <ion-col>
@@ -368,7 +494,7 @@
           </ion-card>
         </ion-row>
       </ion-col>
-      
+
       <ion-col size="auto">
         <ion-list lines="none">
         <ion-item class="info">
@@ -441,22 +567,22 @@
         <ion-col size="auto">
           <ion-item lines="none" class="TypeBagage">
             <ion-label class="text">Leger</ion-label>
-            <ion-icon *ngIf="bagageForm.value['leger']==true" size="small" slot="end" name="checkmark-circle" style="color: rgb(25, 240, 79);"></ion-icon>
-            <ion-icon *ngIf="bagageForm.value['leger']==false || bagageForm.value['leger']==null" size="small" slot="end" name="close-circle" style="color: rgb(239, 104, 104);"></ion-icon>
+            <ion-icon *ngIf="trajetAnnonce.leger" size="small" slot="end" name="checkmark-circle" style="color: rgb(25, 240, 79);"></ion-icon>
+            <ion-icon *ngIf="!trajetAnnonce.leger" size="small" slot="end" name="close-circle" style="color: rgb(239, 104, 104);"></ion-icon>
           </ion-item>
         </ion-col>
         <ion-col size="auto">
           <ion-item lines="none" class="TypeBagage">
             <ion-label class="text">Moyen</ion-label>
-            <ion-icon *ngIf="bagageForm.value['moyen']==true" size="small" slot="end" name="checkmark-circle" style="color: rgb(25, 240, 79);"></ion-icon>
-            <ion-icon *ngIf="bagageForm.value['moyen']==false || bagageForm.value['moyen']==null" size="small" slot="end" name="close-circle" style="color: rgb(239, 104, 104);"></ion-icon>
+            <ion-icon *ngIf="trajetAnnonce.moyen" size="small" slot="end" name="checkmark-circle" style="color: rgb(25, 240, 79);"></ion-icon>
+            <ion-icon *ngIf="!trajetAnnonce.moyen" size="small" slot="end" name="close-circle" style="color: rgb(239, 104, 104);"></ion-icon>
           </ion-item>
         </ion-col>
         <ion-col size="auto">
           <ion-item lines="none" class="TypeBagage">
             <ion-label class="text">Lourd</ion-label>
-            <ion-icon *ngIf="bagageForm.value['lourd']==true" size="small" slot="end" name="checkmark-circle" style="color: rgb(25, 240, 79);"></ion-icon>
-            <ion-icon *ngIf="bagageForm.value['lourd']==false || bagageForm.value['lourd']==null" size="small" slot="end" name="close-circle" style="color: rgb(239, 104, 104);"></ion-icon>
+            <ion-icon *ngIf="trajetAnnonce.lourd" size="small" slot="end" name="checkmark-circle" style="color: rgb(25, 240, 79);"></ion-icon>
+            <ion-icon *ngIf="!trajetAnnonce.lourd" size="small" slot="end" name="close-circle" style="color: rgb(239, 104, 104);"></ion-icon>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -464,10 +590,7 @@
         <ion-button style="float: left;" (click)="toEtape3()" class="text prevBtn" shape="round">Précedent</ion-button>
         <ion-button style="float: right;" (click)="publierAnnonce()" class="text nextBtn" shape="round">Publier</ion-button>
       </ion-row>
-    </ion-grid>
+    </ion-grid>-->
   </ion-card>
 
-  
 </ion-content>
-
-

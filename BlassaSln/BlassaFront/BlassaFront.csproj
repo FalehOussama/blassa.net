@@ -11,6 +11,7 @@
     <None Remove="src\app\classes\heureDepartCritereTypeDto.ts" />
     <None Remove="src\app\classes\rechTrajetAnnonceDto.ts" />
     <None Remove="src\app\classes\reservationStatusType.ts" />
+    <None Remove="src\app\classes\trajetAnnonce.ts" />
     <None Remove="src\app\classes\trajetAnnonceCriteresDto.ts" />
     <None Remove="src\app\classes\trajetAnnonceTriTypeDto.ts" />
     <None Remove="src\app\classes\trajetsAnnoncesRechercheRetourDto.ts" />
@@ -28,6 +29,7 @@
     <TypeScriptCompile Include="src\app\classes\heureDepartCritereTypeDto.ts" />
     <TypeScriptCompile Include="src\app\classes\rechTrajetAnnonceDto.ts" />
     <TypeScriptCompile Include="src\app\classes\reservationStatusType.ts" />
+    <TypeScriptCompile Include="src\app\classes\trajetAnnonce.ts" />
     <TypeScriptCompile Include="src\app\classes\trajetAnnonceCriteresDto.ts" />
     <TypeScriptCompile Include="src\app\classes\trajetAnnonceTriTypeDto.ts" />
     <TypeScriptCompile Include="src\app\classes\trajetsAnnoncesRechercheRetourDto.ts" />

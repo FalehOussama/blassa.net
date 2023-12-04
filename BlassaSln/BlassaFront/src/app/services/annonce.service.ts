@@ -6,6 +6,7 @@ import { StorageService } from './storage.service';
 import { TrajetAnnonceCriteresDto } from '../classes/trajetAnnonceCriteresDto';
 import { TrajetAnnonceTriTypeDto } from '../classes/trajetAnnonceTriTypeDto';
 import { TrajetsAnnoncesRechercheRetourDto } from '../classes/trajetsAnnoncesRechercheRetourDto';
+import { TrajetAnnonce } from '../classes/trajetAnnonce';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class AnnonceService {
     ) { 
     }
   private baseUrl = url + "/TrajetsAnnonces";
+
+  public post(trajetAnnonce: TrajetAnnonce) {
+    return this.http.post<TrajetAnnonce>(this.baseUrl, trajetAnnonce);
+  }
 
   trajetsAnnoncesRecherchePost(crietres: TrajetAnnonceCriteresDto, tri: TrajetAnnonceTriTypeDto, pageNb: number) {
     return this.http.post<TrajetsAnnoncesRechercheRetourDto>(this.baseUrl + "/Recherche/?tri=" + tri + "&pageNb=" + pageNb, crietres);

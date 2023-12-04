@@ -231,7 +231,31 @@ namespace BlassaApi.Controllers
         public async Task<ActionResult<User>> PostTrajetAnnonce(TrajetAnnonce trajetAnnonce)
         {
             if (!UserExists(trajetAnnonce.UserId))
-                return BadRequest();
+                return BadRequest("Utilisateur inexistant");
+
+            if (string.IsNullOrWhiteSpace(trajetAnnonce.Depart) || trajetAnnonce.Depart.Length < 3)
+                return BadRequest("Départ: longueur inférieure à 3");
+
+            if (string.IsNullOrWhiteSpace(trajetAnnonce.Destination) || trajetAnnonce.Destination.Length < 3)
+                return BadRequest("Destination: longueur inférieure à 3");
+
+            if (trajetAnnonce.DateHeureDepart <  DateTime.Now)
+                return BadRequest("Date heure départ dans le passé");
+
+            if (trajetAnnonce.DateHeureDepart.Subtract(DateTime.Now).TotalHours < 1d)
+                return BadRequest("Date heure départ moins d'une heure");
+
+            if (trajetAnnonce.NombrePlaces < 1)
+                return BadRequest("Nombre de places doit être supérieur à 0");
+
+            if (trajetAnnonce.Prix < 0)
+                return BadRequest("Prix doit être positif");
+
+            if (string.IsNullOrWhiteSpace(trajetAnnonce.VMarque))
+                return BadRequest("Marque véhicule non définie");
+
+            if (string.IsNullOrWhiteSpace(trajetAnnonce.VModele))
+                return BadRequest("Modèle véhicule non définie");
 
             trajetAnnonce.NombrePlacesDispo = trajetAnnonce.NombrePlaces;
             trajetAnnonce.DateCreation = DateTime.Now;
