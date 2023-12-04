@@ -6,7 +6,17 @@
   width: 100px;
 }
 
+.headerVehicule {
+  --background: rgb(14 116 144);
+  color: white;
+}
 
+.alert {
+  color: var(--highlight-color-invalid);
+  margin: auto;
+  font-family: font4;
+  font-size: 0.7rem;
+}
 
 .stepper-wrapper {
   margin-top: auto;

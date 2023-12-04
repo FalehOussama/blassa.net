@@ -114,6 +114,9 @@
 
     <ion-row class="groupInputs">
       <ion-card class="groupInputs bulletCard">
+        <ion-item class="headerVehicule">
+          <ion-label class="text">Mon véhicule</ion-label>
+        </ion-item>
         <ion-radio-group value="{{vehiculeSelectId}}">
           <ion-item *ngFor="let car of vehicules">
             <ion-radio value="{{car.id}}" slot="start" (click)="selectVehicule(car.id);"></ion-radio>
@@ -122,16 +125,28 @@
           </ion-item>
         </ion-radio-group>
 
-        <form *ngIf="vehicules.length <= 0" [formGroup]="vehiculeForm" novalidate>
+        <form #vehiculeForm="ngForm" *ngIf="vehicules?.length <= 0">
           <ion-item>
-            <ion-label class="text" position="floating">Marque véhicule</ion-label>
-            <ion-input class="text" formControlName="marque"></ion-input>
             <ion-icon name="car-outline" slot="start"></ion-icon>
+            <ion-label class="text" position="floating">Marque</ion-label>
+            <ion-input [(ngModel)]="newVehicule.marque" name="marque" #marque="ngModel" required minlength="3" class="text"></ion-input>
           </ion-item>
-          <ion-item lines="none">
-            <ion-label class="text" position="floating">Modèle véhicule</ion-label>
-            <ion-input class="text" formControlName="model"></ion-input>
+          <ion-item>
             <ion-icon name="car-outline" slot="start"></ion-icon>
+            <ion-label class="text" position="floating">Modèle</ion-label>
+            <ion-input [(ngModel)]="newVehicule.modele" name="modele" #modele="ngModel" required minlength="3" class="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-img class="icon" slot="start" src="../../../assets/images/clim.png"></ion-img>
+            <ion-checkbox [(ngModel)]="newVehicule.climatise" name="climatise" class="text" mode="ios" labelPlacement="start">Climatisé</ion-checkbox>
+          </ion-item>
+          <ion-item *ngIf="(marque.invalid && (marque.dirty || marque.touched)) || (modele.invalid && (modele.dirty || modele.touched))" class="alert">
+            <ul>
+              <li *ngIf="marque.errors?.['required']">Marque est obligatoire.</li>
+              <li *ngIf="marque.errors?.['minlength']">Marque de longeur 3 min.</li>
+              <li *ngIf="modele.errors?.['required']">Modèle est obligatoire.</li>
+              <li *ngIf="modele.errors?.['minlength']">Modèle de longeur 3 min.</li>
+            </ul>
           </ion-item>
         </form>
 
@@ -409,8 +424,8 @@
             <!--<ion-list></ion-list>-->
             <ion-item style="width: 100%;">
               <ion-img class="icon" slot="start" src="../../../assets/images/car.png"></ion-img>
-              <ion-label class="text2">{{vehiculeSelect?.marque}} - {{vehiculeSelect?.modele}}</ion-label>
-              <ion-img *ngIf="vehiculeSelect?.climatise" class="icon" slot="end" src="../../../assets/images/clim.png"></ion-img>
+              <ion-label class="text">{{trajetAnnonce?.vMarque}} - {{trajetAnnonce?.vModele}}</ion-label>
+              <ion-img *ngIf="trajetAnnonce?.vClimatise" class="icon" slot="end" src="../../../assets/images/clim.png"></ion-img>
             </ion-item>
 
             <ion-item style="width: 100%;">

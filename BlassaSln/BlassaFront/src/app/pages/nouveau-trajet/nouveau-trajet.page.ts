@@ -1,7 +1,7 @@
 /// <reference types="@types/googlemaps" />
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgZone } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { UserService } from 'src/app/services/user.service';
@@ -18,12 +18,15 @@ import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert
 })
 export class NouveauTrajetPage implements OnInit  {
 
+  @Input() marque: any;
+
   /************************** */
   user: any;
   trajetAnnonce: TrajetAnnonce = new TrajetAnnonce();
   vehicules: any;
   vehiculeSelect: any;
   vehiculeSelectId: any;
+  newVehicule: Vehicule = new Vehicule();
   today: String = this.toIsoString(new Date());
   etape: number;
   /************************** */
@@ -40,7 +43,6 @@ export class NouveauTrajetPage implements OnInit  {
     private userService: UserService,
     private vehiculeService: VehiculeService,
     private storage : StorageService,
-    private formBuilder: FormBuilder,
     private blassaAlert: BlassaAlertComponent
   ) {
     //this.GoogleAutocompleteDep = new google.maps.places.AutocompleteService();
@@ -100,18 +102,7 @@ export class NouveauTrajetPage implements OnInit  {
     this.ngOnInit();
   }
   
-  ngOnInit() {    
-
-    this.vehiculeForm = this.formBuilder.group({
-      mat: [''],
-      marque: ['', [Validators.required]],
-      model: ['', [Validators.required]],
-      mis: [''],
-      couleur: [null],
-      type: [null],
-      climatise: [false],
-    });
-  }
+  ngOnInit() {  }
 
   toEtape4() {
     this.etape = 4;
@@ -119,6 +110,32 @@ export class NouveauTrajetPage implements OnInit  {
 
   toEtape3() {
     this.etape = 3;
+    if (this.vehiculeSelect) {
+      this.trajetAnnonce.vClimatise = this.vehiculeSelect.climatise;
+      this.trajetAnnonce.vCouleur = this.vehiculeSelect.couleur;
+      this.trajetAnnonce.vMarque = this.vehiculeSelect.marque;
+      this.trajetAnnonce.vMatricule = this.vehiculeSelect.matricule;
+      this.trajetAnnonce.vMiseEnCirculation = this.vehiculeSelect.miseEnCirculation;
+      this.trajetAnnonce.vModele = this.vehiculeSelect.modele;
+      this.trajetAnnonce.vTypeVehicule = this.vehiculeSelect.typeVehicule;
+      this.trajetAnnonce.vVerifie = this.vehiculeSelect.verifie;
+    }
+    else {
+      this.trajetAnnonce.vMarque = this.newVehicule.marque;
+      this.trajetAnnonce.vModele = this.newVehicule.modele;
+      this.trajetAnnonce.vClimatise = this.newVehicule.climatise;
+      this.trajetAnnonce.vMatricule = '';
+      this.trajetAnnonce.vCouleur = 0;
+      this.trajetAnnonce.vTypeVehicule = 0;
+      this.trajetAnnonce.vVerifie = false;
+
+      //this.newVehicule.id = 0;
+      this.newVehicule.userId = this.user.id;
+      this.newVehicule.matricule = '';
+      this.newVehicule.couleur = 0;
+      this.newVehicule.typeVehicule = 0;
+      this.newVehicule.verifie = false;
+    }
   }
 
   toEtape2() {
@@ -268,24 +285,19 @@ export class NouveauTrajetPage implements OnInit  {
     //  });
     //});
   }
-  
-  isAlertOpen = false;
-  public alertButtons = ['OK'];
-
-  addSuccess(isOpen : boolean) {
-    this.isAlertOpen = true;
-  }
-
+    
   validationTrajet(){
     return (this.trajetAnnonce.depart != null && this.trajetAnnonce.depart != "") &&
       (this.trajetAnnonce.destination != null && this.trajetAnnonce.destination != "");
   }
 
+  @ViewChild(NgForm, { static: false }) vehiculeForm: NgForm;
+
   validationVehicule(){
     if (this.vehiculeSelect)
       return true;
     else{
-      return (this.vehiculeForm.value['marque'] != "") && (this.vehiculeForm.value['model'] != "");
+      return this.vehiculeForm?.valid;
     }
   }
   
@@ -293,30 +305,10 @@ export class NouveauTrajetPage implements OnInit  {
 
     this.trajetAnnonce.voyageAvec = parseInt(this.trajetAnnonce.voyageAvecStr);
 
-    if (this.vehiculeSelect) {
-      this.trajetAnnonce.vClimatise = this.vehiculeSelect.climatise;
-      this.trajetAnnonce.vCouleur = this.vehiculeSelect.couleur;
-      this.trajetAnnonce.vMarque = this.vehiculeSelect.marque;
-      this.trajetAnnonce.vMatricule = this.vehiculeSelect.matricule;
-      this.trajetAnnonce.vMiseEnCirculation = this.vehiculeSelect.miseEnCirculation;
-      this.trajetAnnonce.vModele = this.vehiculeSelect.modele;
-      this.trajetAnnonce.vTypeVehicule = this.vehiculeSelect.typeVehicule;
-      this.trajetAnnonce.vVerifie = this.vehiculeSelect.verifie;
-    }
-    else {
-      this.trajetAnnonce.vMarque = this.vehiculeForm.value['marque'];
-      this.trajetAnnonce.vModele = this.vehiculeForm.value['model'];
-      //console.log(this.vehiculeForm.value);      
-    }
-
     this.annonceService.post(this.trajetAnnonce).subscribe(
       async (value: TrajetAnnonce) => {
         if (!this.vehiculeSelect) {
-          let vehiculePost: Vehicule = new Vehicule();
-          vehiculePost.marque = this.vehiculeForm.value['marque'];
-          vehiculePost.modele = this.vehiculeForm.value['model'];
-
-          this.vehiculeService.post(vehiculePost).subscribe(
+          this.vehiculeService.post(this.newVehicule).subscribe(
             async (resV: Vehicule) => { },
             async (err) => {
               this.blassaAlert.alert("Erreur lors de l'enregistrement du véhicule", err.error);
@@ -336,27 +328,6 @@ export class NouveauTrajetPage implements OnInit  {
 
   async publierAnnonceSuccess(data) {
     this.router.navigateByUrl('/fiche-trajet');
-  }
-  
-  //Ajouter vehicule
-  vehiculeForm: FormGroup;
-
-  get errorControl() {
-    return this.vehiculeForm.controls;
-  }
-
-  ajouterVehicule(){
-    this.userService.addVehicule(this.user.id_User , this.vehiculeForm.value['climatise'], this.vehiculeForm.value['verifie'] , this.vehiculeForm.value['couleur']  , this.vehiculeForm.value['type'] , this.vehiculeForm.value['mis'] , this.vehiculeForm.value['model'] , this.vehiculeForm.value['marque'] , this.vehiculeForm.value['mat'] ).subscribe(
-      async (res)=>{
-        console.log("car added success");
-        this.user.vehicules[this.user?.vehicules.length] = this.vehiculeForm.value;
-        this.storage.set('user' , this.user);
-      }
-    )
-  }
-     
-  get errorControl2() {
-    return this.vehiculeForm.controls;
   }
 
   changeBagageLourd() {
