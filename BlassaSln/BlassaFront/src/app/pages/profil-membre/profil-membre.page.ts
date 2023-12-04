@@ -6,11 +6,12 @@ import { AviConducteurService } from 'src/app/services/aviConducteur.service';
 import { CommentaireService } from 'src/app/services/commentaire.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { AvisComponent } from '../../components/avis/avis.component';
 import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
 import { AvisModalComponent } from '../../components/avis-modal/avis-modal.component';
 import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
+import { BlassaToastComponent } from '../../components/blassa-toast/blassa-toast.component';
 
 @Component({
   selector: 'app-profil-membre',
@@ -32,7 +33,7 @@ export class ProfilMembrePage implements OnInit {
     private formBuilder :FormBuilder,
     private modalCtrl: ModalController,
     private blassaAlert: BlassaAlertComponent,
-    private toastController: ToastController
+    private blassaToast: BlassaToastComponent
   ) {
     this.storage.get('user').then(
       async data => {
@@ -77,16 +78,6 @@ export class ProfilMembrePage implements OnInit {
 
   }
 
-  async presentToast(msg: string, position: 'top' | 'middle' | 'bottom') {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 1500,
-      position: position,
-    });
-
-    await toast.present();
-  }
-
   //Commenter
   commenter() {
     let comm = { userId: this.membre.id, userCommId: this.user.id, texte: this.commentaireForm.value.commentaire };
@@ -94,7 +85,7 @@ export class ProfilMembrePage implements OnInit {
       async (res) => {
         this.loadMembre();
         this.commentaireForm.patchValue({ commentaire: '' });
-        await this.presentToast('Commentaire enregistré avec succès !', 'bottom');
+        await this.blassaToast.present('Commentaire enregistré avec succès !', 'bottom');
       },
       async (err) => {
         console.log(err);
@@ -122,7 +113,7 @@ export class ProfilMembrePage implements OnInit {
             async (res) => {
               this.compAvisCond.ngOnInit();
               this.loadMembre();
-              await this.presentToast('Avi conduite enregistré avec succès !', 'bottom');
+              await this.blassaToast.present('Avi conduite enregistré avec succès !', 'bottom');
             },
             async (err) => {
               console.log(err);
@@ -135,7 +126,7 @@ export class ProfilMembrePage implements OnInit {
             async (res) => {
               this.compAvis.ngOnInit();
               this.loadMembre();
-              await this.presentToast('Avi enregistré avec succès !', 'bottom');
+              await this.blassaToast.present('Avi enregistré avec succès !', 'bottom');
             },
             async (err) => {
               console.log(err);

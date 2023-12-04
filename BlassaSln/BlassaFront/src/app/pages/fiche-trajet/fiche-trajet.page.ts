@@ -1,6 +1,6 @@
 import {  Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonModal, Platform, ToastController } from '@ionic/angular';
+import { IonModal, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
@@ -14,6 +14,7 @@ import { ReservationStatusType } from '../../classes/reservationStatusType';
 import { AvisComponent } from '../../components/avis/avis.component';
 import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
 import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
+import { BlassaToastComponent } from '../../components/blassa-toast/blassa-toast.component';
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -53,19 +54,9 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
     public platform: Platform,
     private storage: StorageService,
     private blassaAlert: BlassaAlertComponent,
-    private toastController: ToastController
+    private blassaToast: BlassaToastComponent
     ) { 
       
-  }
-
-  async presentToast(msg: string, position: 'top' | 'middle' | 'bottom') {
-    const toast = await this.toastController.create({
-      message: msg,
-      duration: 1500,
-      position: position,
-    });
-
-    await toast.present();
   }
   
   @HostListener('unloaded')
@@ -189,7 +180,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
         this.reservationService.postReservation({ userId: this.user?.id, trajetAnnonceId: this.annonce?.id }).subscribe(
           async (res) => {
             location.reload();
-            this.presentToast('Reservation enregistrée avec succès !', 'bottom');
+            this.blassaToast.present('Reservation enregistrée avec succès !', 'bottom');
           },
           async (err) => {
             console.log(err);
