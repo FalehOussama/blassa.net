@@ -5,8 +5,8 @@ import { StorageService } from 'src/app/services/storage.service';
 import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 import { AvisComponent } from '../../components/avis/avis.component';
 import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
+import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
 import { Base64 } from 'js-base64';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profil',
@@ -28,7 +28,7 @@ export class ProfilPage implements OnInit  {
     private userService: UserService,
     private router : Router,
     private storage: StorageService,
-    private alertController: AlertController
+    private blassaAlert: BlassaAlertComponent
   ) { 
 
     this.storage.get('user').then(
@@ -87,45 +87,12 @@ export class ProfilPage implements OnInit  {
   aviStat: any;
   aviConducteurStat: any;
 
-  async presentAlert(header: string, msg: string) {
-    const alert = await this.alertController.create({
-      header: 'Blassa message',
-      subHeader: header,
-      message: msg,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
-
-  async presentConfirm(header: string, msg: string, onConfirm: () => void) {
-    const alert = await this.alertController.create({
-      header: 'Blassa message',
-      subHeader: header,
-      message: msg,
-      buttons: [
-        {
-          text: 'Cancel',
-        },
-        {
-          text: 'Confirmer',
-          handler: () => {
-            const boundOnconfirm = onConfirm.bind(this);
-            boundOnconfirm();
-          },
-        }
-      ],
-    });
-
-    await alert.present();
-  }
-
   async ionViewWillEnter() { }
 
   async ngOnInit() {  }
 
   async enregistrer() {
-    await this.presentConfirm('Confirmer profil', 'Veuillez confirmer l\'enregistrement des changements apportées sur votre profil.', this.enregistrerConfim);
+    await this.blassaAlert.confirm('Confirmer profil', 'Veuillez confirmer l\'enregistrement des changements apportées sur votre profil.', this.enregistrerConfim.bind(this));
   }
 
   async enregistrerConfim() {
@@ -142,7 +109,7 @@ export class ProfilPage implements OnInit  {
       },
       async (err) => {
         console.log(err);
-        await this.presentAlert('Erreur enregistrement profil', err.error);
+        await this.blassaAlert.alert('Erreur enregistrement profil', err.error);
       }
     );
   }
@@ -192,7 +159,7 @@ export class ProfilPage implements OnInit  {
   deletePermisConduire() {
     this.filePermisConduireObj = null;
     this.user.filePermisConduire = null;
-    this.presentAlert('Suppression Permis de conduire', 'Veuillez enregistrer pour que la suppression soit effective.');
+    this.blassaAlert.alert('Suppression Permis de conduire', 'Veuillez enregistrer pour que la suppression soit effective.');
   }
 
   /*****************************************/
@@ -213,7 +180,7 @@ export class ProfilPage implements OnInit  {
   deleteCin() {
     this.fileCinObj = null;
     this.user.fileCin = null;
-    this.presentAlert('Suppression Carte d\identité nationale', 'Veuillez enregistrer pour que la suppression soit effective.');
+    this.blassaAlert.alert('Suppression Carte d\identité nationale', 'Veuillez enregistrer pour que la suppression soit effective.');
   }
 
   /*****************************************/
@@ -234,7 +201,7 @@ export class ProfilPage implements OnInit  {
   deletePasseport() {
     this.filePasseportObj = null;
     this.user.filePasseport = null;
-    this.presentAlert('Suppression passeport', 'Veuillez enregistrer pour que la suppression soit effective.');
+    this.blassaAlert.alert('Suppression passeport', 'Veuillez enregistrer pour que la suppression soit effective.');
   }
 
   /*****************************************/

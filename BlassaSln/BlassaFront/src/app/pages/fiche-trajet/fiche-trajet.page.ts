@@ -1,6 +1,6 @@
 import {  Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonModal, Platform, AlertController, ToastController } from '@ionic/angular';
+import { IonModal, Platform, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
@@ -13,6 +13,7 @@ import { VoyageAvecType } from '../../classes/voyageAvecType';
 import { ReservationStatusType } from '../../classes/reservationStatusType';
 import { AvisComponent } from '../../components/avis/avis.component';
 import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
+import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -51,7 +52,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
     private callNumber: CallNumber,
     public platform: Platform,
     private storage: StorageService,
-    private alertController: AlertController,
+    private blassaAlert: BlassaAlertComponent,
     private toastController: ToastController
     ) { 
       
@@ -66,40 +67,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
 
     await toast.present();
   }
-
-  async presentAlert(header: string, msg: string) {
-    const alert = await this.alertController.create({
-      header: 'Blassa message',
-      subHeader: header,
-      message: msg,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
-
-  async presentConfirm(header: string, msg: string, onConfirm: () => void) {
-    const alert = await this.alertController.create({
-      header: 'Blassa message',
-      subHeader: header,
-      message: msg,
-      buttons: [
-        {
-          text: 'Cancel',
-        },
-        {
-          text: 'Confirmer',
-          handler: () => {
-            const boundOnconfirm = onConfirm.bind(this);
-            boundOnconfirm();
-          },
-        }
-      ],
-    });
-
-    await alert.present();
-  }
-
+  
   @HostListener('unloaded')
   async ngOnDestroy() {
     console.log("fiche destroyed");
@@ -210,12 +178,12 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
 
   //Reservation Logic
   async promptReserver() {
-    await this.presentConfirm('Confirmer réservation', 'Veuillez confirmer votre réservation.', this.reserver);
+    await this.blassaAlert.confirm('Confirmer réservation', 'Veuillez confirmer votre réservation.', this.reserver.bind(this));
   }
 
   async reserver(){
       if(this.token.method == "Invite"){
-        await this.presentConfirm('Mode invité', 'Veuillez vous connecter', this.inviteToConnect);
+        await this.blassaAlert.confirm('Mode invité', 'Veuillez vous connecter', this.inviteToConnect.bind(this));
       }
       else{
         this.reservationService.postReservation({ userId: this.user?.id, trajetAnnonceId: this.annonce?.id }).subscribe(
@@ -225,7 +193,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
           },
           async (err) => {
             console.log(err);
-            await this.presentAlert('Erreur ajout réservation', err.error);
+            await this.blassaAlert.alert('Erreur ajout réservation', err.error);
           }
         );
       }
@@ -264,9 +232,9 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
   resParam: any;
   async promptAccepterRes(res) {
     this.resParam = res;
-    await this.presentConfirm("Confirmer la réservation de " + res.userRes.prenom + " ?",
+    await this.blassaAlert.confirm("Confirmer la réservation de " + res.userRes.prenom + " ?",
       'Veuillez confirmer la réservation.',
-      this.accepterRes);
+      this.accepterRes.bind(this));
   }
 
   async accepterRes() {
@@ -281,16 +249,16 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
       },
       async (err) => {
         console.log(err);
-        await this.presentAlert('Acceptation réservation', err.error);
+        await this.blassaAlert.alert('Acceptation réservation', err.error);
       }
     );
   }
 
   async promptRefuserRes(res) {
     this.resParam = res;
-    await this.presentConfirm("Refuser la réservation de " + res.userRes.prenom + " ?",
+    await this.blassaAlert.confirm("Refuser la réservation de " + res.userRes.prenom + " ?",
       'Veuillez confirmer le refu de la réservation.',
-      this.refuserRes);
+      this.refuserRes.bind(this));
   }
 
   async refuserRes() {
@@ -304,16 +272,16 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
       },
       async (err) => {
         console.log(err);
-        await this.presentAlert('Refus réservation', err.error);
+        await this.blassaAlert.alert('Refus réservation', err.error);
       }
     );
   }
 
   async promptEnAttenteRes(res: any) {
     this.resParam = res;
-    await this.presentConfirm("Mettre la réservation de " + res.userRes.prenom + " en attente ?",
+    await this.blassaAlert.confirm("Mettre la réservation de " + res.userRes.prenom + " en attente ?",
       'Veuillez confirmer la mise en attente de la réservation.',
-      this.enAttenteRes);
+      this.enAttenteRes.bind(this));
   }
 
   enAttenteRes() {
@@ -334,7 +302,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
       async (err) => {
         console.log(err);
         this.resParam.status = statusRes;
-        await this.presentAlert('Mise en attente réservation', err.error);
+        await this.blassaAlert.alert('Mise en attente réservation', err.error);
       }
     );
   }

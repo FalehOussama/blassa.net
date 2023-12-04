@@ -6,11 +6,11 @@ import { AviConducteurService } from 'src/app/services/aviConducteur.service';
 import { CommentaireService } from 'src/app/services/commentaire.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, AlertController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { AvisComponent } from '../../components/avis/avis.component';
 import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
 import { AvisModalComponent } from '../../components/avis-modal/avis-modal.component';
-import el from 'date-fns/locale/el';
+import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
 
 @Component({
   selector: 'app-profil-membre',
@@ -31,7 +31,7 @@ export class ProfilMembrePage implements OnInit {
     private storage : StorageService,
     private formBuilder :FormBuilder,
     private modalCtrl: ModalController,
-    private alertController: AlertController,
+    private blassaAlert: BlassaAlertComponent,
     private toastController: ToastController
   ) {
     this.storage.get('user').then(
@@ -87,17 +87,6 @@ export class ProfilMembrePage implements OnInit {
     await toast.present();
   }
 
-  async presentAlert(header: string, msg: string) {
-    const alert = await this.alertController.create({
-      header: 'Blassa message',
-      subHeader: header,
-      message: msg,
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
-
   //Commenter
   commenter() {
     let comm = { userId: this.membre.id, userCommId: this.user.id, texte: this.commentaireForm.value.commentaire };
@@ -109,7 +98,7 @@ export class ProfilMembrePage implements OnInit {
       },
       async (err) => {
         console.log(err);
-        await this.presentAlert('Erreur ajout commentaire', err.error);
+        await this.blassaAlert.alert('Erreur ajout commentaire', err.error);
       }
     );
   }
@@ -137,7 +126,7 @@ export class ProfilMembrePage implements OnInit {
             },
             async (err) => {
               console.log(err);
-              await this.presentAlert('Erreur ajout avi conduite', err.error);
+              await this.blassaAlert.alert('Erreur ajout avi conduite', err.error);
             }
           );
         }
@@ -150,7 +139,7 @@ export class ProfilMembrePage implements OnInit {
             },
             async (err) => {
               console.log(err);
-              await this.presentAlert('Erreur ajout avi', err.error);
+              await this.blassaAlert.alert('Erreur ajout avi', err.error);
             }
           );
         }

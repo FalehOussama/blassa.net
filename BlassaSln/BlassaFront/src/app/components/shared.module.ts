@@ -20,11 +20,12 @@ import { RouterModule } from '@angular/router';
 import { AvisComponent } from './avis/avis.component';
 import { AvisCondComponent } from './avis-cond/avis-cond.component';
 import { AvisModalComponent } from './avis-modal/avis-modal.component';
+import { BlassaAlertComponent } from './blassa-alert/blassa-alert.component';
 
 @NgModule({
-  declarations: [AvisModalComponent, InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent,InputComponent, ButtonComponent, IconButtonComponent , IconButton2Component , AnnonceItemComponent , InfoConducteurComponent , InfoTrajetComponent , InfoReservationsComponent , CreerAnnonceStepsComponent],
+  declarations: [BlassaAlertComponent, AvisModalComponent, InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent,InputComponent, ButtonComponent, IconButtonComponent , IconButton2Component , AnnonceItemComponent , InfoConducteurComponent , InfoTrajetComponent , InfoReservationsComponent , CreerAnnonceStepsComponent],
   imports: [CommonModule, IonicModule , FontAwesomeModule , NgxPaginationModule , RouterModule],
   providers :[CallNumber],
-  exports: [AvisModalComponent, InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent ,InputComponent, ButtonComponent, IconButtonComponent, IconButton2Component, AnnonceItemComponent, InfoConducteurComponent, InfoTrajetComponent, InfoReservationsComponent, CreerAnnonceStepsComponent],
+  exports: [BlassaAlertComponent, AvisModalComponent, InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent ,InputComponent, ButtonComponent, IconButtonComponent, IconButton2Component, AnnonceItemComponent, InfoConducteurComponent, InfoTrajetComponent, InfoReservationsComponent, CreerAnnonceStepsComponent],
 })
 export class SharedModule {}
