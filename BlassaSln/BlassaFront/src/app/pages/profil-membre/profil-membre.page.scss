@@ -1,3 +1,7 @@
+ion-modal {
+  --height: 50%;
+}
+
 .nom{
     width: 100%;
     font-family: font4;
@@ -101,5 +105,4 @@ ion-icon {
 .aviBtn {
   --background: transparent;
   --color: black;
-  --padding-top: 15px;
 }

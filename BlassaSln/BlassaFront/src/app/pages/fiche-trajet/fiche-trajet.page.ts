@@ -41,6 +41,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
     }
+    this.isModalOpen = false;
   }
   
   constructor(

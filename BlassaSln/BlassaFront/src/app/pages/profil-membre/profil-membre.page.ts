@@ -98,7 +98,8 @@ export class ProfilMembrePage implements OnInit {
   async openAvisModal(isConduite: boolean) {
     const modal = await this.modalCtrl.create({
       component: AvisModalComponent,
-      componentProps: { membre: this.membre, isConduite: isConduite }
+      componentProps: { membre: this.membre, isConduite: isConduite },
+      cssClass: 'avi-modal'
     })
 
     await modal.present();
