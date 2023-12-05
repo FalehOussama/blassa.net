@@ -24,5 +24,6 @@ export class RechTrajetAnnonceDto {
   uPrenom: string;
   uSexe: string;
   uSuperDriver: boolean;
+  uSuperUser: boolean;
   uVerifie: boolean;
 }

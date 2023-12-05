@@ -48,14 +48,10 @@
           </ion-popover>
         </ion-col>
 
-        <ion-col size="1" *ngIf="annonce?.user.preferences.tel">
-          <ion-img class="social" src="../../../assets/icon/phone.svg" alt="rating" (click)="call();"></ion-img>
-        </ion-col>
-        <ion-col size="1" *ngIf="annonce?.user.preferences.whatsApp">
-          <ion-img class="social" src="../../../assets/icon/whatsapp.svg" alt="rating" (click)="whatsapp();"></ion-img>
-        </ion-col>
-        <ion-col size="1" *ngIf="annonce?.user.preferences.messenger">
-          <ion-img class="social" src="../../../assets/icon/messenger.svg" alt="rating" (click)="openFacebook()"></ion-img>
+        <ion-col size="3">
+          <ion-img *ngIf="annonce?.user.preferences.tel" class="social" src="../../../assets/icon/phone.svg" alt="rating" (click)="call();"></ion-img>
+          <ion-img *ngIf="annonce?.user.preferences.whatsApp" class="social" src="../../../assets/icon/whatsapp.svg" alt="rating" (click)="whatsapp();"></ion-img>
+          <ion-img *ngIf="annonce?.user.preferences.messenger" class="social" src="../../../assets/icon/messenger.svg" alt="rating" (click)="openFacebook()"></ion-img>
         </ion-col>
       </ion-row>
 
@@ -113,13 +109,7 @@
             <ion-item style="width: 100%;">
               <ion-img class="icon" slot="start" src="../../../assets/images/car.png"></ion-img>
               <ion-label class="text2">{{annonce?.vMarque}} - {{annonce?.vModele}}</ion-label>
-            </ion-item>
-
-            <ion-item style="width: 100%;">
-              <ion-img class="icon" slot="start" src="../../../assets/images/clim.png"></ion-img>
-              <ion-label class="text">Climatisé </ion-label>
-              <ion-icon *ngIf="annonce?.vClimatise" slot="end" color="success" name="checkmark-circle"></ion-icon>
-              <ion-icon *ngIf="annonce?.vClimatise==false" slot="end" name="close-circle"></ion-icon>
+              <ion-img *ngIf="annonce?.vClimatise" class="icon" slot="end" src="../../../assets/images/clim.png"></ion-img>
             </ion-item>
 
             <ion-item style="width: 100%;">
