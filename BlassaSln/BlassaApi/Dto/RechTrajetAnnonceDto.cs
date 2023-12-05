@@ -31,5 +31,8 @@ namespace BlassaApi.Dto
         public bool USuperDriver { get; set; }
         public bool USuperUser { get; set; }
         public bool UVerifie { get; set; }
+
+        public bool IsRes { get; set; }
+        public ReservationStatusType StatutRes { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnnonceService } from 'src/app/services/annonce.service';
-import { ReservationService } from 'src/app/services/reservation.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -12,7 +11,6 @@ import { StorageService } from 'src/app/services/storage.service';
 export class MesReservationsPage implements OnInit {
 
   constructor(
-    private reservationService : ReservationService,
     private storage : StorageService,
     private annonceService : AnnonceService,
     private router : Router,
@@ -27,32 +25,25 @@ export class MesReservationsPage implements OnInit {
   }
 
   mesReservations : any;
-  mesReservationsHistorique : any;
-  
+  mesReservationsHistorique : any;  
   user:any;
-  nbreReservation:number;
 
   ngOnInit() {
-  }
-
-  async chargerHistoriqueReservations(){
-    //await this.reservationService.getHistoriqueMesReservations(this.user?.id_User).subscribe(
-    //  async (res)=> this.mesReservationsHistorique = await res
-    //)
   }
 
   async ionViewWillEnter(){
 
     this.user = await this.storage.get('user');
 
-    await this.reservationService.getMesReservations(this.user?.id_User).subscribe(
-      async (res)=>
-      {
-        this.mesReservations = await res
-        this.nbreReservation = this.mesReservations.length
-        console.log(this.mesReservations)
-      } 
-    )
+    await this.annonceService.getMesTrajetsResByUserId(this.user?.id).subscribe(
+      async (res) => {
+        this.mesReservations = await res;
+      }
+    );
+
+    await this.annonceService.getMesTrajetsResHisByUserId(this.user?.id).subscribe(
+      async (res) => this.mesReservationsHistorique = await res
+    );
   }
 
   afficherFiche(id){

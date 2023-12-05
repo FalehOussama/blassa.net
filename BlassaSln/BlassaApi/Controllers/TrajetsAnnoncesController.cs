@@ -181,25 +181,177 @@ namespace BlassaApi.Controllers
             return retour;
         }
 
-        //GET : api/TrajetsAnnonces/User
+        //GET : api/TrajetsAnnonces/User/5
         [HttpGet("User/{userId}")]
-        public async Task<ActionResult<IEnumerable<TrajetAnnonce>>> GetTrajetsAnnoncesUser(int userId)
+        public async Task<ActionResult<IEnumerable<RechTrajetAnnonceDto>>> GetTrajetsAnnoncesUser(int userId)
         {
             if (_dbContext.TrajetsAnnonces == null)
                 return NotFound();
-            return await _dbContext.TrajetsAnnonces.Where(x => x.UserId == userId).ToListAsync();
+            return await _dbContext.TrajetsAnnonces
+                .Where(t => t.UserId == userId &&
+                            t.DateHeureDepart >= DateTime.Now)
+                .OrderBy(t => t.DateHeureDepart)
+                .Select(t => new RechTrajetAnnonceDto()
+                {
+                    Id = t.Id,
+                    Depart = t.Depart,
+                    Destination = t.Destination,
+                    DateHeureDepart = t.DateHeureDepart,
+                    NombrePlaces = t.NombrePlaces,
+                    NombrePlacesDispo = t.NombrePlacesDispo,
+                    Prix = t.Prix,
+                    Instantane = t.Instantane,
+                    VoyageAvec = t.VoyageAvec,
+                    VClimatise = t.VClimatise,
+                    Cigarette = t.Cigarette,
+                    Animaux = t.Animaux,
+                    Max2 = t.Max2,
+                    Leger = t.Leger,
+                    Moyen = t.Moyen,
+                    Lourd = t.Lourd,
+                    UserId = t.UserId,
+                    UId = t.User.UId,
+                    UNom = t.User.Nom,
+                    UPrenom = t.User.Prenom,
+                    UImgUrl = t.User.ImgUrl,
+                    USexe = t.User.Sexe,
+                    USuperDriver = t.User.SuperDriver,
+                    USuperUser = t.User.SuperUser,
+                    UVerifie = t.User.Verifie
+                })
+                .ToListAsync();
         }
 
-        //GET : api/TrajetsAnnonces/UserReservation
+        //GET : api/TrajetsAnnonces/UserHis/5
+        [HttpGet("UserHis/{userId}")]
+        public async Task<ActionResult<IEnumerable<RechTrajetAnnonceDto>>> GetTrajetsAnnoncesUserHistorique(int userId)
+        {
+            if (_dbContext.TrajetsAnnonces == null)
+                return NotFound();
+            return await _dbContext.TrajetsAnnonces
+                .Where(t => t.UserId == userId &&
+                            t.DateHeureDepart < DateTime.Now)
+                .OrderByDescending(t => t.DateHeureDepart)
+                .Select(t => new RechTrajetAnnonceDto()
+                {
+                    Id = t.Id,
+                    Depart = t.Depart,
+                    Destination = t.Destination,
+                    DateHeureDepart = t.DateHeureDepart,
+                    NombrePlaces = t.NombrePlaces,
+                    NombrePlacesDispo = t.NombrePlacesDispo,
+                    Prix = t.Prix,
+                    Instantane = t.Instantane,
+                    VoyageAvec = t.VoyageAvec,
+                    VClimatise = t.VClimatise,
+                    Cigarette = t.Cigarette,
+                    Animaux = t.Animaux,
+                    Max2 = t.Max2,
+                    Leger = t.Leger,
+                    Moyen = t.Moyen,
+                    Lourd = t.Lourd,
+                    UserId = t.UserId,
+                    UId = t.User.UId,
+                    UNom = t.User.Nom,
+                    UPrenom = t.User.Prenom,
+                    UImgUrl = t.User.ImgUrl,
+                    USexe = t.User.Sexe,
+                    USuperDriver = t.User.SuperDriver,
+                    USuperUser = t.User.SuperUser,
+                    UVerifie = t.User.Verifie
+                })
+                .Take(10)
+                .ToListAsync();
+        }
+
+        //GET : api/TrajetsAnnonces/UserReservation/5
         [HttpGet("UserReservation/{userId}")]
-        public async Task<ActionResult<IEnumerable<TrajetAnnonce>>> GetTrajetsAnnoncesUserReservation(int userId)
+        public async Task<ActionResult<IEnumerable<RechTrajetAnnonceDto>>> GetTrajetsAnnoncesUserReservation(int userId)
         {
             if (_dbContext.TrajetsAnnonces == null)
             {
                 return NotFound();
             }
             return await _dbContext.TrajetsAnnonces
-                .Where(x => x.Reservations.Any(r => r.UserId == userId))
+                .Where(t => t.Reservations.Any(r => r.UserId == userId) &&
+                            t.DateHeureDepart >= DateTime.Now)
+                .OrderBy(t => t.DateHeureDepart)
+                .Select(t => new RechTrajetAnnonceDto()
+                {
+                    Id = t.Id,
+                    Depart = t.Depart,
+                    Destination = t.Destination,
+                    DateHeureDepart = t.DateHeureDepart,
+                    NombrePlaces = t.NombrePlaces,
+                    NombrePlacesDispo = t.NombrePlacesDispo,
+                    Prix = t.Prix,
+                    Instantane = t.Instantane,
+                    VoyageAvec = t.VoyageAvec,
+                    VClimatise = t.VClimatise,
+                    Cigarette = t.Cigarette,
+                    Animaux = t.Animaux,
+                    Max2 = t.Max2,
+                    Leger = t.Leger,
+                    Moyen = t.Moyen,
+                    Lourd = t.Lourd,
+                    UserId = t.UserId,
+                    UId = t.User.UId,
+                    UNom = t.User.Nom,
+                    UPrenom = t.User.Prenom,
+                    UImgUrl = t.User.ImgUrl,
+                    USexe = t.User.Sexe,
+                    USuperDriver = t.User.SuperDriver,
+                    USuperUser = t.User.SuperUser,
+                    UVerifie = t.User.Verifie,
+                    IsRes = true,
+                    StatutRes = t.Reservations.Single(r => r.UserId == userId).Status
+                })
+                .ToListAsync();
+        }
+
+        //GET : api/TrajetsAnnonces/UserReservationHis/5
+        [HttpGet("UserReservationHis/{userId}")]
+        public async Task<ActionResult<IEnumerable<RechTrajetAnnonceDto>>> GetTrajetsAnnoncesUserReservationHistorique(int userId)
+        {
+            if (_dbContext.TrajetsAnnonces == null)
+            {
+                return NotFound();
+            }
+            return await _dbContext.TrajetsAnnonces
+                .Where(t => t.Reservations.Any(r => r.UserId == userId) &&
+                            t.DateHeureDepart < DateTime.Now)
+                .OrderByDescending(t => t.DateHeureDepart)
+                .Select(t => new RechTrajetAnnonceDto()
+                {
+                    Id = t.Id,
+                    Depart = t.Depart,
+                    Destination = t.Destination,
+                    DateHeureDepart = t.DateHeureDepart,
+                    NombrePlaces = t.NombrePlaces,
+                    NombrePlacesDispo = t.NombrePlacesDispo,
+                    Prix = t.Prix,
+                    Instantane = t.Instantane,
+                    VoyageAvec = t.VoyageAvec,
+                    VClimatise = t.VClimatise,
+                    Cigarette = t.Cigarette,
+                    Animaux = t.Animaux,
+                    Max2 = t.Max2,
+                    Leger = t.Leger,
+                    Moyen = t.Moyen,
+                    Lourd = t.Lourd,
+                    UserId = t.UserId,
+                    UId = t.User.UId,
+                    UNom = t.User.Nom,
+                    UPrenom = t.User.Prenom,
+                    UImgUrl = t.User.ImgUrl,
+                    USexe = t.User.Sexe,
+                    USuperDriver = t.User.SuperDriver,
+                    USuperUser = t.User.SuperUser,
+                    UVerifie = t.User.Verifie,
+                    IsRes = true,
+                    StatutRes = t.Reservations.Single(r => r.UserId == userId).Status
+                })
+                .Take(10)
                 .ToListAsync();
         }
 

@@ -1,32 +1,23 @@
 <app-menu></app-menu>
 
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content class="ion-padding">
 
   <ion-img class="cover" src="../../../assets/images/Background/mesTrajets.png" alt="Header"></ion-img>
-  <ion-label class="nombre">{{nbreAnnonces}} trajets</ion-label>
-
-  <div *ngIf="mesAnnonces?.length==0">
-    <ion-row class="ion-justify-content-center">
-      <video preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
-        <source src="../../../assets/videos/noAnnonce.mp4" type="video/mp4" />
-       </video>
-    </ion-row>
-  </div>
+  <ion-label class="nombre">{{mesAnnonces?.length}} trajets en cours</ion-label>
 
   <app-annonce-item *ngFor="let annonce of mesAnnonces" 
             (click)="afficherFiche(annonce.id)"
             [annonce]="annonce"
   ></app-annonce-item>
 
-  <ion-accordion-group>
-    <ion-accordion value="historiqueAnnonces" (click)="chargerHistoriqueAnnonces()">
+  <ion-accordion-group value="hist">
+    <ion-accordion value="hist">
       <ion-item slot="header" color="light">
-        <ion-label>Historique annonces</ion-label>
+        <ion-label>Historique annonces ({{mesAnnoncesHistorique?.length}})</ion-label>
       </ion-item>
       <div slot="content">
         <app-annonce-item *ngFor="let annonce of mesAnnoncesHistorique" 
-                (click)="afficherFiche(annonce.id)"
                 [annonce]="annonce"
         ></app-annonce-item>
       </div>

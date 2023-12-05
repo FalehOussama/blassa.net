@@ -1,3 +1,4 @@
+import { ReservationStatusType } from "./reservationStatusType";
 import { VoyageAvecType } from "./voyageAvecType";
 
 export class RechTrajetAnnonceDto {
@@ -26,4 +27,6 @@ export class RechTrajetAnnonceDto {
   uSuperDriver: boolean;
   uSuperUser: boolean;
   uVerifie: boolean;
+  isRes: boolean;
+  statutRes: ReservationStatusType;
 }

@@ -134,3 +134,18 @@ ion-chip {
     --background: linear-gradient(90deg, rgba(255,255,255,0.27614373386073177) 96%, rgba(251,67,227,1) 100%);
 }
 
+.enAttente {
+  --background: #ffd94f !important;
+}
+
+.refusee {
+  --background: #fa5252 !important;
+}
+
+.confirmee {
+  --background: #37e373 !important;
+}
+
+.statusIcon {
+  //margin-inline: 0px 0px;
+}

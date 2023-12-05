@@ -54,6 +54,11 @@
       </ion-col>
     </ion-row>
     <ion-row style="margin-top: -15px;">
+      <ion-chip *ngIf="annonce.isRes" class={{classResChip}}>
+        <ion-icon *ngIf="classResChip=='enAttente'" name="hourglass" color="light" class="statusIcons"></ion-icon>
+        <ion-icon *ngIf="classResChip=='confirmee'" name="checkmark-circle" color="light" class="statusIcons"></ion-icon>
+        <ion-icon *ngIf="classResChip=='refusee'" name="close-circle" color="light" class="statusIcons"></ion-icon>
+      </ion-chip>
       <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
         <ion-img class="icon" *ngIf="annonce.leger" src="../../../assets/images/bLeger.png"></ion-img>
         <ion-img class="icon" *ngIf="annonce.moyen" src="../../../assets/images/bMoyen.png"></ion-img>

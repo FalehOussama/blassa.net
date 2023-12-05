@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RechTrajetAnnonceDto } from '../../classes/rechTrajetAnnonceDto';
 import { VoyageAvecType } from '../../classes/voyageAvecType';
+import { ReservationStatusType } from '../../classes/reservationStatusType';
 
 @Component({
   selector: 'app-annonce-item',
@@ -14,7 +15,8 @@ export class AnnonceItemComponent  implements OnInit {
   }
 
   @Input() annonce: RechTrajetAnnonceDto;
-  style:string;
+  style: string;
+  classResChip: String = "";
   
   ngOnInit() {
     if (this.annonce.voyageAvec == VoyageAvecType.FILLES){
@@ -24,7 +26,11 @@ export class AnnonceItemComponent  implements OnInit {
       this.style="garcons";
      }else{
       this.style="tous"
-     }
+    }
+
+    if (this.annonce.statutRes == ReservationStatusType.COMFIRMEE) this.classResChip = "confirmee"
+    else if (this.annonce.statutRes == ReservationStatusType.EN_ATTENTE) this.classResChip = "enAttente"
+    else if (this.annonce.statutRes == ReservationStatusType.REFUSEE) this.classResChip = "refusee"
   }
 
   

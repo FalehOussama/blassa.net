@@ -1,30 +1,22 @@
 <app-menu></app-menu>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content class="ion-padding">
 
   <ion-img class="cover" src="../../../assets/images/Background/mesReservations.png" alt="Header"></ion-img>
-  <ion-label class="nombre">{{nbreReservation}} Reservations</ion-label>
+  <ion-label class="nombre">{{mesReservations?.length}} Réservations en cours</ion-label>
 
-    <div *ngIf="mesReservations?.length==0">
-      <ion-row class="ion-justify-content-center">
-        <video preload="metadata" autoplay="autoplay" webkit-playsinline="webkit-playsinline" class="videoPlayer">
-          <source src="../../../assets/videos/noReservation.mp4" type="video/mp4" />
-         </video>
-      </ion-row>
-    </div>
     <app-annonce-item *ngFor="let annonce of mesReservations"  
               (click)="afficherFiche(annonce.id)"
               [annonce]="annonce"
     ></app-annonce-item>
   
-    <ion-accordion-group>
-      <ion-accordion value="historiqueAnnonces" (click)="chargerHistoriqueReservations()">
+    <ion-accordion-group value="hist">
+      <ion-accordion value="hist">
         <ion-item slot="header" color="light">
-          <ion-label>Historique reservations</ion-label>
+          <ion-label>Historique reservations ({{mesReservationsHistorique?.length}})</ion-label>
         </ion-item>
         <div slot="content">
-          <app-annonce-item *ngFor="let annonce of mesReservationsHistorique" 
-                    (click)="afficherFiche(annonce.id)"
+          <app-annonce-item *ngFor="let annonce of mesReservationsHistorique"
                     [annonce]="annonce"
           ></app-annonce-item>
         </div>
