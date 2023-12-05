@@ -5,7 +5,7 @@
   <ion-img class="cover" src="../../../assets/images/Background/mesReservations.png" alt="Header"></ion-img>
   <ion-label class="nombre">{{mesReservations?.length}} Réservations en cours</ion-label>
 
-    <app-annonce-item *ngFor="let annonce of mesReservations"  
+    <app-annonce-item *ngFor="let annonce of mesReservations"
               (click)="afficherFiche(annonce.id)"
               [annonce]="annonce"
     ></app-annonce-item>
@@ -17,6 +17,7 @@
         </ion-item>
         <div slot="content">
           <app-annonce-item *ngFor="let annonce of mesReservationsHistorique"
+                    (click)="afficherFiche(annonce.id)"
                     [annonce]="annonce"
           ></app-annonce-item>
         </div>

@@ -6,7 +6,7 @@
   <ion-img class="cover" src="../../../assets/images/Background/mesTrajets.png" alt="Header"></ion-img>
   <ion-label class="nombre">{{mesAnnonces?.length}} trajets en cours</ion-label>
 
-  <app-annonce-item *ngFor="let annonce of mesAnnonces" 
+  <app-annonce-item *ngFor="let annonce of mesAnnonces"
             (click)="afficherFiche(annonce.id)"
             [annonce]="annonce"
   ></app-annonce-item>
@@ -17,7 +17,8 @@
         <ion-label>Historique annonces ({{mesAnnoncesHistorique?.length}})</ion-label>
       </ion-item>
       <div slot="content">
-        <app-annonce-item *ngFor="let annonce of mesAnnoncesHistorique" 
+        <app-annonce-item *ngFor="let annonce of mesAnnoncesHistorique"
+                (click)="afficherFiche(annonce.id)" 
                 [annonce]="annonce"
         ></app-annonce-item>
       </div>
