@@ -33,6 +33,22 @@ export class AnnonceService {
     return this.http.get<any>(this.baseUrl + "/" + id);
   }
 
+  getMesTrajetsByUserId(id: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/User/" + id);
+  }
+
+  getMesTrajetsHisByUserId(id: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/UserHis/" + id);
+  }
+
+  getMesTrajetsResByUserId(id: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/UserReservation/" + id);
+  }
+
+  getMesTrajetsResHisByUserId(id: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/UserReservationHis/" + id);
+  }
+
   //================================
 
   getAnnonces(): Observable<any[]>{
