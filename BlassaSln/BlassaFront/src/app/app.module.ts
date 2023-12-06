@@ -37,24 +37,52 @@ import { SharedModule } from './components/shared.module';
 const CLIENT_ID = "856756010084-gleml74i01flrj2gd64ckkmpfk2d8io4.apps.googleusercontent.com";
 @NgModule({
   declarations: [AppComponent ],
-  imports: [IonicStorageModule.forRoot() , NgxPaginationModule,SharedModule ,MaskitoModule , SocialLoginModule , BrowserModule, IonicModule.forRoot(),AppRoutingModule, CommonModule,AngularFireModule.initializeApp(environment.firebaseConfig),AngularFireAuthModule, HttpClientModule , FontAwesomeModule , NgxPaginationModule, FontAwesomeModule, ServiceWorkerModule.register('ngsw-worker.js', {
-  enabled: !isDevMode(),
-  // Register the ServiceWorker as soon as the application is stable
-  // or after 30 seconds (whichever comes first).
-  registrationStrategy: 'registerWhenStable:30000'
-})],
-  providers: [  {
-    provide: 'SocialAuthServiceConfig',
-    useValue: {
-      autoLogin: false,
-      providers: [
-        {
-          id: GoogleLoginProvider.PROVIDER_ID,
-          provider: new GoogleLoginProvider('856756010084-gleml74i01flrj2gd64ckkmpfk2d8io4.apps.googleusercontent.com'),
-        },
-      ],
-    } as SocialAuthServiceConfig,
-  }, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },InviteComponent ,NativeGeocoder, GooglePlus,NativeStorage,AngularFireAuthModule, Sim, AndroidPermissions,HttpClient , ],
+  imports: [
+    NgxPaginationModule,
+    SharedModule,
+    MaskitoModule,
+    SocialLoginModule,
+    BrowserModule,
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
+    AppRoutingModule,
+    CommonModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    HttpClientModule,
+    FontAwesomeModule,
+    NgxPaginationModule,
+    FontAwesomeModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
+  ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('856756010084-gleml74i01flrj2gd64ckkmpfk2d8io4.apps.googleusercontent.com'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    InviteComponent,
+    NativeGeocoder,
+    GooglePlus,
+    NativeStorage,
+    AngularFireAuthModule,
+    Sim,
+    AndroidPermissions,
+    HttpClient
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {

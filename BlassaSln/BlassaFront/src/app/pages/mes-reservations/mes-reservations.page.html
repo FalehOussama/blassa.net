@@ -10,16 +10,16 @@
               [annonce]="annonce"
     ></app-annonce-item>
   
-    <ion-accordion-group value="hist">
+    <ion-accordion-group value="hist">      
       <ion-accordion value="hist">
-        <ion-item slot="header" color="light">
-          <ion-label>Historique reservations ({{mesReservationsHistorique?.length}})</ion-label>
+        <ion-item slot="header" color="warning">
+          <ion-label>Historique reservations</ion-label>
         </ion-item>
         <div slot="content">
+          <ion-label class="nombre">{{mesReservationsHistorique?.length}} Réservations dans votre historique</ion-label>
           <app-annonce-item *ngFor="let annonce of mesReservationsHistorique"
-                    (click)="afficherFiche(annonce.id)"
-                    [annonce]="annonce"
-          ></app-annonce-item>
+                            (click)="afficherFiche(annonce.id)"
+                            [annonce]="annonce"></app-annonce-item>
         </div>
       </ion-accordion>
     </ion-accordion-group>

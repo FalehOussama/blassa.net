@@ -1,6 +1,5 @@
 <app-menu></app-menu>
 
-
 <ion-content class="ion-padding">
 
   <ion-img class="cover" src="../../../assets/images/Background/mesTrajets.png" alt="Header"></ion-img>
@@ -13,14 +12,14 @@
 
   <ion-accordion-group value="hist">
     <ion-accordion value="hist">
-      <ion-item slot="header" color="light">
-        <ion-label>Historique annonces ({{mesAnnoncesHistorique?.length}})</ion-label>
+      <ion-item slot="header" color="warning">
+        <ion-label>Historique annonces</ion-label>
       </ion-item>
       <div slot="content">
+        <ion-label class="nombre">{{mesAnnoncesHistorique?.length}} trajets dans votre historique</ion-label>
         <app-annonce-item *ngFor="let annonce of mesAnnoncesHistorique"
-                (click)="afficherFiche(annonce.id)" 
-                [annonce]="annonce"
-        ></app-annonce-item>
+                          (click)="afficherFiche(annonce.id)"
+                          [annonce]="annonce"></app-annonce-item>
       </div>
     </ion-accordion>
   </ion-accordion-group>

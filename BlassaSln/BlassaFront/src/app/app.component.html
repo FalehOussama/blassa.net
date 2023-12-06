@@ -2,17 +2,89 @@
   <ion-split-pane contentId="main-content">
       <ion-menu contentId="main-content" type="overlay">
         <ion-content>
-          <ion-list id="inbox-list">
-            <ion-menu-toggle auto-hide="false" *ngFor="let pages of Pages; let i = index">
-              <ion-card>
-                <ion-item (click)="activeIndex = i" routerDirection="root" [routerLink]="[pages.url]" lines="none"
-                  detail="false" [class.selected]="activeIndex == i">
-                  <ion-icon slot="start" [ios]="pages.icon + '-outline'" [md]="pages.icon + '-sharp'"></ion-icon>
-                  <ion-label class="menu-text">{{ pages.title }}</ion-label>
+
+          <ion-card color="light">
+            <img alt="Blassa Logo" src="../../../assets/images/logo/blassaLogo.png" />
+            <ion-row style="margin-top: -5px;">
+              <ion-col>
+                <ion-item color="light" lines="none">
+                  <ion-avatar slot="start" class="{{user?.verifie ? 'verifie' : ''}}">
+                    <img alt="person" src="{{user?.imgUrl}}" />
+                  </ion-avatar>
+                  <ion-label class="nom">{{user?.prenom}}</ion-label>
                 </ion-item>
-              </ion-card>
-            </ion-menu-toggle>
-          </ion-list>
+              </ion-col>
+              <ion-col>
+                <ion-row>
+                  <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+                    <ion-img class="icon" *ngIf="user?.superUser" src="../../../assets/images/medSuperUser.png"></ion-img>
+                    <ion-img class="icon" *ngIf="user?.superDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
+                  </div>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+
+          <ion-accordion-group value="trajinterCites">
+            <ion-accordion value="trajinterCites">
+              <ion-item slot="header">
+                <ion-label>Trajets inter-cités</ion-label>
+              </ion-item>
+              <div slot="content">
+                <ion-list>
+                  <ion-menu-toggle autoHide="false" *ngFor="let p of Pages; let i = index">
+                    <ion-item [routerLink]="p.url" [button]="true" detail="true">
+                      <ion-icon slot="start" [name]="p.icon? p.icon: ''" color="{{p.color ? p.color: ''}}"></ion-icon>
+                      <ion-label>
+                        {{p.title}}
+                      </ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
+                </ion-list>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
+          <ion-accordion-group value="trajquot">
+            <ion-accordion value="trajquot">
+              <ion-item slot="header">
+                <ion-label>Trajets quotidiens</ion-label>
+              </ion-item>
+              <div slot="content">
+                <ion-list>
+                  <ion-menu-toggle autoHide="false" *ngFor="let p of PagesQuot; let i = index">
+                    <ion-item [routerLink]="p.url" [button]="true" detail="true">
+                      <ion-icon slot="start" [name]="p.icon? p.icon: ''" color="{{p.color ? p.color: ''}}"></ion-icon>
+                      <ion-label>
+                        {{p.title}}
+                      </ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
+                </ion-list>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
+          <ion-accordion-group value="donn">
+            <ion-accordion value="donn">
+              <ion-item slot="header">
+                <ion-label>Mes données</ion-label>
+              </ion-item>
+              <div slot="content">
+                <ion-list>
+                  <ion-menu-toggle autoHide="false" *ngFor="let p of PagesCompte; let i = index">
+                    <ion-item [routerLink]="p.url" [button]="true" detail="true">
+                      <ion-icon slot="start" [name]="p.icon? p.icon: ''" color="{{p.color ? p.color: ''}}"></ion-icon>
+                      <ion-label>
+                        {{p.title}}
+                      </ion-label>
+                    </ion-item>
+                  </ion-menu-toggle>
+                </ion-list>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+
           <app-icon-button2 label='Logout' (click)="logout()"></app-icon-button2>
         </ion-content>
       </ion-menu>
