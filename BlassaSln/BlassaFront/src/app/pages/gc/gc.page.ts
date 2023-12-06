@@ -28,9 +28,12 @@ export class GCPage implements OnInit {
 
 
   async ionViewWillEnter(){
-    this.menuCtrl.enable(false);
+    
     await this.storage.get('user').then(
-      async data => this.user = await data
+      async data => {
+        this.user = await data;
+        this.menuCtrl.enable(this.user.conditionsGenerales);
+      }
     )
     console.log(this.user);
   }

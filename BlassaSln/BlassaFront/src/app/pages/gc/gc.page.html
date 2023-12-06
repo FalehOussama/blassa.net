@@ -1,4 +1,6 @@
-<ion-content [fullscreen]="true" class="ion-padding">
+<app-menu *ngIf="user?.conditionsGenerales"></app-menu>
+
+<ion-content class="ion-padding">
 
 
 <ion-title>Conditions générales</ion-title>
@@ -295,7 +297,7 @@ BlassaApp pourra être amenée à modifier les présentes CGU afin de s’adapte
 
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="!user?.conditionsGenerales">
   <ion-toolbar>
     <ion-grid>
       <ion-col>
