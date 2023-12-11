@@ -88,7 +88,7 @@ namespace BlassaApi.Controllers
 
         //GET : api/Avis/User/5/1
         [HttpGet("User/{userId}/{page}")]
-        public async Task<ActionResult<AvisRetourDtocs>> GetAvisUserPaginate(int userId, int page = 1)
+        public async Task<ActionResult<AvisRetourDto>> GetAvisUserPaginate(int userId, int page = 1)
         {
             if (_dbContext.Avis == null)
                 return NotFound();
@@ -99,7 +99,7 @@ namespace BlassaApi.Controllers
             var query = _dbContext.Avis
                 .Where(x => x.UserId == userId);
 
-            var retour = new AvisRetourDtocs();
+            var retour = new AvisRetourDto();
             retour.NbreTotal = await query.CountAsync();
             retour.Avis = await query
                 .Skip(skip)

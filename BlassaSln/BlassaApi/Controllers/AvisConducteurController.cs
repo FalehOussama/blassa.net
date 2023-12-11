@@ -85,6 +85,47 @@ namespace BlassaApi.Controllers
                 .ToListAsync();
         }
 
+        //GET : api/AvisConducteur/User/5/1
+        [HttpGet("User/{userId}/{page}")]
+        public async Task<ActionResult<AvisConduiteRetourDto>> GetAvisUserPaginate(int userId, int page = 1)
+        {
+            if (_dbContext.AvisConducteur == null)
+                return NotFound();
+
+            var nbPageElts = 10;
+            var skip = nbPageElts * (page - 1);
+
+            var query = _dbContext.AvisConducteur
+                .Where(x => x.UserId == userId);
+
+            var retour = new AvisConduiteRetourDto();
+            retour.NbreTotal = await query.CountAsync();
+            retour.Avis = await query
+                .Skip(skip)
+                .Take(nbPageElts)
+                .Select(av => new AviConducteur()
+                {
+                    Id = av.Id,
+                    DateAvi = av.DateAvi,
+                    UserId = av.UserId,
+                    UserAviId = av.UserAviId,
+                    Categorie = av.Categorie,
+                    UserAvi = new User()
+                    {
+                        Id = av.UserAvi.Id,
+                        Prenom = av.UserAvi.Prenom,
+                        ImgUrl = av.UserAvi.ImgUrl,
+                        SuperDriver = av.UserAvi.SuperDriver,
+                        SuperUser = av.UserAvi.SuperUser,
+                        Verifie = av.UserAvi.Verifie,
+                    }
+                })
+                .OrderByDescending(x => x.DateAvi)
+                .ToListAsync();
+
+            return retour;
+        }
+
         //GET : api/AvisConducteur/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AviConducteur>> GetAviConducteur(int id)

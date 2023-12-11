@@ -21,6 +21,10 @@ export class AviConducteurService {
     return this.http.get<any>(this.baseUrl + "/User/?userId=" + uid);
   }
 
+  public getByUserIdPaginate(id: any, page: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/User/" + id + "/" + page);
+  }
+
   public getStat(uid: any): Observable<any> {
     return this.http.get<any>(this.baseUrl + "/User/Stat/" + uid);
   }
