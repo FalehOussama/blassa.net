@@ -75,7 +75,15 @@ const routes: Routes = [
   {
     path: 'mes-reservations',
     loadChildren: () => import('./pages/mes-reservations/mes-reservations.module').then( m => m.MesReservationsPageModule)
+  },  {
+    path: 'mes-vehicules',
+    loadChildren: () => import('./pages/mes-vehicules/mes-vehicules.module').then( m => m.MesVehiculesPageModule)
+  },
+  {
+    path: 'mes-vehicules-fiche',
+    loadChildren: () => import('./pages/mes-vehicules-fiche/mes-vehicules-fiche.module').then( m => m.MesVehiculesFichePageModule)
   }
+
 ];
 @NgModule({
   imports: [

@@ -1,0 +1,99 @@
+<app-menu></app-menu>
+
+<ion-content>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-img *ngIf="!isEdit" class="cover" src="../../../assets/images/Background/mes-vehicules-fiche-ajouter.png" alt="Header"></ion-img>
+      <ion-img *ngIf="isEdit" class="cover" src="../../../assets/images/Background/mes-vehicules-fiche-modifier.png" alt="Header"></ion-img>
+      <div style="display: flex;">
+        <ion-button *ngIf="isEdit" style="margin-right: 5px; margin-left:auto" shape="round" color="danger" (click)="supprimerClick()">
+          <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+          Supprimer
+        </ion-button>
+        <ion-button style="margin-right: 5px; margin-left:auto" shape="round" (click)="enregistrerClick()">
+          <ion-icon slot="start" name="save-outline"></ion-icon>
+          Enregistrer
+        </ion-button>
+      </div>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid>
+    <ion-row>
+      <ion-card style="width: 100%" color="light">
+        <ion-card-content>
+          <form #vehiculeForm="ngForm">
+
+            <ion-input class="textInput" label="Marque" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="vehicule.marque" name="marque" #marque="ngModel" required minlength="3"></ion-input>
+            <div *ngIf="marque.invalid && (marque.dirty || marque.touched)" class="alert">
+              <ul>
+                <li *ngIf="marque.errors?.['required']">Marque est obligatoire.</li>
+                <li *ngIf="marque.errors?.['minlength']">Marque de longeur 3 min.</li>
+              </ul>
+            </div>
+            <hr />
+            <ion-input class="textInput" label="Modèle" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="vehicule.modele" name="modele" #modele="ngModel" required minlength="3"></ion-input>
+            <div *ngIf="modele.invalid && (modele.dirty || modele.touched)" class="alert">
+              <ul>
+                <li *ngIf="modele.errors?.['required']">Modèle est obligatoire.</li>
+                <li *ngIf="modele.errors?.['minlength']">Modèle de longeur 3 min.</li>
+              </ul>
+            </div>
+
+            <hr />
+            <ion-input class="textInput" label="Matricule" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="vehicule.matricule" name="matricule" #matricule="ngModel" required minlength="3"></ion-input>
+            <div *ngIf="matricule.invalid && (matricule.dirty || matricule.touched)" class="alert">
+              <ul>
+                <li *ngIf="matricule.errors?.['required']">Matricule est obligatoire.</li>
+                <li *ngIf="matricule.errors?.['minlength']">Matricule de longeur 3 min.</li>
+              </ul>
+            </div>
+            <ion-chip color="success">Matricule : n'est visible que par vous</ion-chip>
+
+
+            <hr />
+            <ion-item lines="none">
+              <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+              <ion-input id="miseEnCirculation" class="textInput" label="Mise en circulation" placeholder="{{vehicule.miseEnCirculation | date}}" [(ngModel)]="vehicule.miseEnCirculation" name="miseEnCirculation" #miseEnCirculation="ngModel" required></ion-input>
+              <ion-popover trigger="miseEnCirculation">
+                <ng-template>
+                  <ion-datetime presentation="date" [(ngModel)]="vehicule.miseEnCirculation" name="miseEnCirculationDT"></ion-datetime>
+                </ng-template>
+              </ion-popover>
+            </ion-item>
+            <div *ngIf="miseEnCirculation.invalid && (miseEnCirculation.dirty || miseEnCirculation.touched)" class="alert">
+              <ul>
+                <li *ngIf="miseEnCirculation.errors?.['required']">Mise en circulation est obligatoire.</li>
+              </ul>
+            </div>
+            <ion-chip color="success">Mise en circulation : n'est visible que par vous</ion-chip>
+
+            <hr />
+            <ion-item lines="none">
+              <ion-checkbox [(ngModel)]="vehicule.climatise" name="climatise" class="text" mode="ios" labelPlacement="end">Climatisé</ion-checkbox>
+              <ion-img class="icon" src="../../../assets/images/clim.png" slot="end"></ion-img>
+            </ion-item>
+
+
+            <hr />
+            <ion-select value="{{vehicule.typeVehicule}}" name="typeVehicule" (ionChange)="typeVehiculeChange($event)"
+                        mode="ios"
+                        label="Type véhicule"
+                        interface="action-sheet"
+                        placeholder="Sélectionner"
+                        cancelText="Fermer" class="text">
+              <ion-select-option *ngFor="let tv of typeVehicules; let index = index" value="{{index}}">{{tv}}</ion-select-option>
+            </ion-select>
+
+            <hr />
+            <ion-label class="text">Couleur véhicule : {{couleurs[vehicule.couleur]}}</ion-label> <br /><br />
+            <ion-icon name="{{getNameIconColor(index)}}" (click)="couleurChange(index)" size="large" *ngFor="let c of couleurs; let index = index" class="icon-color" style="color: {{styleColors[index]}}"></ion-icon>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+  </ion-grid>
+  
+
+</ion-content>

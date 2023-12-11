@@ -1,0 +1,55 @@
+<app-menu></app-menu>
+
+<ion-content [fullscreen]="true">
+  <ion-header>
+    <ion-toolbar>
+      <ion-img class="cover" src="../../../assets/images/Background/mes-vehicules.png" alt="Header"></ion-img>
+      <ion-fab vertical="top" horizontal="end" style="margin-top: 110px;">
+        <ion-fab-button id="filter-content" (click)="toFiche(0)">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <ion-chip [outline]="true">{{vehicules?.length}} véhicules</ion-chip>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card *ngFor="let car of vehicules" (click)="toFiche(car.id)" class="{{getStyleColor(car.couleur)}}">
+    <ion-grid [fixed]="true">
+      <ion-row style="margin-top: -5px;">
+        <ion-col>
+          <ion-item lines="none">
+            <ion-avatar slot="start" class="{{car?.verifie ? 'verifie' : 'non-verifie'}}">
+              <!--<img alt="person" src="{{car.imgUrl}}" />-->
+              <img alt="person" src="../../../assets/images/Background/notEmpty.png" />
+            </ion-avatar>
+            <ion-label>
+              <h1 class="title">{{car.marque}} - {{car.modele}}</h1>
+              <p>{{car.matricule}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+              <ion-img class="icon" *ngIf="car.climatise" src="../../../assets/images/clim.png"></ion-img>
+              <ion-icon class="icon" *ngIf="car.verifie" name="shield-checkmark-outline" color="success"></ion-icon>
+            </div>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row style="margin-top: -10px;">
+        <ion-col style="margin-left: 10px;">
+          <ion-label><p>{{getTypeVehicule(car.typeVehicule)}}</p></ion-label>
+        </ion-col>
+        <ion-col>
+          <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+            <ion-label style="margin-left: auto; margin-right: 5px;"><p>M.C.: {{car.miseEnCirculation | date:'dd/MM/yyyy'}}</p></ion-label>
+          </div>
+        </ion-col>
+
+
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+</ion-content>

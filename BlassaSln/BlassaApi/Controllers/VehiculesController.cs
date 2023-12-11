@@ -8,6 +8,7 @@ namespace BlassaApi.Controllers
     [ApiController]
     public class VehiculesController : Controller
     {
+        private const int Limit = 3;
         private readonly BlassaContext _dbContext;
 
         public VehiculesController(BlassaContext dbContext)
@@ -47,10 +48,33 @@ namespace BlassaApi.Controllers
         public async Task<ActionResult<Vehicule>> PostVehicule(Vehicule vehicule)
         {
             if (!UserExists(vehicule.UserId))
-                return BadRequest();
+                return BadRequest("Utilisateur inexistant");
 
             if(!VehiculeCanAdd(vehicule.UserId))
-                return BadRequest();
+                return BadRequest("Limite de véhicules atteinte: " + Limit);
+
+            if (string.IsNullOrWhiteSpace(vehicule.Marque))
+                return BadRequest("Marque non définie");
+
+            if (string.IsNullOrWhiteSpace(vehicule.Modele))
+                return BadRequest("Modèle non définie");
+
+            if (string.IsNullOrWhiteSpace(vehicule.Matricule))
+                return BadRequest("Matricule non définie");
+
+            if (vehicule.Marque.Length < 3)
+                return BadRequest("Marque min 3");
+
+            if (vehicule.Modele.Length < 3)
+                return BadRequest("Modüle min 3");
+
+            if (vehicule.Matricule.Length < 3)
+                return BadRequest("Matricule min 3");
+
+            if (vehicule.MiseEnCirculation == null)
+                return BadRequest("MiseEnCirculation non définie");
+
+            vehicule.Verifie = false;
 
             _dbContext.Vehicules.Add(vehicule);
             await _dbContext.SaveChangesAsync();
@@ -63,9 +87,31 @@ namespace BlassaApi.Controllers
         public async Task<IActionResult> PutVehicule(int id, Vehicule vehicule)
         {
             if (id != vehicule.Id)
-            {
-                return BadRequest();
-            }
+                return BadRequest("id véhicule");
+
+            if (!UserExists(vehicule.UserId))
+                return BadRequest("Utilisateur inexistant");
+
+            if (string.IsNullOrWhiteSpace(vehicule.Marque))
+                return BadRequest("Marque non définie");
+
+            if (string.IsNullOrWhiteSpace(vehicule.Modele))
+                return BadRequest("Modèle non définie");
+
+            if (string.IsNullOrWhiteSpace(vehicule.Matricule))
+                return BadRequest("Matricule non définie");
+
+            if (vehicule.Marque.Length < 3)
+                return BadRequest("Marque min 3");
+
+            if (vehicule.Modele.Length < 3)
+                return BadRequest("Modüle min 3");
+
+            if (vehicule.Matricule.Length < 3)
+                return BadRequest("Matricule min 3");
+
+            if (vehicule.MiseEnCirculation == null)
+                return BadRequest("MiseEnCirculation non définie");
 
             _dbContext.Entry(vehicule).State = EntityState.Modified;
 
@@ -76,7 +122,7 @@ namespace BlassaApi.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!VehiculeExists(id))
-                    return NotFound();
+                    return NotFound("Véhicule introuvable");
                 else
                     throw;
             }
@@ -88,11 +134,11 @@ namespace BlassaApi.Controllers
         public async Task<IActionResult> DeleteVehicule(int id)
         {
             if (_dbContext.Vehicules == null)
-                return NotFound();
+                return NotFound("Véhicules introuvable");
 
             var vehicule = await _dbContext.Vehicules.FindAsync(id);
             if (vehicule == null)
-                return NotFound();
+                return NotFound("Véhicule introuvable");
 
             _dbContext.Vehicules.Remove(vehicule);
             await _dbContext.SaveChangesAsync();
@@ -112,7 +158,7 @@ namespace BlassaApi.Controllers
 
         private bool VehiculeCanAdd(int idUser)
         { 
-            return _dbContext.Vehicules.Count(u => u.UserId == idUser) < 3;
+            return _dbContext.Vehicules.Count(u => u.UserId == idUser) < Limit;
         }
     }
 }

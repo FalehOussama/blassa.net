@@ -1,0 +1,87 @@
+ion-card {
+  box-shadow: 1px 0px 5px 4px rgba(58,57,57,0.23);
+  border-radius: 17px;
+}
+
+.icon {
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+.title {
+  font-family: font4;
+  font-size: large;
+}
+
+.verifie {
+  border: 2px solid green;
+}
+
+.non-verifie {
+  border: 1px solid gray;
+}
+
+.color-black {
+  --background: linear-gradient(90deg, white 95%, black 100%);
+}
+
+.color-white {
+  --background: linear-gradient(90deg, white 95%, white 100%);
+}
+
+.color-gray {
+  --background: linear-gradient(90deg, white 95%, gray 100%);
+}
+
+.color-lightgray {
+  --background: linear-gradient(90deg, white 95%, lightgray 100%);
+}
+
+.color-purple {
+  --background: linear-gradient(90deg, white 95%, purple 100%);
+}
+
+.color-red {
+  --background: linear-gradient(90deg, white 95%, red 100%);
+}
+
+.color-darkblue {
+  --background: linear-gradient(90deg, white 95%, darkblue 100%);
+}
+
+.color-blue {
+  --background: linear-gradient(90deg, white 95%, blue 100%);
+}
+
+.color-darkgreen {
+  --background: linear-gradient(90deg, white 95%, darkgreen 100%);
+}
+
+.color-green {
+  --background: linear-gradient(90deg, white 95%, green 100%);
+}
+
+.color-maroon {
+  --background: linear-gradient(90deg, white 95%, maroon 100%);
+}
+
+.color-beige {
+  --background: linear-gradient(90deg, white 95%, beige 100%);
+}
+
+.color-orange {
+  --background: linear-gradient(90deg, white 95%, orange 100%);
+}
+
+.color-yellow {
+  --background: linear-gradient(90deg, white 95%, yellow 100%);
+}
+
+.color-blueviolet {
+  --background: linear-gradient(90deg, white 95%, blueviolet 100%);
+}
+
+.color-hotpink {
+  --background: linear-gradient(90deg, white 95%, hotpink 100%);
+}
