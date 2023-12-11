@@ -22,11 +22,48 @@ import { AvisCondComponent } from './avis-cond/avis-cond.component';
 import { AvisModalComponent } from './avis-modal/avis-modal.component';
 import { BlassaAlertComponent } from './blassa-alert/blassa-alert.component';
 import { BlassaToastComponent } from './blassa-toast/blassa-toast.component';
+import { CommentaireItemComponent } from './commentaire-item/commentaire-item.component';
 
 @NgModule({
-  declarations: [BlassaToastComponent, BlassaAlertComponent, AvisModalComponent, InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent,InputComponent, ButtonComponent, IconButtonComponent , IconButton2Component , AnnonceItemComponent , InfoConducteurComponent , InfoTrajetComponent , InfoReservationsComponent , CreerAnnonceStepsComponent],
+  declarations: [
+    CommentaireItemComponent,
+    BlassaToastComponent,
+    BlassaAlertComponent,
+    AvisModalComponent,
+    InviteComponent,
+    AvisComponent,
+    AvisCondComponent,
+    CarCardComponent,
+    MenuComponent,
+    InputComponent,
+    ButtonComponent,
+    IconButtonComponent,
+    IconButton2Component,
+    AnnonceItemComponent,
+    InfoConducteurComponent,
+    InfoTrajetComponent,
+    InfoReservationsComponent,
+    CreerAnnonceStepsComponent],
   imports: [CommonModule, IonicModule , FontAwesomeModule , NgxPaginationModule , RouterModule],
   providers :[CallNumber],
-  exports: [BlassaToastComponent, BlassaAlertComponent, AvisModalComponent, InviteComponent, AvisComponent, AvisCondComponent, CarCardComponent, MenuComponent ,InputComponent, ButtonComponent, IconButtonComponent, IconButton2Component, AnnonceItemComponent, InfoConducteurComponent, InfoTrajetComponent, InfoReservationsComponent, CreerAnnonceStepsComponent],
+  exports: [
+    CommentaireItemComponent,
+    BlassaToastComponent,
+    BlassaAlertComponent,
+    AvisModalComponent,
+    InviteComponent,
+    AvisComponent,
+    AvisCondComponent,
+    CarCardComponent,
+    MenuComponent,
+    InputComponent,
+    ButtonComponent,
+    IconButtonComponent,
+    IconButton2Component,
+    AnnonceItemComponent,
+    InfoConducteurComponent,
+    InfoTrajetComponent,
+    InfoReservationsComponent,
+    CreerAnnonceStepsComponent],
 })
 export class SharedModule {}

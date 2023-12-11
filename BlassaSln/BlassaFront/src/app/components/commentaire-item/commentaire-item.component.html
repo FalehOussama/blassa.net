@@ -1,0 +1,34 @@
+<ion-card>
+  <ion-grid [fixed]="true">
+    <ion-row style="margin-top: -5px;">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-avatar slot="start" class="{{comm.verifie ? 'verifie' : 'non-verifie'}}">
+            <img alt="person" src="{{comm.imgUrl}}" />
+          </ion-avatar>
+          <ion-label>
+            <h1 class="title">{{comm.prenom}}</h1>
+            <p>{{comm.dateComm | date}} à {{comm.dateComm | date: 'HH:mm'}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-row>
+          <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+            <ion-img class="icon" *ngIf="comm.superUser" src="../../../assets/images/medSuperUser.png"></ion-img>
+            <ion-img class="icon" *ngIf="comm.superDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
+          </div>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row style="margin-top: -10px;">
+      <ion-col>
+        <ion-item lines="none">
+          <ion-chip [outline]="true" color="medium" style="width: 100%; height: 100%">
+            <p [innerHTML]="toHtml(comm.texte)"></p>
+          </ion-chip>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="src\app\classes\commentaireDto.ts" />
     <None Remove="src\app\classes\couleurType.ts" />
     <None Remove="src\app\classes\heureDepartCritereTypeDto.ts" />
     <None Remove="src\app\classes\rechTrajetAnnonceDto.ts" />
@@ -25,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="src\app\classes\commentaireDto.ts" />
     <TypeScriptCompile Include="src\app\classes\couleurType.ts" />
     <TypeScriptCompile Include="src\app\classes\heureDepartCritereTypeDto.ts" />
     <TypeScriptCompile Include="src\app\classes\rechTrajetAnnonceDto.ts" />

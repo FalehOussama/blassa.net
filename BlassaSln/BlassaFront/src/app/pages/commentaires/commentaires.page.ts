@@ -54,8 +54,4 @@ export class CommentairesPage implements OnInit {
     this.router.navigate(['/profil-membre']);
   }
 
-  toHtml(texte: string) {
-    return texte.replaceAll('\n', "<br/>");
-  }
-
 }
