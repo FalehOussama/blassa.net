@@ -27,6 +27,5 @@ namespace BlassaApi.Dto
         public bool Moyen { get; set; }
         public bool Lourd { get; set; }
         public List<Vehicule> Vehicules { get; set; } = new List<Vehicule>();
-        public List<CommentaireDto> Commentaires { get; set; } = new List<CommentaireDto>();
     }
 }

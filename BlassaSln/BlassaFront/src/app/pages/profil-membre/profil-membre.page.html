@@ -141,29 +141,33 @@
           <ion-avatar style="width: 30px; height: 30px; margin-right: 10px;">
             <img alt="Silhouette of a person's head" src={{user?.imgUrl}} />
           </ion-avatar>
-          <ion-textarea label="Votre commentaire" label-placement="floating" fill="outline" placeholder="Saisir votre commentaire" formControlName="commentaire"></ion-textarea>
+          <ion-textarea label="Votre commentaire" label-placement="floating" fill="outline" placeholder="Saisir votre commentaire" formControlName="commentaire" style="height: 100px"></ion-textarea>
         </ion-item>
       </form>
 
       <ion-button (click)="commenter()" style="float: right;">Commenter</ion-button>
 
       <div style="margin-top:55px ;">
-        <ion-card *ngFor="let comment of membre?.commentaires">
-          <ion-card-header>
-            <ion-item>
-              <ion-avatar slot="start">
-                <img alt="Silhouette of mountains" src="{{comment.imgUrl}}" />
-              </ion-avatar>
-              <ion-label>
-                <ion-card-title>{{comment.prenom}}</ion-card-title>
-                <p>{{comment.dateComm | date}}</p>
-              </ion-label>
-            </ion-item>
-          </ion-card-header>
-          <ion-card-content>
-            {{comment.texte}}
-          </ion-card-content>
-        </ion-card>
+        <ion-row class="ion-justify-content-center">
+          <pagination-controls class="paginator"
+                               previousLabel="Prec."
+                               nextLabel="Suiv."
+                               (pageChange)="onChange($event)"></pagination-controls>
+        </ion-row>
+
+        <app-commentaire-item *ngFor="let com of retourComms?.commentaires |
+                      paginate :{ itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: count };"
+                              [comm]="com"
+                              (click)="toFiche(com.userCommId)">
+        </app-commentaire-item>
+
+
+        <ion-row class="ion-justify-content-center">
+          <pagination-controls class="paginator"
+                               previousLabel="Prec."
+                               nextLabel="Suiv."
+                               (pageChange)="onChange($event)"></pagination-controls>
+        </ion-row>
       </div>
 
     </div>

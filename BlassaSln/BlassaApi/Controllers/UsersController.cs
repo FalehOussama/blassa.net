@@ -102,17 +102,7 @@ namespace BlassaApi.Controllers
                     Leger = u.Preferences.Leger,
                     Moyen = u.Preferences.Moyen,
                     Lourd = u.Preferences.Lourd,
-                    Vehicules = u.Vehicules.ToList(),
-                    Commentaires = u.Commentaires.OrderByDescending(x => x.DateComm).Select(c => new CommentaireDto() { 
-                        Id = c.Id,
-                        UserId = c.UserId,
-                        UserCommId = c.UserCommId,
-                        ImgUrl = c.UserComm.ImgUrl,
-                        Nom = c.UserComm.Nom,
-                        Prenom = c.UserComm.Prenom,
-                        DateComm = c.DateComm,
-                        Texte = c.Texte
-                    }).ToList()
+                    Vehicules = u.Vehicules.ToList()
                 })
                 .FirstOrDefaultAsync();
 

@@ -8,6 +8,7 @@ import { ProfilMembrePageRoutingModule } from './profil-membre-routing.module';
 
 import { ProfilMembrePage } from './profil-membre.page';
 import { SharedModule } from 'src/app/components/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { SharedModule } from 'src/app/components/shared.module';
     IonicModule,
     ProfilMembrePageRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   declarations: [ProfilMembrePage]
 })

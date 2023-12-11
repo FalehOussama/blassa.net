@@ -12,7 +12,6 @@ export class CommentairesPage implements OnInit {
 
   user: any;
   retourComms: any;
-  commHtml: string = "<b>COMM...</b>";
   public count = 0;
   public itemsPerPage = 10;
   public currentPage = 1;
