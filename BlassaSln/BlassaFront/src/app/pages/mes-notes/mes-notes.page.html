@@ -4,12 +4,16 @@
   <ion-header>
     <ion-toolbar>
       <ion-img class="cover" src="../../../assets/images/Background/mes-notes.png" alt="Header"></ion-img>
-      <ion-avatar style="margin-top: -40px; margin-left: 10px;" slot="start" class="{{user?.verifie ? 'verifie' : 'non-verifie'}}">
+      <ion-avatar style="margin-left: 10px;" slot="start" class="{{user?.verifie ? 'verifie' : 'non-verifie'}}">
         <img alt="person" src="{{user?.imgUrl}}" />
+        <ion-label><h2>{{user?.prenom}}</h2></ion-label>
+      </ion-avatar>
+
+      <div style="margin-top: -40px; margin-left: 10px;">
         <ion-button id="btn-avi" class="aviBtn">
           <app-avis #compAvis></app-avis>
         </ion-button>
-      </ion-avatar>
+      </div>
     </ion-toolbar>
   </ion-header>
 
