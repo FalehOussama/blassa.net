@@ -17,6 +17,13 @@
   </div>
 
   <div style="margin-top: 30px;">
+    <ion-row class="ion-justify-content-center">
+      <pagination-controls class="paginator"
+                           previousLabel="Prec."
+                           nextLabel="Suiv."
+                           (pageChange)="onChange($event)"></pagination-controls>
+    </ion-row>
+
     <app-annonce-item *ngFor="let annonce of annonces | paginate :
     { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: count };
     let i = index" [annonce]="annonce"
@@ -24,8 +31,8 @@
 
     <ion-row class="ion-justify-content-center">
       <pagination-controls class="paginator"
-                           previousLabel="Prev"
-                           nextLabel="Next"
+                           previousLabel="Prec."
+                           nextLabel="Suiv."
                            (pageChange)="onChange($event)"></pagination-controls>
     </ion-row>
   </div>
