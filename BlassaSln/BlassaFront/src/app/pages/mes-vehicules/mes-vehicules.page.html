@@ -1,6 +1,6 @@
 <app-menu></app-menu>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-header>
     <ion-toolbar>
       <ion-img class="cover" src="../../../assets/images/Background/mes-vehicules.png" alt="Header"></ion-img>
@@ -19,7 +19,6 @@
         <ion-col>
           <ion-item lines="none">
             <ion-avatar slot="start" class="{{car?.verifie ? 'verifie' : 'non-verifie'}}">
-              <!--<img alt="person" src="{{car.imgUrl}}" />-->
               <img alt="person" src="../../../assets/images/Background/notEmpty.png" />
             </ion-avatar>
             <ion-label>
@@ -46,8 +45,6 @@
             <ion-label style="margin-left: auto; margin-right: 5px;"><p>M.C.: {{car.miseEnCirculation | date:'dd/MM/yyyy'}}</p></ion-label>
           </div>
         </ion-col>
-
-
       </ion-row>
     </ion-grid>
   </ion-card>

@@ -78,7 +78,7 @@ export class AppComponent implements OnInit{
     },
     {
       title: 'Mes notes',
-      url: '/nouveau-notes',
+      url: '/mes-notes',
       icon: 'star-outline',
       color: 'warning'
     },

@@ -82,6 +82,10 @@ const routes: Routes = [
   {
     path: 'mes-vehicules-fiche',
     loadChildren: () => import('./pages/mes-vehicules-fiche/mes-vehicules-fiche.module').then( m => m.MesVehiculesFichePageModule)
+  },
+  {
+    path: 'mes-notes',
+    loadChildren: () => import('./pages/mes-notes/mes-notes.module').then( m => m.MesNotesPageModule)
   }
 
 ];

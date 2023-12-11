@@ -86,6 +86,45 @@ namespace BlassaApi.Controllers
                 .ToListAsync();
         }
 
+        //GET : api/Avis/User/5/1
+        [HttpGet("User/{userId}/{page}")]
+        public async Task<ActionResult<AvisRetourDtocs>> GetAvisUserPaginate(int userId, int page = 1)
+        {
+            if (_dbContext.Avis == null)
+                return NotFound();
+
+            var nbPageElts = 10;
+            var skip = nbPageElts * (page - 1);
+
+            var query = _dbContext.Avis
+                .Where(x => x.UserId == userId);
+
+            var retour = new AvisRetourDtocs();
+            retour.NbreTotal = await query.CountAsync();
+            retour.Avis = await query
+                .Skip(skip)
+                .Take(nbPageElts)
+                .Select(av => new Avi() { 
+                    Id = av.Id,
+                    DateAvi = av.DateAvi,
+                    UserId = av.UserId,
+                    UserAviId = av.UserAviId,
+                    Categorie = av.Categorie,
+                    UserAvi = new User() { 
+                        Id = av.UserAvi.Id,
+                        Prenom = av.UserAvi.Prenom,
+                        ImgUrl = av.UserAvi.ImgUrl,
+                        SuperDriver = av.UserAvi.SuperDriver,
+                        SuperUser = av.UserAvi.SuperUser,
+                        Verifie = av.UserAvi.Verifie,
+                    }
+                })
+                .OrderByDescending(x => x.DateAvi)
+                .ToListAsync();
+
+            return retour;
+        }
+
         //GET : api/Avis/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Avi>> GetAvi(int id)
