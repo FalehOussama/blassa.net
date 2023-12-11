@@ -101,6 +101,7 @@ namespace BlassaApi.Controllers
             var retour = new AvisConduiteRetourDto();
             retour.NbreTotal = await query.CountAsync();
             retour.Avis = await query
+                .OrderByDescending(x => x.DateAvi)
                 .Skip(skip)
                 .Take(nbPageElts)
                 .Select(av => new AviConducteur()
@@ -120,7 +121,6 @@ namespace BlassaApi.Controllers
                         Verifie = av.UserAvi.Verifie,
                     }
                 })
-                .OrderByDescending(x => x.DateAvi)
                 .ToListAsync();
 
             return retour;
