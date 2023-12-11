@@ -22,7 +22,7 @@
                          (pageChange)="onChange($event)"></pagination-controls>
   </ion-row>
 
-  <ion-card *ngFor="let com of retourComms?.commentaires | paginate :{ itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: count };" (click)="toFiche(com.userId)" class="">
+  <ion-card *ngFor="let com of retourComms?.commentaires | paginate :{ itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: count };" (click)="toFiche(com.userCommId)" class="">
     <ion-grid [fixed]="true">
       <ion-row style="margin-top: -5px;">
         <ion-col>
@@ -32,7 +32,7 @@
             </ion-avatar>
             <ion-label>
               <h1 class="title">{{com.prenom}}</h1>
-              <p>{{com.dateComm | date:'short'}}</p>
+              <p>{{com.dateComm | date}} à {{com.dateComm | date: 'HH:mm'}}</p>
             </ion-label>
           </ion-item>
         </ion-col>
@@ -48,7 +48,9 @@
       <ion-row style="margin-top: -10px;">
         <ion-col>
           <ion-item lines="none">
-            <ion-chip [outline]="true" color="medium" style="width: 100%">{{com.texte}}</ion-chip>
+            <ion-chip [outline]="true" color="medium" style="width: 100%; height: 100%">
+              <p [innerHTML]="toHtml(com.texte)"></p>
+            </ion-chip>
           </ion-item>
         </ion-col>
       </ion-row>

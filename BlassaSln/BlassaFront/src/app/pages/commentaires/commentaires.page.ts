@@ -12,6 +12,7 @@ export class CommentairesPage implements OnInit {
 
   user: any;
   retourComms: any;
+  commHtml: string = "<b>COMM...</b>";
   public count = 0;
   public itemsPerPage = 10;
   public currentPage = 1;
@@ -51,6 +52,10 @@ export class CommentairesPage implements OnInit {
   toFiche(idMembre) {
     this.storage.set('idMembre', idMembre);
     this.router.navigate(['/profil-membre']);
+  }
+
+  toHtml(texte: string) {
+    return texte.replaceAll('\n', "<br/>");
   }
 
 }
