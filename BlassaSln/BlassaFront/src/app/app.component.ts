@@ -89,8 +89,8 @@ export class AppComponent implements OnInit{
       color: 'tertiary'
     },
     {
-      title: 'Commetaires',
-      url: '/commetaires',
+      title: 'Commentaires',
+      url: '/commentaires',
       icon: 'chatbubbles-outline',
       color: 'primary'
     },

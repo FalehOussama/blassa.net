@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlassaApi.Models;
+using BlassaApi.Dto;
 
 namespace BlassaApi.Controllers
 {
@@ -26,6 +27,43 @@ namespace BlassaApi.Controllers
                 .Include(x => x.UserComm)
                 .Where(x => x.UserId == userId)
                 .ToListAsync();
+        }
+
+        //GET : api/Commentaires/User/5/1
+        [HttpGet("User/{userId}/{page}")]
+        public async Task<ActionResult<CommentairesRetourDto>> GetCommentairesUserPaginate(int userId, int page = 1)
+        {
+            if (_dbContext.Avis == null)
+                return NotFound();
+
+            var nbPageElts = 10;
+            var skip = nbPageElts * (page - 1);
+
+            var query = _dbContext.Commentaires
+                .Where(x => x.UserId == userId);
+
+            var retour = new CommentairesRetourDto();
+            retour.Count = await query.CountAsync();
+            retour.Commentaires = await query
+                .OrderByDescending(x => x.DateComm)
+                .Skip(skip)
+                .Take(nbPageElts)
+                .Select(c => new CommentaireDto()
+                {
+                    Id = c.Id,
+                    DateComm = c.DateComm,
+                    UserId = c.UserId,
+                    UserCommId = c.UserCommId,
+                    Texte = c.Texte,
+                    Prenom = c.UserComm.Prenom,
+                    ImgUrl = c.UserComm.ImgUrl,
+                    SuperDriver = c.UserComm.SuperDriver,
+                    SuperUser = c.UserComm.SuperUser,
+                    Verifie = c.UserComm.Verifie
+                })
+                .ToListAsync();
+
+            return retour;
         }
 
         //GET : api/Commentaires/5

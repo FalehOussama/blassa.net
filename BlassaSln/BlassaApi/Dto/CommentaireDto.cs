@@ -10,6 +10,9 @@
         public string? ImgUrl { get; set; }
         public string? Nom { get; set; }
         public string? Prenom { get; set; }
+        public bool Verifie { get; set; }
+        public bool SuperDriver { get; set; }
+        public bool SuperUser { get; set; }
         public DateTime DateComm { get; set; }
         public string Texte { get; set; }
     }

@@ -90,6 +90,10 @@ const routes: Routes = [
   {
     path: 'mes-notes-conduite',
     loadChildren: () => import('./pages/mes-notes-conduite/mes-notes-conduite.module').then( m => m.MesNotesConduitePageModule)
+  },
+  {
+    path: 'commentaires',
+    loadChildren: () => import('./pages/commentaires/commentaires.module').then( m => m.CommentairesPageModule)
   }
 
 ];

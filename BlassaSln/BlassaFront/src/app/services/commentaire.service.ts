@@ -21,6 +21,10 @@ export class CommentaireService {
     return this.http.get<any>(this.baseUrl + "/User/?userId=" + uid);
   }
 
+  public getByUserIdPaginate(id: any, page: any): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/User/" + id + "/" + page);
+  }
+
   public post(commentaire: any) {
     return this.http.post<any>(this.baseUrl, commentaire);
   }
