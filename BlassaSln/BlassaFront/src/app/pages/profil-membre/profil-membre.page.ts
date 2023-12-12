@@ -99,6 +99,8 @@ export class ProfilMembrePage implements OnInit {
     this.commentaireService.post(comm).subscribe(
       async (res) => {
         this.loadMembre();
+        this.currentPage = 1;
+        this.loadCommentaires();
         this.commentaireForm.patchValue({ commentaire: '' });
         await this.blassaToast.present('Commentaire enregistré avec succès !', 'bottom');
       },
@@ -146,6 +148,8 @@ export class ProfilMembrePage implements OnInit {
             async (res) => {
               this.compAvisCond.ngOnInit();
               this.loadMembre();
+              this.currentPage = 1;
+              this.loadCommentaires();
               await this.blassaToast.present('Avi conduite enregistré avec succès !', 'bottom');
             },
             async (err) => {
@@ -159,6 +163,8 @@ export class ProfilMembrePage implements OnInit {
             async (res) => {
               this.compAvis.ngOnInit();
               this.loadMembre();
+              this.currentPage = 1;
+              this.loadCommentaires();
               await this.blassaToast.present('Avi enregistré avec succès !', 'bottom');
             },
             async (err) => {

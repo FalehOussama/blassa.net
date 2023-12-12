@@ -24,9 +24,7 @@
     <ion-row style="margin-top: -10px;">
       <ion-col>
         <ion-item lines="none">
-          <ion-chip [outline]="true" color="medium" style="width: 100%; height: 100%">
-            <p [innerHTML]="toHtml(comm.texte)"></p>
-          </ion-chip>
+          <ion-chip [outline]="true" color="medium" [innerHTML]="toHtml(comm.texte)"></ion-chip>
         </ion-item>
       </ion-col>
     </ion-row>
