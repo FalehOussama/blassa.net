@@ -1,162 +1,116 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="white">
+    <ion-img style="margin-left: 15px; width: 100px;" slot="start" src="../../../assets/images/logo/blassaLogo.png" alt="Blassa"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
 
-    <!-- Header -->
+  <!-- Header -->
 
-    <ion-row class="ion-justify-content-center" style="margin-top: 30px;">
-      <ion-avatar style="width: 100px; height: 100px;">
-        <img alt="Silhouette of a person's head" src={{user?.imgUrl}}/>
-      </ion-avatar>
-    </ion-row>
-    <ion-row class="ion-text-center" style="margin-top: 20px;">
-      <ion-label class="title ion-text-wrap">Bienvenue {{user?.prenom}} sur l’application Blassa</ion-label>
-    </ion-row>
-
-    <!-- Etape 1 -->
-    <ion-content #content1 class="content1 ion-padding">
-    <ion-radio-group value="role" [(ngModel)]="role">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="6" class="ion-justify-content-center" style="margin-left: -30px;">
-        <ion-card mode="ios" class="roleCard" id="roleCard1" #roleCard1>
-          <ion-row class="ion-justify-content-center" style="margin-top: 10px;">
-            <img class="roleImg" alt="image conducteur" src="https://cdn-icons-png.flaticon.com/512/8692/8692682.png" />
-          </ion-row>
-
-          <ion-card-header>
-            <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
-            <ion-card-title class="role">Conducteur</ion-card-title>
-            </ion-row>
-          </ion-card-header>
-          <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
-              <ion-radio value="conducteur" mode="md"></ion-radio>
-            </ion-row>
-        </ion-card>
-      </ion-col>
-
-
-      <ion-col size="6" class="ion-justify-content-center">
-        <ion-card mode="ios" class="roleCard" id="roleCard2">
-          <ion-row class="ion-justify-content-center" style="margin-top: 10px;">
-            <img class="roleImg" alt="image conducteur" src="https://cdn-icons-png.flaticon.com/512/8207/8207404.png" />
-          </ion-row>
-
-          <ion-card-header>
-            <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
-            <ion-card-title class="role" >Passager</ion-card-title>
-            </ion-row>
-          </ion-card-header>
-          <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
-              <ion-radio value="Passager" mode="md"></ion-radio>
-            </ion-row>
-        </ion-card>
-      </ion-col>
-
-    </ion-row>
-  </ion-radio-group>
-
-  <ion-radio-group [(ngModel)]="sexe">
-    <ion-label class="textLarge">Je suis</ion-label>
-    <br> 
-    <ion-item>
-      <ion-label class="textLarge">Homme</ion-label>
-      <ion-icon name="male"></ion-icon>
-      <ion-radio value="H"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label class="textLarge">Femme</ion-label>
-      <ion-icon name="female"></ion-icon>
-      <ion-radio value="F"></ion-radio>
-    </ion-item>
-  </ion-radio-group>
-
-  <form [formGroup]="ionicForm1" novalidate>
-      <ion-input
-        label-placement="floating"
-        fill="outline"
-        label="Description"
-        formControlName="description"
-        value="">
-      </ion-input>
-  </form>
-
-
-  <ion-row class="ion-justify-content-end ion-padding">
-    <ion-button [disabled]="role==null" (click)="play()">Suivant</ion-button>
+  <ion-row class="ion-justify-content-center" style="margin-top: 30px;">
+    <ion-avatar style="width: 100px; height: 100px;">
+      <img alt="Silhouette of a person's head" src={{user?.imgUrl}} />
+    </ion-avatar>
+  </ion-row>
+  <ion-row class="ion-text-center" style="margin-top: 20px;">
+    <ion-label class="title ion-text-wrap">Bienvenue {{user?.prenom}} sur l’application Blassa</ion-label>
   </ion-row>
 
-</ion-content>
+  <!-- Etape 1 -->
+  <ion-content #content1 class="content1 ion-padding">
+    <ion-radio-group value="role" [(ngModel)]="role">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="6" class="ion-justify-content-center" style="margin-left: -30px;">
+          <ion-card mode="ios" class="roleCard" id="roleCard1" #roleCard1 (click)="conducteurClick()">
+            <ion-row class="ion-justify-content-center" style="margin-top: 10px;">
+              <img class="roleImg" alt="image conducteur" src="../../../assets/images/conducteur.png" />
+            </ion-row>
+
+            <ion-card-header>
+              <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
+                <ion-card-title class="role">Conducteur</ion-card-title>
+              </ion-row>
+            </ion-card-header>
+            <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
+              <ion-radio value="conducteur" mode="md"></ion-radio>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="6" class="ion-justify-content-center">
+          <ion-card mode="ios" class="roleCard" id="roleCard2" (click)="passagerClick()">
+            <ion-row class="ion-justify-content-center" style="margin-top: 10px;">
+              <img class="roleImg" alt="image conducteur" src="../../../assets/images/passager.png" />
+            </ion-row>
+
+            <ion-card-header>
+              <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
+                <ion-card-title class="role">Passager</ion-card-title>
+              </ion-row>
+            </ion-card-header>
+            <ion-row class="ion-justify-content-center" style="margin-top: -10px;">
+              <ion-radio value="passager" mode="md"></ion-radio>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+
+      </ion-row>
+    </ion-radio-group>
+
+    <ion-radio-group [(ngModel)]="sexe">
+      <ion-label class="textLarge">Je suis</ion-label>
+      <br>
+      <ion-item>
+        <ion-label class="textLarge">Homme</ion-label>
+        <ion-icon name="male"></ion-icon>
+        <ion-radio value="H"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textLarge">Femme</ion-label>
+        <ion-icon name="female"></ion-icon>
+        <ion-radio value="F"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+    <ion-input label-placement="floating" fill="outline" label="Description" [(ngModel)]="description" value=""></ion-input>
 
 
-<ion-content #content2 class="content2 ion-padding" id="content2">
-
-  <form [formGroup]="ionicForm2" (ngSubmit)="submitForm()" novalidate style="padding-bottom: 50px;">
-    <ion-input      
-    [maskito]="phoneMask"
-    [maskitoElement]="maskPredicate"
-    label-placement="floating"
-    fill="outline"
-    label="Télephone : +216"
-    formControlName="tel1"
-    value={{user?.tel1}}
-    required
-  ></ion-input >
-  </form >
-
-
-    <ion-label>Les {{audience}} peuvent me contacter par : </ion-label>
-    <form [formGroup]="preferences" novalidate>
-      <ion-list>
-        <ion-item>
-          <ion-checkbox formControlName="tel" value="tel" justify="space-between">Télephone</ion-checkbox>
-        </ion-item>
-        <ion-item>
-          <ion-checkbox formControlName="whatsapp" value="whatsapp" justify="space-between">Whatsapp</ion-checkbox>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-checkbox formControlName="messenger" value="messenger" justify="space-between">Messenger</ion-checkbox>
-        </ion-item>
-      </ion-list>
-    </form>
-    <ion-row class="ion-justify-content-end">
-      <ion-button [disabled]="ionicForm2.valid==false || checkBoxs()==false" *ngIf="role=='Passager'" (click)="enregistrerPassager()">Enregistrer</ion-button>
-      <ion-button [disabled]="ionicForm2.valid==false" *ngIf="role=='conducteur'" (click)="play2()">Suivant</ion-button>
+    <ion-row class="ion-justify-content-end ion-padding">
+      <ion-button [disabled]="role==null" (click)="play()">Suivant</ion-button>
     </ion-row>
 
-
-</ion-content>
-
-<ion-content class="ion-padding content3" #content3 *ngIf="etape3==true">
- 
-  <ion-img class="cover" src="../../../assets/images/Background/AjouterVehicule.png" alt="Header"></ion-img>
-
-  <form [formGroup]="vehiculeForm" novalidate>
-    <ion-input class="input" label-placement="floating" fill="outline" label="Plaque d'immatriculation" formControlName="matricule" style="margin-top: 10px;"></ion-input>
-    <ion-input class="input" label-placement="floating" fill="outline" label="Marque du véhicule" formControlName="marque"></ion-input>
-    <ion-input class="input" label-placement="floating" fill="outline" label="Modéle du véhicule" formControlName="model"></ion-input>
-    <ion-toggle justify="space-between" [checked]="false" formControlName="climatise">Vehicule climatisé ?</ion-toggle>
-    <ion-select label="Selectionner Type" class="input"  formControlName="type">
-      <ion-select-option *ngFor="let type of types" [value]="type" >{{ type }}</ion-select-option>
-    </ion-select>
-    <ion-select label="Selectionner Couleur" class="input"  formControlName="couleur">
-      <ion-select-option *ngFor="let color of colors" [value]="color" >{{ color }}</ion-select-option>
-    </ion-select>
-
-    <ion-label class="text ion-padding">Mise en circulation</ion-label>
-    <ion-item lines="none">
-      <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
-      <ion-input id="date" placeholder="{{vehiculeForm.value['miseEnCirculation'] | date}}"></ion-input>
-      <ion-popover trigger="date">
-        <ng-template>
-          <ion-datetime formControlName="miseEnCirculation"></ion-datetime>
-        </ng-template>
-      </ion-popover>
-    </ion-item>
-
-    <input class="input" type="file" label="Carte grise" />
+  </ion-content>
 
 
-    <ion-button style="float: right;" (click)="enregistrerConducteur();">Enregistrer</ion-button>
-  </form>
-</ion-content>
+  <ion-content #content2 class="content2 ion-padding" id="content2">
 
-  
+    <ion-row>
+      <ion-input [maskito]="phoneMask" [maskitoElement]="maskPredicate" label-placement="floating" fill="outline"
+                 label="Télephone : +216" [(ngModel)]="tel1" value={{user?.tel1}} required></ion-input>
+    </ion-row>
+
+    <ion-row style="margin-top: 50px">
+      <ion-label>Les {{audience}} peuvent me contacter par : </ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-list style="width: 100%">
+        <ion-item>
+          <ion-checkbox [(ngModel)]="tel" value="tel" justify="space-between">Télephone</ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="whatsApp" value="whatsapp" justify="space-between">WhatsApp</ion-checkbox>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-checkbox [(ngModel)]="messenger" value="messenger" justify="space-between">Messenger</ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-end">
+      <ion-button [disabled]="!isForm2Valid()" (click)="enregistrer()">Enregistrer</ion-button>
+    </ion-row>
+
+  </ion-content>
+
 </ion-content>
