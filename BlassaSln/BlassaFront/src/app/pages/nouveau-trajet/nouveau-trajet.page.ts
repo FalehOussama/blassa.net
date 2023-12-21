@@ -88,7 +88,11 @@ export class NouveauTrajetPage implements OnInit  {
               this.vehiculeSelect = this.vehicules[0];
               this.vehiculeSelectId = this.vehiculeSelect?.id;
               this.trajetAnnonce.vClimatise = this.vehiculeSelect.climatise;
-            }              
+            }
+            else {
+              this.vehiculeSelect = undefined;
+              this.vehiculeSelectId = undefined;
+            }
           }
         );
       }
@@ -111,36 +115,20 @@ export class NouveauTrajetPage implements OnInit  {
   toEtape3() {
     this.etape = 3;
     if (this.vehiculeSelect) {
-      this.trajetAnnonce.vClimatise = this.vehiculeSelect.climatise;
-      this.trajetAnnonce.vCouleur = this.vehiculeSelect.couleur;
-      this.trajetAnnonce.vMarque = this.vehiculeSelect.marque;
-      this.trajetAnnonce.vMatricule = this.vehiculeSelect.matricule;
-      this.trajetAnnonce.vMiseEnCirculation = this.vehiculeSelect.miseEnCirculation;
-      this.trajetAnnonce.vModele = this.vehiculeSelect.modele;
-      this.trajetAnnonce.vTypeVehicule = this.vehiculeSelect.typeVehicule;
-      this.trajetAnnonce.vVerifie = this.vehiculeSelect.verifie;
+      this.trajetAnnonce.VehiculeId = this.vehiculeSelect.id;
     }
     else {
-      this.trajetAnnonce.vMarque = this.newVehicule.marque;
-      this.trajetAnnonce.vModele = this.newVehicule.modele;
-      this.trajetAnnonce.vClimatise = this.newVehicule.climatise;
-      this.trajetAnnonce.vMatricule = '';
-      this.trajetAnnonce.vCouleur = 0;
-      this.trajetAnnonce.vTypeVehicule = 0;
-      this.trajetAnnonce.vVerifie = false;
-
-      //this.newVehicule.id = 0;
       this.newVehicule.userId = this.user.id;
-      this.newVehicule.matricule = '';
       this.newVehicule.couleur = 0;
       this.newVehicule.typeVehicule = 0;
       this.newVehicule.verifie = false;
+      this.newVehicule.miseEnCirculation = new Date();
     }
   }
 
   toEtape2() {
     this.etape = 2;
-    this.trajetAnnonce.dateHeureDepart = new Date(this.trajetAnnonce.dateHeureDepartStr + "Z");
+    this.trajetAnnonce.dateHeureDepart = new Date(this.trajetAnnonce.dateHeureDepartStr);
     this.vehiculeSelectId = this.vehiculeSelect?.id;
   }
 
@@ -303,18 +291,29 @@ export class NouveauTrajetPage implements OnInit  {
   
   async publierAnnonce(){
 
+    this.trajetAnnonce.dateHeureDepart = new Date(this.trajetAnnonce.dateHeureDepartStr + "Z");
     this.trajetAnnonce.voyageAvec = parseInt(this.trajetAnnonce.voyageAvecStr);
 
+    if (!this.vehiculeSelect) {
+      await this.vehiculeService.post(this.newVehicule).subscribe(
+        async (resV: Vehicule) => {
+          this.vehiculeSelect = resV;
+          this.trajetAnnonce.VehiculeId = this.vehiculeSelect.id;
+          this.postTrajetAnnonce();
+        },
+        async (err) => {
+          this.blassaAlert.alert("Erreur lors de l'enregistrement du véhicule", err.error);
+        }
+      );
+    }
+    else {
+      this.postTrajetAnnonce();
+    }    
+  }
+
+  async postTrajetAnnonce() {
     this.annonceService.post(this.trajetAnnonce).subscribe(
       async (value: TrajetAnnonce) => {
-        if (!this.vehiculeSelect) {
-          this.vehiculeService.post(this.newVehicule).subscribe(
-            async (resV: Vehicule) => { },
-            async (err) => {
-              this.blassaAlert.alert("Erreur lors de l'enregistrement du véhicule", err.error);
-            }
-          );
-        }
         await this.storage.set('idTrajetAnnonce', await value.id);
         this.blassaAlert.alertDismiss("Enregistrement de votre trajet",
           "Votre trajet a été enregistrée avec succès",
@@ -323,7 +322,7 @@ export class NouveauTrajetPage implements OnInit  {
       async (err) => {
         this.blassaAlert.alert("Erreur lors de l'enregistrement de votre trajet", err.error);
       }
-      );
+    );
   }
 
   async publierAnnonceSuccess(data) {

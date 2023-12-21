@@ -19,6 +19,43 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-accordion-group value="img" style="margin: 10px">
+    <ion-accordion value="img">
+
+      <ion-item slot="header" color="success">
+        <ion-label>Photos de votre véhicule</ion-label>
+      </ion-item>
+
+      <div slot="content">
+        <ion-grid style="margin-right: 10px">
+          <ion-row>
+            <ion-col>
+              <ion-card style="width: 100%" color="light">
+                <img alt="vehicule" src="{{fileImage1Obj?.href ? fileImage1Obj.href : '../../../assets/images/Background/notEmpty.png'}}" />
+                <ion-button color="danger" shape="round" style="width: 90%" (click)="deleteImage1();">Supp.</ion-button>
+              </ion-card>
+            </ion-col>
+
+            <ion-col>
+              <ion-card style="width: 100%" color="light">
+                <img alt="vehicule" src="{{fileImage2Obj?.href ? fileImage2Obj.href : '../../../assets/images/Background/notEmpty.png'}}" />
+                <ion-button color="danger" shape="round" style="width: 90%" (click)="deleteImage2();">Supp.</ion-button>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <input type="file" name="myImage" accept="image/*" multiple (change)="onFileImagesChange($event)" />
+              </ion-item>              
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
   <ion-grid>
     <ion-row>
       <ion-card style="width: 100%" color="light">
@@ -51,24 +88,6 @@
             </div>
             <ion-chip color="success">Matricule : n'est visible que par vous</ion-chip>
 
-
-            <hr />
-            <ion-item lines="none">
-              <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
-              <ion-input id="miseEnCirculation" class="textInput" label="Mise en circulation" placeholder="{{vehicule.miseEnCirculation | date}}" [(ngModel)]="vehicule.miseEnCirculation" name="miseEnCirculation" #miseEnCirculation="ngModel" required></ion-input>
-              <ion-popover trigger="miseEnCirculation">
-                <ng-template>
-                  <ion-datetime presentation="date" [(ngModel)]="vehicule.miseEnCirculation" name="miseEnCirculationDT"></ion-datetime>
-                </ng-template>
-              </ion-popover>
-            </ion-item>
-            <div *ngIf="miseEnCirculation.invalid && (miseEnCirculation.dirty || miseEnCirculation.touched)" class="alert">
-              <ul>
-                <li *ngIf="miseEnCirculation.errors?.['required']">Mise en circulation est obligatoire.</li>
-              </ul>
-            </div>
-            <ion-chip color="success">Mise en circulation : n'est visible que par vous</ion-chip>
-
             <hr />
             <ion-item lines="none">
               <ion-checkbox [(ngModel)]="vehicule.climatise" name="climatise" class="text" mode="ios" labelPlacement="end">Climatisé</ion-checkbox>
@@ -94,6 +113,143 @@
       </ion-card>
     </ion-row>
   </ion-grid>
-  
+
+  <ion-accordion-group value="verif" style="margin: 10px">
+    <ion-accordion value="verif">
+      <ion-item slot="header" color="success">
+        <ion-label>Vérification de votre véhicule</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-chip color="success">Les passagers aiment voyager avec un véhicule vérifié.</ion-chip>
+        <ion-chip color="success">Les informations ci-dessous ne sont visible que par vous.</ion-chip>
+
+        <ion-row>
+          <ion-card style="width: 100%;">
+            <ion-card-content>
+              <ion-card-title>Carte grise :</ion-card-title>
+              <ion-item *ngIf="!fileCarteGriseObj">
+                <input type="file" (change)="onFileCarteGriseChange($event)" />
+              </ion-item>
+              <div *ngIf="fileCarteGriseObj">
+                <a href="{{fileCarteGriseObj.href}}" download="PermisConduire{{fileCarteGriseObj.ext ? fileCarteGriseObj.ext : ''}}">
+                  <ion-button color="success" shape="round" class="buttonVerif">
+                    <ion-icon slot="start" name="star"></ion-icon>
+                    Télécharger
+                  </ion-button>
+                </a>
+                <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deleteCarteGrise();">
+                  Supprimer
+                  <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+                </ion-button>
+                <hr />
+              </div>
+              <ion-item lines="none">
+                <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+                <ion-input id="miseEnCirculation" class="textInput" label="Mise en circulation" placeholder="{{vehicule.miseEnCirculation | date}}" [(ngModel)]="vehicule.miseEnCirculation" name="miseEnCirculation" #miseEnCirculation="ngModel" required></ion-input>
+                <ion-popover trigger="miseEnCirculation">
+                  <ng-template>
+                    <ion-datetime presentation="date" [(ngModel)]="vehicule.miseEnCirculation" name="miseEnCirculationDT"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+              <div *ngIf="miseEnCirculation.invalid && (miseEnCirculation.dirty || miseEnCirculation.touched)" class="alert">
+                <ul>
+                  <li *ngIf="miseEnCirculation.errors?.['required']">Mise en circulation est obligatoire.</li>
+                </ul>
+              </div>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card style="width: 100%;">
+            <ion-card-content>
+              <ion-card-title>Assurance :</ion-card-title>
+              <ion-item *ngIf="!fileAssuranceObj">
+                <input type="file" (change)="onFileAssuranceChange($event)" />
+              </ion-item>
+              <div *ngIf="fileAssuranceObj">
+                <a href="{{fileAssuranceObj.href}}" download="Cin{{fileAssuranceObj.ext ? fileAssuranceObj.ext : ''}}">
+                  <ion-button color="success" shape="round" class="buttonVerif">
+                    <ion-icon slot="start" name="star"></ion-icon>
+                    Télécharger
+                  </ion-button>
+                </a>
+                <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deleteAssurance();">
+                  Supprimer
+                  <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+                </ion-button>
+                <hr />
+              </div>
+              <ion-item>
+                <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+                <ion-input id="dateAssurance" class="textInput" label="Début" placeholder="{{vehicule.dateAssurance | date}}" name="dateAssurance"></ion-input>
+                <ion-popover trigger="dateAssurance">
+                  <ng-template>
+                    <ion-datetime presentation="date" [(ngModel)]="vehicule.dateAssurance" name="dateAssuranceDT"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+                <ion-input id="dateAssuranceProch" class="textInput" label="Fin" placeholder="{{vehicule.dateAssuranceProch | date}}" name="dateAssuranceProch"></ion-input>
+                <ion-popover trigger="dateAssuranceProch">
+                  <ng-template>
+                    <ion-datetime presentation="date" [(ngModel)]="vehicule.dateAssuranceProch" name="dateAssuranceProchDT"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-chip color="warning">Pour vous rappeler de renouveler.</ion-chip>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card style="width: 100%;">
+            <ion-card-content>
+              <ion-card-title>Visite Technique :</ion-card-title>
+              <ion-item *ngIf="!fileVisiteTechObj">
+                <input type="file" (change)="onFileVisiteTechChange($event)" />
+              </ion-item>
+              <div *ngIf="fileVisiteTechObj">
+                <a href="{{fileVisiteTechObj.href}}" download="Passeport{{fileVisiteTechObj.ext ? fileVisiteTechObj.ext : ''}}">
+                  <ion-button color="success" shape="round" class="buttonVerif">
+                    <ion-icon slot="start" name="star"></ion-icon>
+                    Télécharger
+                  </ion-button>
+                </a>
+                <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deleteVisiteTech();">
+                  Supprimer
+                  <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+                </ion-button>
+                <hr />
+              </div>
+
+              <ion-item>
+                <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+                <ion-input id="dateVisiteTech" class="textInput" label="Début" placeholder="{{vehicule.dateVisiteTech | date}}" name="dateVisiteTech"></ion-input>
+                <ion-popover trigger="dateVisiteTech">
+                  <ng-template>
+                    <ion-datetime presentation="date" [(ngModel)]="vehicule.dateVisiteTech" name="dateVisiteTechDT"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+                <ion-input id="dateVisiteTechProch" class="textInput" label="Fin" placeholder="{{vehicule.dateVisiteTechProch | date}}" name="dateVisiteTechProch"></ion-input>
+                <ion-popover trigger="dateVisiteTechProch">
+                  <ng-template>
+                    <ion-datetime presentation="date" [(ngModel)]="vehicule.dateVisiteTechProch" name="dateVisiteTechProchDT"></ion-datetime>
+                  </ng-template>
+                </ion-popover>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-chip color="warning">Pour vous rappeler de renouveler.</ion-chip>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-row>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
 
 </ion-content>

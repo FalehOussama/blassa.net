@@ -1,11 +1,10 @@
 import {  Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { IonModal, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
-import { UserService } from 'src/app/services/user.service';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 import { AppAvailability, InAppBrowser } from 'ionic-native';
 import { StorageService } from 'src/app/services/storage.service';
@@ -15,6 +14,7 @@ import { AvisComponent } from '../../components/avis/avis.component';
 import { AvisCondComponent } from '../../components/avis-cond/avis-cond.component';
 import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
 import { BlassaToastComponent } from '../../components/blassa-toast/blassa-toast.component';
+import { Base64 } from 'js-base64';
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -45,12 +45,10 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
   }
   
   constructor(
-    private route: ActivatedRoute , 
     private router : Router,
     private annonceService:AnnonceService , 
     private reservationService: ReservationService,
     public token : TokenStorageService,
-    private userService : UserService,
     private callNumber: CallNumber,
     public platform: Platform,
     private storage: StorageService,
@@ -112,6 +110,24 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
   haveResConfirmee = false;
   haveResRefusee = false;
 
+  styleColors: string[] = [
+    "black",
+    "white",
+    "gray",
+    "lightgray",
+    "purple", //BORDEAUX
+    "red",
+    "darkblue",
+    "blue",
+    "darkgreen",
+    "green",
+    "maroon",
+    "beige",
+    "orange",
+    "yellow",
+    "blueviolet",
+    "hotpink"];
+
   async ionViewWillEnter() { }
 
   async ngOnInit() {
@@ -127,6 +143,7 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
             await this.annonceService.getTrajetAnnonceById(this.idTrajetAnnonce).subscribe(
               async res => {
                 this.annonce = await res
+                this.setImageVehicule();
 
                 for (let reservation of this.annonce.reservations) {
                   if (reservation.status == 0) {
@@ -298,5 +315,92 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
       }
     );
   }
+
+  getStyleColor(index: number) {
+    return this.styleColors ? "color-" + this.styleColors[index] : '';
+  }
+
+  async setImageVehicule() {
+    if (this.annonce.vImage1) {
+      this.writeFile(this.annonce.vImage1, this.onWFileImageLoaded);
+    }
+  }
+
+  onWFileImageLoaded(hRef: string, ext: string) {
+    this.annonce.vImage1Href = hRef;
+  }
+
+  writeFile(fileStr: string, onLoad: (hRef: string, ext: string) => void) {
+    const boundOnLoad = onLoad.bind(this);
+
+    let fileType = this.detectMimeType(fileStr);
+    let ext = this.detectExtension(fileStr);
+
+    let uint8Array = Base64.toUint8Array(fileStr);
+    let arrayBuffer = uint8Array.buffer;
+    const dataView = new DataView(arrayBuffer);
+    const blob = new Blob([dataView], { type: fileType });
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      let hRef: string = <string>reader.result;
+      if (boundOnLoad)
+        boundOnLoad(hRef, ext);
+    };
+
+    reader.onerror = function () {
+      console.log(reader.error);
+    };
+
+    reader.readAsDataURL(blob);
+  }
+
+  detectMimeType(base64String: string) {
+    const signatures = {
+      JVBERi0: "application/pdf",
+      R0lGODdh: "image/gif",
+      R0lGODlh: "image/gif",
+      iVBORw0KGgo: "image/png",
+      TU0AK: "image/tiff",
+      "/9j/": "image/jpg",
+      UEs: "application/vnd.openxmlformats-officedocument.", //?? doc - docx - ppt - xls
+      PK: "application/zip",
+    };
+
+    for (let s in signatures) {
+      if (base64String.indexOf(s) === 0) {
+        let x = signatures[s];
+
+        // return
+        return x;
+      }
+    }
+    return '';
+  }
+
+  detectExtension(base64String: string) {
+    const extSign = {
+      JVBERi0: ".pdf",
+      R0lGODdh: ".gif",
+      R0lGODlh: ".gif",
+      iVBORw0KGgo: ".png",
+      TU0AK: ".tiff",
+      "/9j/": ".jpg",
+      UEs: ".docx", //?? doc - docx - ppt - xls
+      PK: ".zip",
+    };
+
+    for (let s in extSign) {
+      if (base64String.indexOf(s) === 0) {
+        let ext = extSign[s];
+
+        // return
+        return ext;
+      }
+    }
+    return '';
+  }
+
 }
 

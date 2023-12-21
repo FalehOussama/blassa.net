@@ -37,14 +37,23 @@
         public bool Instantane { get; set; }
 
         //Vehicule
-        public string VMatricule { get; set; }
-        public string VModele { get; set; }
-        public string VMarque { get; set; }
+        public int VehiculeId { get; set; }
+        public string? VMatricule { get; set; }
+        public string? VModele { get; set; }
+        public string? VMarque { get; set; }
         public bool VClimatise { get; set; }
         public bool VVerifie { get; set; }
         public CouleurType VCouleur { get; set; }
         public TypeVehiculeType VTypeVehicule { get; set; }
         public DateTime? VMiseEnCirculation { get; set; }
+        public DateTime? VDateAssurance { get; set; }
+        public DateTime? VDateAssuranceProch { get; set; }
+        public DateTime? VDateVisiteTech { get; set; }
+        public DateTime? VDateVisiteTechProch { get; set; }
+        public byte[]? VFileCarteGrise { get; set; }
+        public byte[]? VFileAssurance { get; set; }
+        public byte[]? VFileVisiteTech { get; set; }
+        public byte[]? VImage1 { get; set; }
 
         public DateTime DateCreation { get; set; }
 

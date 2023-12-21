@@ -157,7 +157,13 @@ namespace BlassaApi.Controllers
                     Prix = t.Prix,
                     Instantane = t.Instantane,
                     VoyageAvec = t.VoyageAvec,
+                    VMarque = t.VMarque,
+                    VModele = t.VModele,
                     VClimatise = t.VClimatise,
+                    VCouleur = t.VCouleur,
+                    VTypeVehicule = t.VTypeVehicule,
+                    VVerifie = t.VVerifie,
+                    VImage1 = t.VImage1,
                     Cigarette = t.Cigarette,
                     Animaux = t.Animaux,
                     Max2 = t.Max2,
@@ -202,7 +208,13 @@ namespace BlassaApi.Controllers
                     Prix = t.Prix,
                     Instantane = t.Instantane,
                     VoyageAvec = t.VoyageAvec,
+                    VMarque = t.VMarque,
+                    VModele = t.VModele,
                     VClimatise = t.VClimatise,
+                    VCouleur = t.VCouleur,
+                    VTypeVehicule = t.VTypeVehicule,
+                    VVerifie = t.VVerifie,
+                    VImage1 = t.VImage1,
                     Cigarette = t.Cigarette,
                     Animaux = t.Animaux,
                     Max2 = t.Max2,
@@ -243,7 +255,13 @@ namespace BlassaApi.Controllers
                     Prix = t.Prix,
                     Instantane = t.Instantane,
                     VoyageAvec = t.VoyageAvec,
+                    VMarque = t.VMarque,
+                    VModele = t.VModele,
                     VClimatise = t.VClimatise,
+                    VCouleur = t.VCouleur,
+                    VTypeVehicule = t.VTypeVehicule,
+                    VVerifie = t.VVerifie,
+                    VImage1 = t.VImage1,
                     Cigarette = t.Cigarette,
                     Animaux = t.Animaux,
                     Max2 = t.Max2,
@@ -287,7 +305,13 @@ namespace BlassaApi.Controllers
                     Prix = t.Prix,
                     Instantane = t.Instantane,
                     VoyageAvec = t.VoyageAvec,
+                    VMarque = t.VMarque,
+                    VModele = t.VModele,
                     VClimatise = t.VClimatise,
+                    VCouleur = t.VCouleur,
+                    VTypeVehicule = t.VTypeVehicule,
+                    VVerifie = t.VVerifie,
+                    VImage1 = t.VImage1,
                     Cigarette = t.Cigarette,
                     Animaux = t.Animaux,
                     Max2 = t.Max2,
@@ -332,7 +356,13 @@ namespace BlassaApi.Controllers
                     Prix = t.Prix,
                     Instantane = t.Instantane,
                     VoyageAvec = t.VoyageAvec,
+                    VMarque = t.VMarque,
+                    VModele = t.VModele,
                     VClimatise = t.VClimatise,
+                    VCouleur = t.VCouleur,
+                    VTypeVehicule = t.VTypeVehicule,
+                    VVerifie = t.VVerifie,
+                    VImage1 = t.VImage1,
                     Cigarette = t.Cigarette,
                     Animaux = t.Animaux,
                     Max2 = t.Max2,
@@ -403,14 +433,31 @@ namespace BlassaApi.Controllers
             if (trajetAnnonce.Prix < 0)
                 return BadRequest("Prix doit être positif");
 
-            if (string.IsNullOrWhiteSpace(trajetAnnonce.VMarque))
-                return BadRequest("Marque véhicule non définie");
-
-            if (string.IsNullOrWhiteSpace(trajetAnnonce.VModele))
-                return BadRequest("Modèle véhicule non définie");
+            if (!VehiculeExists(trajetAnnonce.VehiculeId, trajetAnnonce.UserId))
+                return BadRequest("Véhicule non définie");
 
             trajetAnnonce.NombrePlacesDispo = trajetAnnonce.NombrePlaces;
             trajetAnnonce.DateCreation = DateTime.Now;
+
+            var vehicule = _dbContext.Vehicules.FirstOrDefault(x => x.Id == trajetAnnonce.VehiculeId && x.UserId == trajetAnnonce.UserId);
+            if (vehicule != null)
+            {
+                trajetAnnonce.VMatricule = vehicule.Matricule;
+                trajetAnnonce.VCouleur = vehicule.Couleur;
+                trajetAnnonce.VMarque = vehicule.Marque;
+                trajetAnnonce.VModele = vehicule.Modele;
+                trajetAnnonce.VTypeVehicule = vehicule.TypeVehicule;
+                trajetAnnonce.VCouleur = vehicule.Couleur;
+                trajetAnnonce.VImage1 = vehicule.Image1;
+                trajetAnnonce.VFileAssurance = vehicule.FileAssurance;
+                trajetAnnonce.VFileCarteGrise = vehicule.FileCarteGrise;
+                trajetAnnonce.VFileVisiteTech = vehicule.FileVisiteTech;
+                trajetAnnonce.VMiseEnCirculation = vehicule.MiseEnCirculation;
+                trajetAnnonce.VDateAssurance = vehicule.DateAssurance;
+                trajetAnnonce.VDateAssuranceProch = vehicule.DateAssuranceProch;
+                trajetAnnonce.VDateVisiteTech = vehicule.DateVisiteTech;
+                trajetAnnonce.VDateVisiteTechProch = vehicule.DateVisiteTechProch;
+            }
 
             _dbContext.TrajetsAnnonces.Add(trajetAnnonce);
             await _dbContext.SaveChangesAsync();
@@ -468,6 +515,11 @@ namespace BlassaApi.Controllers
         private bool TrajetAnnonceExists(int id)
         {
             return (_dbContext.TrajetsAnnonces?.Any(u => u.Id == id)).GetValueOrDefault();
+        }
+
+        private bool VehiculeExists(int id, int userId)
+        {
+            return (_dbContext.Vehicules?.Any(u => u.Id == id && u.UserId == userId)).GetValueOrDefault();
         }
     }
 }

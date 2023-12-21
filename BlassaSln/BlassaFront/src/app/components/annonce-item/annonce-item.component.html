@@ -50,7 +50,33 @@
         </ion-row>
       </ion-col>
     </ion-row>
+
     <ion-row style="margin-top: -15px;">
+      <ion-card style="width: 96%" class="{{getStyleColor(annonce.vCouleur)}}">
+        <ion-row>
+          <ion-col class="colVehicule">
+            <img alt="person" src="{{annonce.vImage1Href ? annonce.vImage1Href : '../../../assets/images/Background/notEmpty.png'}}" style="height: 75px; width: 100px" />
+          </ion-col>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label>
+                <h1 class="trajet">{{annonce.vMarque}} - {{annonce.vModele}}</h1>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-row>
+              <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+                <ion-img class="icon" *ngIf="annonce.vClimatise" src="../../../assets/images/clim.png"></ion-img>
+                <ion-icon class="icon" *ngIf="annonce.vVerifie" name="shield-checkmark-outline" color="success"></ion-icon>
+              </div>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-row>
+
+    <ion-row >
       <ion-chip *ngIf="annonce.isRes" class={{classResChip}}>
         <ion-icon *ngIf="classResChip=='enAttente'" name="hourglass" color="light" class="statusIcons"></ion-icon>
         <ion-icon *ngIf="classResChip=='confirmee'" name="checkmark-circle" color="light" class="statusIcons"></ion-icon>
@@ -63,7 +89,6 @@
         <ion-img class="icon" *ngIf="annonce.max2" src="../../../assets/images/max2.png"></ion-img>
         <ion-img class="icon" *ngIf="annonce.animaux" src="../../../assets/images/animal.png"></ion-img>
         <ion-img class="icon" *ngIf="annonce.cigarette" src="../../../assets/images/cigarette.png"></ion-img>
-        <ion-img class="icon" *ngIf="annonce.vClimatise" src="../../../assets/images/clim.png"></ion-img>
         <ion-icon name="flash-outline" *ngIf="annonce.instantane" class="inst" size="large" color="warning"></ion-icon>
       </div>
     </ion-row>

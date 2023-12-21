@@ -13,7 +13,13 @@ namespace BlassaApi.Dto
         public int NombrePlacesDispo { get; set; }
         public VoyageAvecType VoyageAvec { get; set; }
         public bool Instantane { get; set; }
+        public string? VModele { get; set; }
+        public string? VMarque { get; set; }
         public bool VClimatise { get; set; }
+        public CouleurType VCouleur { get; set; }
+        public TypeVehiculeType VTypeVehicule { get; set; }
+        public bool VVerifie { get; set; }
+        public byte[]? VImage1 { get; set; }
         public bool Cigarette { get; set; }
         public bool Animaux { get; set; }
         public bool Max2 { get; set; }

@@ -1,4 +1,6 @@
+import { CouleurType } from "./couleurType";
 import { ReservationStatusType } from "./reservationStatusType";
+import { TypeVehiculeType } from "./typeVehiculeType";
 import { VoyageAvecType } from "./voyageAvecType";
 
 export class RechTrajetAnnonceDto {
@@ -11,7 +13,14 @@ export class RechTrajetAnnonceDto {
   nombrePlacesDispo: bigint;
   voyageAvec: VoyageAvecType;
   instantane: boolean;
+  vMarque: string;
+  vModele: string;
   vClimatise: boolean;
+  vCouleur: CouleurType;
+  vTypeVehicule: TypeVehiculeType;
+  vVerifie: boolean;
+  vImage1: string;
+  vImage1Href: string;
   cigarette: boolean;
   animaux: boolean;
   max2: boolean;

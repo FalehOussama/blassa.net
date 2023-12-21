@@ -35,3 +35,17 @@ hr {
   font-family: font4;
   font-size: 0.7rem;
 }
+
+ion-item[slot='header'] {
+  border-start-start-radius: 10px;
+  border-start-end-radius: 10px;
+}
+
+div[slot='content'] {
+  margin-top: -10px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border: 1px solid mediumseagreen;
+  border-end-start-radius: 20px;
+  border-end-end-radius: 20px;
+}

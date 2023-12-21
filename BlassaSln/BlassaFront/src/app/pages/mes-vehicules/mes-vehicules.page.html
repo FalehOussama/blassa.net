@@ -14,12 +14,13 @@
   </ion-header>
 
   <ion-card *ngFor="let car of vehicules" (click)="toFiche(car.id)" class="{{getStyleColor(car.couleur)}}">
+    <!--<img alt="person" src="{{car.image1Href ? car.image1Href : '../../../assets/images/Background/notEmpty.png'}}" style="height: 96%; width: 96%" />-->
     <ion-grid [fixed]="true">
       <ion-row style="margin-top: -5px;">
         <ion-col>
           <ion-item lines="none">
             <ion-avatar slot="start" class="{{car?.verifie ? 'verifie' : 'non-verifie'}}">
-              <img alt="person" src="../../../assets/images/Background/notEmpty.png" />
+              <img alt="person" src="{{car.image1Href ? car.image1Href : '../../../assets/images/Background/notEmpty.png'}}" />
             </ion-avatar>
             <ion-label>
               <h1 class="title">{{car.marque}} - {{car.modele}}</h1>

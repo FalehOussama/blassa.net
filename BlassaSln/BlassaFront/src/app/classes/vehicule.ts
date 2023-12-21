@@ -12,4 +12,15 @@ export class Vehicule {
   couleur: CouleurType;
   typeVehicule: TypeVehiculeType;
   userId: bigint;
+  fileCarteGrise: string;
+  fileAssurance: string;
+  fileVisiteTech: string;
+  dateAssurance: Date;
+  dateAssuranceProch: Date;
+  dateVisiteTech: Date;
+  dateVisiteTechProch: Date;
+  image1: string;
+  image2: string;
+  image3: string;
+  image1Href: string;
 }

@@ -64,13 +64,13 @@
         <ion-item style="z-index: 10;" lines="none">
           <ion-img class="seat" src="../../../assets/icon/Seat.png" slot="end"></ion-img>
           <p class="text" color="dark">{{annonce?.nombrePlacesDispo}} / {{annonce?.nombrePlaces}}</p>
-      </ion-item>
+        </ion-item>
       </ion-row>
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
           <ion-icon class="icons" name="calendar-outline" size="small" slot="end"></ion-icon>
           <p class="text" color="dark">{{annonce?.dateHeureDepart | date:'dd'}} {{annonce?.dateHeureDepart | date:'MMM'}}</p>
-      </ion-item>
+        </ion-item>
       </ion-row>
       <ion-row style="justify-content: end; z-index: 999; position:relative;">
         <ion-item style="z-index: 10;" lines="none">
@@ -102,15 +102,34 @@
       <div class="sep"></div>
 
       <ion-row>
-        <ion-col>
-
+        <ion-card style="width: 96%" class="{{getStyleColor(annonce?.vCouleur)}}">
           <ion-row>
-            <!--<ion-list></ion-list>-->
-            <ion-item style="width: 100%;">
-              <ion-img class="icon" slot="start" src="../../../assets/images/car.png"></ion-img>
-              <ion-label class="text2">{{annonce?.vMarque}} - {{annonce?.vModele}}</ion-label>
-              <ion-img *ngIf="annonce?.vClimatise" class="icon" slot="end" src="../../../assets/images/clim.png"></ion-img>
-            </ion-item>
+            <ion-col class="colVehicule" style="min-width: 100px;">
+              <img alt="person" src="{{annonce?.vImage1Href ? annonce?.vImage1Href : '../../../assets/images/Background/notEmpty.png'}}" style="height: 75px; width: 100px" />
+            </ion-col>
+            <ion-col style="max-width: 190px;">
+              <ion-item lines="none">
+                <ion-label>
+                  <h1 class="trajet">{{annonce?.vMarque}}</h1>
+                  <p>{{annonce?.vModele}}</p>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <div style="margin-left: auto; margin-right: 5px; display: flex; flex-direction: justify-content ">
+                  <ion-img class="icon" *ngIf="annonce?.vClimatise" src="../../../assets/images/clim.png"></ion-img>
+                  <ion-icon class="icon" *ngIf="annonce?.vVerifie" name="shield-checkmark-outline" color="success"></ion-icon>
+                </div>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-row>
 
             <ion-item style="width: 100%;">
               <ion-img class="icon" slot="start" src="../../../assets/images/cigarette.png"></ion-img>

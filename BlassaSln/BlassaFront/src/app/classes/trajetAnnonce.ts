@@ -29,7 +29,8 @@ export class TrajetAnnonce {
   lourd: boolean;
   instantane: boolean;
   verifies: boolean;
-  //Vehicule
+  //Vehicule   
+  VehiculeId: bigint;
   vMatricule: string;
   vModele: string;
   vMarque: string;
@@ -37,5 +38,5 @@ export class TrajetAnnonce {
   vVerifie: boolean;
   vCouleur: CouleurType;
   vTypeVehicule: TypeVehiculeType;
-  vMiseEnCirculation: Date;    
+  vMiseEnCirculation: Date; 
 }
