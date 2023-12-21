@@ -1,322 +1,324 @@
 <app-menu></app-menu>
 
 <ion-content class="ion-padding">
-    <ion-label class="title">Profile</ion-label>
-    <ion-row style="margin: auto; margin-left: 30px; margin-top: 10px; float: right;">
-      <ion-button shape="round" (click)="enregistrer()">Enregistrer</ion-button>
-    </ion-row>
+  <ion-label class="title">Profile</ion-label>
+  <ion-row style="margin: auto; margin-left: 30px; margin-top: 10px; float: right;">
+    <ion-button shape="round" (click)="enregistrer()">Enregistrer</ion-button>
+  </ion-row>
 
-    <ion-grid>
-      <ion-col size="auto">
-        <ion-row class="ion-padding ion-justify-content-center">
-          <ion-col size="auto">
-            <ion-img class="superUser" *ngIf="user.superUser" src="../../../assets/images/medSuperUser.png"></ion-img>
-          </ion-col>
-          <ion-col size="auto">
-            <ion-avatar class="{{user?.verifie ? 'verifie' : 'nonVerifie'}}" style="width: 100px; height: 100px;">
-              <img alt="Silhouette of a person's head" src={{user.imgUrl}} />
-            </ion-avatar>
-          </ion-col>
-          <ion-col size="auto">
-            <ion-img class="superDriver" *ngIf="user.superDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
-          </ion-col>
-        </ion-row>
+  <ion-grid>
+    <ion-col size="auto">
+      <ion-row class="ion-padding ion-justify-content-center">
+        <ion-col size="auto">
+          <ion-img class="superUser" *ngIf="user.superUser" src="../../../assets/images/medSuperUser.png"></ion-img>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-avatar class="{{user?.verifie ? 'verifie' : 'nonVerifie'}}" style="width: 100px; height: 100px;">
+            <img alt="Silhouette of a person's head" src={{user.imgUrl}} />
+          </ion-avatar>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-img class="superDriver" *ngIf="user.superDriver" src="../../../assets/images/medSuperDriver.png"></ion-img>
+        </ion-col>
+      </ion-row>
 
-        <ion-row class="rating ion-justify-content-between">
-          <ion-col class="stats">
-              <app-avis #compAvis></app-avis>
-          </ion-col>
+      <ion-row class="rating ion-justify-content-between">
+        <ion-col class="stats">
+          <app-avis #compAvis></app-avis>
+        </ion-col>
 
-          <ion-col size="auto">
-          </ion-col>
+        <ion-col size="auto">
+        </ion-col>
 
-          <ion-col size="auto" class="right">
-            <app-avis-cond #compAvisCond></app-avis-cond>
-          </ion-col>
-        </ion-row>
+        <ion-col size="auto" class="right">
+          <app-avis-cond #compAvisCond></app-avis-cond>
+        </ion-col>
+      </ion-row>
 
-        <ion-row class="ion-justify-content-center" style="width: 100%;">
-          <ion-label class="nom">{{user.prenom}} {{user.nom}}</ion-label>
-        </ion-row>
-        <ion-row class="ion-justify-content-center">
-          <ion-label class="role"> {{user.preferences.passager ? "Passager" : "Conducteur"}}</ion-label>
-          <ion-icon name="{{user.sexe=='F' ? 'female-outline' : 'male-outline'}}"></ion-icon>
-        </ion-row>
-      </ion-col>
+      <ion-row class="ion-justify-content-center" style="width: 100%;">
+        <ion-label class="nom">{{user.prenom}} {{user.nom}}</ion-label>
+      </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-label class="role"> {{user.preferences.passager ? "Passager" : "Conducteur"}}</ion-label>
+        <ion-icon name="{{user.sexe=='F' ? 'female-outline' : 'male-outline'}}"></ion-icon>
+      </ion-row>
+    </ion-col>
 
-      <ion-col size="auto">
-        <ion-row>
-          <ion-label class="font1">Je suis :</ion-label>
-          <ion-list style="width: 100%">
+    <ion-col size="auto">
+      <ion-row>
+        <ion-label class="font1">Je suis :</ion-label>
+        <ion-list style="width: 100%">
+          <ion-item>
+            <ion-label class="text" style="margin: auto;">Conducteur</ion-label>
+            <ion-toggle [(ngModel)]="user.preferences.passager" name="passager" style="margin: auto;"></ion-toggle>
+            <ion-label class="text" style="margin: auto; float: right; margin-left: 20px;">Passager</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-row>
+      <ion-row>
+        <ion-label class="font1">Informations personnelles</ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-card style="width: 100%" color="light">
+          <ion-card-content>
+            <ion-input class="textInput" label="Nom" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.nom" name="nom"></ion-input>
+            <hr />
+            <ion-input class="textInput" label="Préom" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.prenom" name="prenom"></ion-input>
+            <hr />
+            <ion-input class="textInput" label="Email" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.email" name="email" disabled="disabled"></ion-input>
+            <hr />
+            <ion-input class="textInput" [maskito]="phoneMask" [maskitoElement]="maskPredicate"
+                       label-placement="floating" fill="outline"
+                       label="Télephone : +216" [(ngModel)]="user.tel1" name="tel1"
+                       required></ion-input>
+            <hr />
+            <ion-item lines="none">
+              <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
+              <ion-input id="dateNais" class="textInput" label="Naissance" placeholder="{{user.dateNaissance | date}}" name="dateNaissance"></ion-input>
+              <ion-popover trigger="dateNais">
+                <ng-template>
+                  <ion-datetime presentation="date" [(ngModel)]="user.dateNaissance"></ion-datetime>
+                </ng-template>
+              </ion-popover>
+            </ion-item>
+            <hr />
+            <ion-radio-group [(ngModel)]="user.sexe" name="sexe">
+              <ion-label class="textLarge">Je suis</ion-label>
+              <br>
+              <ion-item>
+                <ion-label class="textInput">Homme</ion-label>
+                <ion-icon name="male"></ion-icon>
+                <ion-radio value="H"></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label class="textInput">Femme</ion-label>
+                <ion-icon name="female"></ion-icon>
+                <ion-radio value="F"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+            <hr />
+            <ion-input class="textInput" label="Description" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.description" name="description"></ion-input>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-col>
+  </ion-grid>
+  <hr />
+  <ion-grid>
+    <ion-row>
+      <ion-label class="font1">Préférences</ion-label>
+
+      <ion-card style="width: 100%" color="light">
+        <ion-card-header>
+          <ion-card-title>Les {{user?.preferences.passager ? "conducteurs" : "passagers"}} peuvent me contacter par :</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list>
             <ion-item>
-              <ion-label class="text" style="margin: auto;">Conducteur</ion-label>
-              <ion-toggle [(ngModel)]="user.preferences.passager" name="passager" style="margin: auto;"></ion-toggle>
-              <ion-label class="text" style="margin: auto; float: right; margin-left: 20px;">Passager</ion-label>
+              <ion-img slot="start" class="icon" src="../../../assets/icon/phone.svg"></ion-img>
+              <ion-label class="text">Téléphone</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="user.preferences.tel" name="tel"></ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-img slot="start" class="icon" src="../../../assets/icon/whatsapp.svg"></ion-img>
+              <ion-label class="text">Whatsapp</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="user.preferences.whatsApp" name="whatsApp"></ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-img slot="start" class="icon" src="../../../assets/icon/messenger.svg"></ion-img>
+              <ion-label class="text">Messenger</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="user.preferences.messenger" name="messenger"></ion-toggle>
             </ion-item>
           </ion-list>
-        </ion-row>
-        <ion-row>
-          <ion-label class="font1">Informations personnelles</ion-label>
-        </ion-row>
-        <ion-row>
-          <ion-card style="width: 100%" color="light">
-            <ion-card-content>
-              <ion-input class="textInput" label="Nom" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.nom" name="nom"></ion-input>
-              <hr />
-              <ion-input class="textInput" label="Préom" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.prenom" name="prenom"></ion-input>
-              <hr />
-              <ion-input class="textInput" label="Email" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.email" name="email" disabled="disabled"></ion-input>
-              <hr />
-              <ion-input class="textInput" [maskito]="phoneMask" [maskitoElement]="maskPredicate"
-                         label-placement="floating" fill="outline"
-                         label="Télephone : +216" [(ngModel)]="user.tel1" name="tel1"
-                         required></ion-input>
-              <hr />
-              <ion-item lines="none">
-                <ion-icon class="bullet small" name="calendar-outline" slot="start"></ion-icon>
-                <ion-input id="dateNais" class="textInput" label="Naissance" placeholder="{{user.dateNaissance | date}}" name="dateNaissance"></ion-input>
-                <ion-popover trigger="dateNais">
-                  <ng-template>
-                    <ion-datetime presentation="date" [(ngModel)]="user.dateNaissance"></ion-datetime>
-                  </ng-template>
-                </ion-popover>
-              </ion-item>
-              <hr />
-              <ion-radio-group [(ngModel)]="user.sexe" name="sexe">
-                <ion-label class="textLarge">Je suis</ion-label>
-                <br>
-                <ion-item>
-                  <ion-label class="textInput">Homme</ion-label>
-                  <ion-icon name="male"></ion-icon>
-                  <ion-radio value="H"></ion-radio>
-                </ion-item>
-                <ion-item>
-                  <ion-label class="textInput">Femme</ion-label>
-                  <ion-icon name="female"></ion-icon>
-                  <ion-radio value="F"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-              <hr />
-              <ion-input class="textInput" label="Description" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="user.description" name="description"></ion-input>
+        </ion-card-content>
+      </ion-card>
 
-            </ion-card-content>
-          </ion-card>
-        </ion-row>
-      </ion-col>
-    </ion-grid>
-    <hr />
-    <ion-grid>
-      <ion-row>
-        <ion-label class="font1">Préférences</ion-label>
+      <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
+        <ion-card-header>
+          <ion-card-title>Je gère les réservations en mode :</ion-card-title>
+        </ion-card-header>
 
-        <ion-card style="width: 100%" color="light">
-          <ion-card-header>
-            <ion-card-title>Les {{user?.preferences.passager ? "conducteurs" : "passagers"}} peuvent me contacter par :</ion-card-title>
-          </ion-card-header>
+        <ion-card-content>
+          <ion-list style="width: 100%">
+            <ion-item>
+              <ion-label class="text" style="margin: auto;">Manuel</ion-label>
+              <ion-toggle [(ngModel)]="user.preferences.instantane" name="instantane" style="margin: auto;"></ion-toggle>
+              <ion-label class="text" style="margin: auto; float: right; margin-left: 20px;">Instantané</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
 
-          <ion-card-content>
-            <ion-list>
-              <ion-item>
-                <ion-img slot="start" class="icon" src="../../../assets/icon/phone.svg"></ion-img>
-                <ion-label class="text">Téléphone</ion-label>
-                <ion-toggle slot="end" [(ngModel)]="user.preferences.tel" name="tel"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-img slot="start" class="icon" src="../../../assets/icon/whatsapp.svg"></ion-img>
-                <ion-label class="text">Whatsapp</ion-label>
-                <ion-toggle slot="end" [(ngModel)]="user.preferences.whatsApp" name="whatsApp"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-img slot="start" class="icon" src="../../../assets/icon/messenger.svg"></ion-img>
-                <ion-label class="text">Messenger</ion-label>
-                <ion-toggle slot="end" [(ngModel)]="user.preferences.messenger" name="messenger"></ion-toggle>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+      <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
+        <ion-card-header>
+          <ion-card-title>Je préfère voyager avec :</ion-card-title>
+        </ion-card-header>
 
-        <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
-          <ion-card-header>
-            <ion-card-title>Je gère les réservations en mode :</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            <ion-list style="width: 100%">
-              <ion-item>
-                <ion-label class="text" style="margin: auto;">Manuel</ion-label>
-                <ion-toggle [(ngModel)]="user.preferences.instantane" name="instantane" style="margin: auto;"></ion-toggle>
-                <ion-label class="text" style="margin: auto; float: right; margin-left: 20px;">Instantané</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
-          <ion-card-header>
-            <ion-card-title>Je préfère voyager avec :</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            <ion-radio-group [(ngModel)]="user.preferences.voyageAvec" name="voyageAvec">
-              <ion-list>
-                <ion-item>
-                  <ion-icon name="people-outline" slot="start"></ion-icon>
-                  <ion-label class="text">Tous</ion-label>
-                  <ion-radio slot="end" value="0"></ion-radio>
-                </ion-item>
-                <ion-item>
-                  <ion-icon name="woman-outline" slot="start"></ion-icon>
-                  <ion-label class="text">Filles uniquement</ion-label>
-                  <ion-radio slot="end" value="1"></ion-radio>
-                </ion-item>
-                <ion-item>
-                  <ion-icon name="man-outline" slot="start"></ion-icon>
-                  <ion-label class="text">Garçons uniquement</ion-label>
-                  <ion-radio slot="end" value="2"></ion-radio>
-                </ion-item>
-              </ion-list>
-            </ion-radio-group>
-
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
-          <ion-card-header>
-            <ion-card-title>Bagage autorisé :</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
-            <ion-list>
-              <ion-item>
-                <ion-label class="text">Léger</ion-label>
-                <ion-toggle slot="end" id="leger" [(ngModel)]="user.preferences.leger" name="leger"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label class="text">Moyen</ion-label>
-                <ion-toggle slot="end" id="moyen" [(ngModel)]="user.preferences.moyen" name="moyen"></ion-toggle>
-              </ion-item>
-              <ion-item>
-                <ion-label class="text">Lourd</ion-label>
-                <ion-toggle slot="end" id="lourd" [(ngModel)]="user.preferences.lourd" name="lourd"></ion-toggle>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
-          <ion-card-header>
-            <ion-card-title>Options de mes voyages :</ion-card-title>
-          </ion-card-header>
-
-          <ion-card-content>
+        <ion-card-content>
+          <ion-radio-group [(ngModel)]="user.preferences.voyageAvec" name="voyageAvec">
             <ion-list>
               <ion-item>
                 <ion-icon name="people-outline" slot="start"></ion-icon>
-                <ion-label class="subTitle">Max. 2 à l’arrière</ion-label>
-                <ion-toggle slot="end" [(ngModel)]="user.preferences.max2" name="max2"></ion-toggle>
+                <ion-label class="text">Tous</ion-label>
+                <ion-radio slot="end" value="0"></ion-radio>
               </ion-item>
               <ion-item>
-                <ion-img slot="start" class="icon" src="../../../assets/icons/cig.svg">
-                </ion-img><ion-label class="subTitle">Cigarette autorisée</ion-label>
-                <ion-toggle slot="end" [(ngModel)]="user.preferences.cigarette" name="cigarette"></ion-toggle>
+                <ion-icon name="woman-outline" slot="start"></ion-icon>
+                <ion-label class="text">Filles uniquement</ion-label>
+                <ion-radio slot="end" value="1"></ion-radio>
               </ion-item>
               <ion-item>
-                <ion-icon name="paw-outline" slot="start"></ion-icon>
-                <ion-label class="subTitle">Animaux de compagnie autorisés</ion-label>
-                <ion-toggle slot="end" [(ngModel)]="user.preferences.animaux" name="animaux"></ion-toggle>
+                <ion-icon name="man-outline" slot="start"></ion-icon>
+                <ion-label class="text">Garçons uniquement</ion-label>
+                <ion-radio slot="end" value="2"></ion-radio>
               </ion-item>
             </ion-list>
-          </ion-card-content>
-        </ion-card>
+          </ion-radio-group>
 
-        <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
-          <ion-card-header>
-            <ion-card-title>Je préfère voyager avec des passagers :</ion-card-title>
-          </ion-card-header>
+        </ion-card-content>
+      </ion-card>
 
-          <ion-card-content>
-            <ion-list>
-              <ion-item>
-                <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
-                <ion-label class="text">Vérifiés uniquement</ion-label>
-                <ion-toggle slot="end" [(ngModel)]="user.preferences.verifies" name="verifies"></ion-toggle>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>        
-      </ion-row>
+      <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
+        <ion-card-header>
+          <ion-card-title>Bagage autorisé :</ion-card-title>
+        </ion-card-header>
 
-      <hr />
-      <ion-row>
-        <ion-label class="font1">Vérification du profil</ion-label>
-        <ion-card style="width: 100%;">
-          <ion-card-content>
-            <ion-card-title>Permis de conduire :</ion-card-title>
-            <ion-item *ngIf="!filePermisConduireObj">
-              <input type="file" (change)="onFilePermisConduireChange($event)" />
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label class="text">Léger</ion-label>
+              <ion-toggle slot="end" id="leger" [(ngModel)]="user.preferences.leger" name="leger"></ion-toggle>
             </ion-item>
-            <div *ngIf="filePermisConduireObj">
-              <a href="{{filePermisConduireObj.href}}" download="PermisConduire{{filePermisConduireObj.ext ? filePermisConduireObj.ext : ''}}">
-                <ion-button color="success" shape="round" class="buttonVerif">
-                  <ion-icon slot="start" name="star"></ion-icon>
-                  Télécharger
-                </ion-button>
-              </a>
-              <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deletePermisConduire();">
-                Supprimer
-                <ion-icon name="close-circle-outline" slot="end"></ion-icon>
-              </ion-button>
-            </div>
-
-            <ion-card-title>Carte d'identité :</ion-card-title>
-            <ion-item *ngIf="!fileCinObj">
-              <input type="file" (change)="onFileCinChange($event)" />
+            <ion-item>
+              <ion-label class="text">Moyen</ion-label>
+              <ion-toggle slot="end" id="moyen" [(ngModel)]="user.preferences.moyen" name="moyen"></ion-toggle>
             </ion-item>
-            <div *ngIf="fileCinObj">
-              <a href="{{fileCinObj.href}}" download="Cin{{fileCinObj.ext ? fileCinObj.ext : ''}}">
-                <ion-button color="success" shape="round" class="buttonVerif">
-                  <ion-icon slot="start" name="star"></ion-icon>
-                  Télécharger
-                </ion-button>
-              </a>
-              <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deleteCin();">
-                Supprimer
-                <ion-icon name="close-circle-outline" slot="end"></ion-icon>
-              </ion-button>
-            </div>
-
-            <ion-card-title>Passeport :</ion-card-title>
-            <ion-item *ngIf="!filePasseportObj">
-              <input type="file" (change)="onFilePasseportChange($event)" />
+            <ion-item>
+              <ion-label class="text">Lourd</ion-label>
+              <ion-toggle slot="end" id="lourd" [(ngModel)]="user.preferences.lourd" name="lourd"></ion-toggle>
             </ion-item>
-            <div *ngIf="filePasseportObj">
-              <a href="{{filePasseportObj.href}}" download="Passeport{{filePasseportObj.ext ? filePasseportObj.ext : ''}}">
-                <ion-button color="success" shape="round" class="buttonVerif">
-                  <ion-icon slot="start" name="star"></ion-icon>
-                  Télécharger
-                </ion-button>
-              </a>
-              <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deletePasseport();">
-                Supprimer
-                <ion-icon name="close-circle-outline" slot="end"></ion-icon>
-              </ion-button>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-row>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
 
-      <hr *ngIf="!user.preferences.passager" />
-      <ion-row *ngIf="!user.preferences.passager">
-        <ion-label class="font1">Mes véhicules</ion-label>
-        <ion-fab horizontal="end" *ngIf="user.vehicules.length < 3">
-          <ion-fab-button routerLink="/add-car">
-            <ion-icon name="add"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
-      </ion-row>
-      <app-car-card *ngIf="!user.preferences.passager"
-                    [car1]="user.vehicules[0]"
-                    [car2]="user.vehicules[1]"
-                    [car3]="user.vehicules[2]"></app-car-card>
-    </ion-grid>
+      <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
+        <ion-card-header>
+          <ion-card-title>Options de mes voyages :</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-icon name="people-outline" slot="start"></ion-icon>
+              <ion-label class="subTitle">Max. 2 à l’arrière</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="user.preferences.max2" name="max2"></ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-img slot="start" class="icon" src="../../../assets/icons/cig.svg">
+              </ion-img><ion-label class="subTitle">Cigarette autorisée</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="user.preferences.cigarette" name="cigarette"></ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="paw-outline" slot="start"></ion-icon>
+              <ion-label class="subTitle">Animaux de compagnie autorisés</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="user.preferences.animaux" name="animaux"></ion-toggle>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="!user.preferences.passager" style="width: 100%" color="light">
+        <ion-card-header>
+          <ion-card-title>Je préfère voyager avec des passagers :</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+              <ion-label class="text">Vérifiés uniquement</ion-label>
+              <ion-toggle slot="end" [(ngModel)]="user.preferences.verifies" name="verifies"></ion-toggle>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+
+    <hr />
+    <ion-row>
+      <ion-label class="font1">Vérification du profil</ion-label>
+      <ion-card style="width: 100%;">
+        <ion-card-content>
+          <ion-card-title>Permis de conduire :</ion-card-title>
+          <ion-item *ngIf="!filePermisConduireObj">
+            <input type="file" (change)="onFilePermisConduireChange($event)" />
+          </ion-item>
+          <div *ngIf="filePermisConduireObj">
+            <a href="{{filePermisConduireObj.href}}" download="PermisConduire{{filePermisConduireObj.ext ? filePermisConduireObj.ext : ''}}">
+              <ion-button color="success" shape="round" class="buttonVerif">
+                <ion-icon slot="start" name="star"></ion-icon>
+                Télécharger
+              </ion-button>
+            </a>
+            <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deletePermisConduire();">
+              Supprimer
+              <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+            </ion-button>
+          </div>
+
+          <ion-card-title>Carte d'identité :</ion-card-title>
+          <ion-item *ngIf="!fileCinObj">
+            <input type="file" (change)="onFileCinChange($event)" />
+          </ion-item>
+          <div *ngIf="fileCinObj">
+            <a href="{{fileCinObj.href}}" download="Cin{{fileCinObj.ext ? fileCinObj.ext : ''}}">
+              <ion-button color="success" shape="round" class="buttonVerif">
+                <ion-icon slot="start" name="star"></ion-icon>
+                Télécharger
+              </ion-button>
+            </a>
+            <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deleteCin();">
+              Supprimer
+              <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+            </ion-button>
+          </div>
+
+          <ion-card-title>Passeport :</ion-card-title>
+          <ion-item *ngIf="!filePasseportObj">
+            <input type="file" (change)="onFilePasseportChange($event)" />
+          </ion-item>
+          <div *ngIf="filePasseportObj">
+            <a href="{{filePasseportObj.href}}" download="Passeport{{filePasseportObj.ext ? filePasseportObj.ext : ''}}">
+              <ion-button color="success" shape="round" class="buttonVerif">
+                <ion-icon slot="start" name="star"></ion-icon>
+                Télécharger
+              </ion-button>
+            </a>
+            <ion-button slot="end" color="danger" shape="round" class="buttonVerif" style="margin-left: auto; margin-right: 10px" (click)="deletePasseport();">
+              Supprimer
+              <ion-icon name="close-circle-outline" slot="end"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+
+    <hr *ngIf="!user.preferences.passager" />
+    <ion-row *ngIf="!user.preferences.passager">
+      <ion-label class="font1">Mes véhicules</ion-label>
+      <ion-fab horizontal="end" *ngIf="user.vehicules.length < 3">
+        <ion-fab-button routerLink="/add-car">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-row>
+    <app-car-card *ngIf="!user.preferences.passager"
+                  [car1]="user.vehicules[0]"
+                  [car2]="user.vehicules[1]"
+                  [car3]="user.vehicules[2]"></app-car-card>
+  </ion-grid>
 </ion-content>
+
+<app-footer></app-footer>

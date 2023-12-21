@@ -71,21 +71,20 @@ export class LoginPage implements OnInit   {
 
   //Invité
   loginAno() {
-    this.signInAnonymously().then(
-      (userData) => {
-        //this.tokenStorage.user = userData;
-        //this.tokenStorage.method="Invite";
-        userModel.nom = "Invité";
-        userModel.imgUrl="https://static.vecteezy.com/system/resources/previews/009/507/522/original/blue-avatar-sign-semi-flat-color-icon-customer-profile-anonymous-guest-full-sized-item-on-white-network-simple-cartoon-style-illustration-for-web-graphic-design-and-animation-vector.jpg"
-        /*this.tokenStorage.userback = userModel;*/
-        this.router.navigate(['/rechercher-trajets']); 
-      }
-    ).catch(err => {
-      if (err) {
-        console.log(err)
-      }
-
-    })
+    //this.signInAnonymously().then(
+    //  (userData) => {
+    //    //this.tokenStorage.user = userData;
+    //    //this.tokenStorage.method="Invite";
+    //    userModel.nom = "Invité";
+    //    userModel.imgUrl = "../../assets/images/profil.png";
+    //    /*this.tokenStorage.userback = userModel;*/
+    //    this.router.navigate(['/rechercher-trajets']);
+    //  }
+    //).catch(err => {
+    //  if (err) {
+    //    console.log(err)
+    //  }
+    //});
   }
   private signInAnonymously() {
     return new Promise<any>((resolve, reject) => {
@@ -118,12 +117,12 @@ export class LoginPage implements OnInit   {
       this.method = "Google";
 
       //temp
-      this.uid = "uId2";
-      this.email = "user2@gmail.com";
-      this.img = "../../assets/images/profil.png";
-      this.prenom = "PUser2";
-      this.nom = "User2";
-      this.method = "Google";
+      //this.uid = "uId29";
+      //this.email = "user29@gmail.com";
+      //this.img = "../../assets/images/profil.png";
+      //this.prenom = "PUser29";
+      //this.nom = "User29";
+      //this.method = "Google";
 
       this.getUser(this.uid, this.email);
      }

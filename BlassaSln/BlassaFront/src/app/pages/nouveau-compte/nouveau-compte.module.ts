@@ -9,6 +9,7 @@ import { NouveauComptePageRoutingModule } from './nouveau-compte-routing.module'
 import { NouveauComptePage } from './nouveau-compte.page';
 
 import { MaskitoModule } from '@maskito/angular';
+import { SharedModule } from '../../components/shared.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MaskitoModule } from '@maskito/angular';
     IonicModule,
     NouveauComptePageRoutingModule,
     ReactiveFormsModule,
-    MaskitoModule
+    MaskitoModule,
+    SharedModule,
   ],
   declarations: [NouveauComptePage]
 })

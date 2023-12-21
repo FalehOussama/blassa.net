@@ -2,14 +2,12 @@
   <ion-img class="img" src="../../../assets/images/logo/blassaLogo.png" alt="Blassa Logo"></ion-img>
   <ion-img class="cover" src="../../../assets/images/Background/Header2.jpg" alt="Header"></ion-img>
 
-
-
-  <form style="margin: 20px;">
-    <app-button label='Mode Invité' (click)="loginAno()"></app-button>
+  <form style="margin: 20px; margin-top: 3rem;">
     <app-icon-button icon='logo-facebook' label='Se connecter avec Facebook' (click)="signInWithF()"></app-icon-button>
     <app-icon-button2 icon='logo-google' label='Se connecter avec Google' (click)="doLogin()"></app-icon-button2>
+    <app-button label='Mode Invité' (click)="loginAno()" [disabled]="true"></app-button>
   </form>
 
-  <p>V1.0.0.2-Rec - Véhicules</p>
-  <p>10/10/2023  10:00</p>
 </ion-content>
+
+<app-footer></app-footer>

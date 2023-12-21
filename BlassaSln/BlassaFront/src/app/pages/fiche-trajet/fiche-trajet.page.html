@@ -230,11 +230,13 @@
       </ion-row>
     </ion-grid>
   </ion-card>
-  
+
   <app-button label='Réserver' (click)="promptReserver()" *ngIf="user?.id != annonce?.userId || token?.method=='Invite'"> </app-button>
   <app-button *ngIf="user?.id == annonce?.userId" label='Voir réservations ({{annonce?.reservations?.length}})' (click)="openModal(true)"> </app-button>
 
 </ion-content>
+
+<app-footer></app-footer>
 
 <!-- pour conducteur -->
 <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)" mode="ios">
@@ -324,7 +326,7 @@
               <div *ngFor="let res of annonce?.reservations">
                 <ion-item style="width: 100%;" mode="ios" *ngIf="res.status ==2;">
                   <ion-img *ngIf="res.userRes.superUser" class="icon" style="position: absolute; z-index: 999; margin-top: 40px" src="../../../assets/images/medSuperUser.png"></ion-img>
-                  <ion-avatar  class="{{res.userRes?.verifie ? 'verifie' : 'nonVerifie'}}">
+                  <ion-avatar class="{{res.userRes?.verifie ? 'verifie' : 'nonVerifie'}}">
                     <img alt="Silhouette of a person's head" src={{res.userRes.imgUrl}} />
                   </ion-avatar>
                   <ion-label style="margin-left: 10px">

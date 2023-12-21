@@ -6,9 +6,8 @@
   <ion-label class="nombre">{{mesAnnonces?.length}} trajets en cours</ion-label>
 
   <app-annonce-item *ngFor="let annonce of mesAnnonces"
-            (click)="afficherFiche(annonce.id)"
-            [annonce]="annonce"
-  ></app-annonce-item>
+                    (click)="afficherFiche(annonce.id)"
+                    [annonce]="annonce"></app-annonce-item>
 
   <ion-accordion-group value="hist">
     <ion-accordion value="hist">
@@ -24,5 +23,6 @@
     </ion-accordion>
   </ion-accordion-group>
 
-
 </ion-content>
+
+<app-footer></app-footer>

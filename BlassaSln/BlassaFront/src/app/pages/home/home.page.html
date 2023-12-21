@@ -2,7 +2,7 @@
 <app-menu></app-menu>
 
 <ion-content appParralaxHeader [scrollEvents]="true" parallaxHeader="../../../assets/images/Background/header3.png"
-  [parallaxHeight]="120">
+             [parallaxHeight]="120">
 
   <ion-fab vertical="top" horizontal="end" style="margin-top: 80px;">
     <ion-fab-button id="filter-content">
@@ -12,7 +12,7 @@
 
   <div class="main" *ngIf="annonces?.length==0">
     <ion-title>
-      Aucune annonce 
+      Aucune annonce
     </ion-title>
   </div>
 
@@ -38,6 +38,7 @@
   </div>
 </ion-content>
 
+<app-footer></app-footer>
 
 <ion-modal trigger="filter-content" (didDismiss)="onDidDismiss($event)" mode="ios">
   <ng-template>
@@ -93,7 +94,7 @@
             </ion-item>
             <div class="ion-padding" slot="content">
               <!-- Heure content -->
-              <ion-radio-group  id="radio-heureDepart" value="{{trajetAnnonceCriteresDto.heureDepart}}" formControlName="heureDepart">
+              <ion-radio-group id="radio-heureDepart" value="{{trajetAnnonceCriteresDto.heureDepart}}" formControlName="heureDepart">
                 <ion-item>
                   <ion-radio value="0" justify="space-between">Tous</ion-radio>
                   <p style="margin-left: 10px; opacity: 0.5;">{{trajetsAnnoncesRechercheRetourDto.count}}</p>

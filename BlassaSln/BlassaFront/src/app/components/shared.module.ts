@@ -14,6 +14,7 @@ import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
 import { CreerAnnonceStepsComponent } from './creerAnnonce/creer-annonce-steps/creer-annonce-steps.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MenuComponent } from './menu/menu.component';
+import { FooterComponent } from './footer/footer.component';
 import { CarCardComponent } from './car-card/car-card.component';
 import { InviteComponent } from './invite/invite.component';
 import { RouterModule } from '@angular/router';
@@ -35,6 +36,7 @@ import { CommentaireItemComponent } from './commentaire-item/commentaire-item.co
     AvisCondComponent,
     CarCardComponent,
     MenuComponent,
+    FooterComponent,
     InputComponent,
     ButtonComponent,
     IconButtonComponent,
@@ -56,6 +58,7 @@ import { CommentaireItemComponent } from './commentaire-item/commentaire-item.co
     AvisCondComponent,
     CarCardComponent,
     MenuComponent,
+    FooterComponent,
     InputComponent,
     ButtonComponent,
     IconButtonComponent,

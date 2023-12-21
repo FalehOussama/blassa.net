@@ -2,7 +2,6 @@
 
 <ion-content class="ion-padding">
 
-
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -118,7 +117,7 @@
         <ion-item slot="header" color="light">
           <ion-label class="text">Ses véhicules</ion-label>
         </ion-item>
-        <div class="ion-padding" slot="content">          
+        <div class="ion-padding" slot="content">
           <ion-card *ngFor="let car of membre?.vehicules">
             <ion-card-header>
               <ion-card-title>{{car.marque}} - {{car.modele}}</ion-card-title>
@@ -175,3 +174,5 @@
   </ion-grid>
 
 </ion-content>
+
+<app-footer></app-footer>
