@@ -408,6 +408,20 @@ namespace BlassaApi.Controllers
             return Ok(trajetAnnonce);
         }
 
+        //GET : api/TrajetsAnnonces/User/5
+        [HttpGet("PrixMoyen/{depart}/{destination}")]
+        public async Task<ActionResult<double>> GetPrixMoyen(string depart, string destination)
+        {
+            if (_dbContext.TrajetsAnnonces == null)
+                return NotFound();
+            return await _dbContext.TrajetsAnnonces
+                .Where(t => t.Depart.ToUpper() == depart.ToUpper() &&
+                            t.Destination.ToUpper() == destination.ToUpper() &&
+                            t.DateHeureDepart >= DateTime.Now)
+                .Select(t => t.Prix)
+                .AverageAsync();
+        }
+
         //POST : api/TrajetAnnonce
         [HttpPost]
         public async Task<ActionResult<User>> PostTrajetAnnonce(TrajetAnnonce trajetAnnonce)

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Sim, SimCard } from '@jonz94/capacitor-sim';
 import { Geocoder } from 'ionic-native';
 import { StorageService } from 'src/app/services/storage.service';
+import { LocationService } from 'src/app/services/location.service';
 import { TrajetAnnonceCriteresDto } from '../../classes/trajetAnnonceCriteresDto';
 
 @Component({
@@ -21,8 +22,9 @@ export class RechercherTrajetsPage implements OnInit {
   constructor(
     private router: Router,
     public zone: NgZone,
-    private storage : StorageService,
-    public formBuilder: FormBuilder,
+    private storage: StorageService,
+    private locationService: LocationService,
+    public formBuilder: FormBuilder
   ) { 
     this.storage.get('user').then(
       async data => {
@@ -142,19 +144,7 @@ export class RechercherTrajetsPage implements OnInit {
   minusPa() {if (this.passagers > 0) this.passagers--; }
   //Fin
 
-  //Code Google Maps
-
-  SelectSearchResultDep(item) {
-    /////WE CAN CONFIGURE MORE COMPLEX FUNCTIONS SUCH AS UPLOAD DATA TO FIRESTORE OR LINK IT TO SOMETHING
-    //// alert(JSON.stringify(item))      
-    //this.placeid = item.place_id;
-    //this.recherche.value['depart']= item.structured_formatting["main_text"];
-    //this.depart = item.description
-    //this.autocompleteItemsDep = [];
-    //// this.getLatLngFromAddressDep(item.place_id);
-    //console.log(RechercherTrajetsPage.lonDep);
-}
-  
+  //Code Google Maps  
 
   SelectSearchResultDes(item) {   
     //this.dest=item.description
@@ -164,55 +154,47 @@ export class RechercherTrajetsPage implements OnInit {
     //this.lonDes = item;
     //this.latDes = item.latitude;
     //this.autocompleteItemsDes = [];
+
+    this.dest = item.city;
+    this.autocompleteItemsDes = [];
   }
 
 
   UpdateSearchResultsDes(){
-    //if (this.autocompleteDes.input == '') {
-    //  this.autocompleteItemsDes = [];
-    //  return;
-    //}
-    //this.GoogleAutocompleteDes.getPlacePredictions({ input: this.autocompleteDes.input },
-    //(predictions, status) => {
-    //  this.autocompleteItemsDes = [];
-    //  this.zone.run(() => {
-    //    predictions.forEach((prediction) => {
-    //      this.autocompleteItemsDes.push(prediction);
-    //    });
-    //  });
-    //});
+    this.autocompleteItemsDes = [];
+
+    if (this.dest.length < 2) {
+      return;
+    }
+
+    this.locationService.getDestination(this.dest).subscribe(
+      async (res) => {
+        this.autocompleteItemsDes = res;
+      }
+    );
   }
 
-  UpdateSearchResultsDep(){
-    //if (this.autocompleteDep.input == '') {
-    //  this.autocompleteItemsDep = [];
-    //  return;
-    //}
-    //this.GoogleAutocompleteDep.getPlacePredictions({ input: this.autocompleteDep.input },
-    //(predictions, status) => {
-    //  this.autocompleteItemsDep = [];
-    //  this.zone.run(() => {
-    //    predictions.forEach((prediction) => {
-    //      this.autocompleteItemsDep.push(prediction);
-    //    });
-    //  });
-    //});
+  async SelectSearchResultDep(item) {
+    /////WE CAN CONFIGURE MORE COMPLEX FUNCTIONS SUCH AS UPLOAD DATA TO FIRESTORE OR LINK IT TO SOMETHING
+    //// alert(JSON.stringify(item))
+    //this.placeid = item.place_id;
+    //this.recherche.value['depart']= item.structured_formatting["main_text"];
+    this.depart = item.city;
+    this.autocompleteItemsDep = [];
   }
-    
-  //  getLatLngFromAddressDep(place_Id : any ){
 
-  //   var geocoder = new google.maps.Geocoder();
-  
-  //   geocoder.geocode( { 'placeId': place_Id}, function(results, status) {
-  
-  //     if (status == google.maps.GeocoderStatus.OK) {
-  //       RechercherTrajetsPage.lonDep =results[0].geometry.location.lng();
-  //       RechercherTrajetsPage.latDep =results[0].geometry.location.lat();
-  
-  //     } else {
-  //       console.log("Geocode was not successful for the following reason: " + status);
-  //     }
-  //   });
+  async UpdateSearchResultsDep() {
+    this.autocompleteItemsDep = [];
 
-  // }
+    if (this.depart.length < 2) {
+      return;
+    }
+
+    this.locationService.getDepart(this.depart).subscribe(
+      async (res) => {
+        this.autocompleteItemsDep = res;
+      }
+    );
+  }
+
 }

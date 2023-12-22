@@ -22,6 +22,7 @@
     <None Remove="src\app\services\avi.service.ts" />
     <None Remove="src\app\services\aviConducteur.service.ts" />
     <None Remove="src\app\services\commentaire.service.ts" />
+    <None Remove="src\app\services\location.service.ts" />
     <None Remove="src\app\services\vehicule.service.ts" />
   </ItemGroup>
 
@@ -41,6 +42,7 @@
     <TypeScriptCompile Include="src\app\services\avi.service.ts" />
     <TypeScriptCompile Include="src\app\services\aviConducteur.service.ts" />
     <TypeScriptCompile Include="src\app\services\commentaire.service.ts" />
+    <TypeScriptCompile Include="src\app\services\location.service.ts" />
     <TypeScriptCompile Include="src\app\services\vehicule.service.ts" />
   </ItemGroup>
 

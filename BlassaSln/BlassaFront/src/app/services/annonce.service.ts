@@ -49,52 +49,8 @@ export class AnnonceService {
     return this.http.get<any>(this.baseUrl + "/UserReservationHis/" + id);
   }
 
-  //================================
-
-  getAnnonces(): Observable<any[]>{
-    return this.http.get<any[]>(`${this.baseUrl}` + "/allAnnonces");
-  }
-
-  getAll(params: any): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}` + "/pag/annonces", { params });
-  }
-
-  getAnnonceById(id: any): Observable<any> {
-    return this.http.get<any>(this.baseUrl + "/" + id);
-  }
-
-  rechercher(iduser:any , dep:any , des:any  , np:any , date:any) : Observable<any[]>{
-    return this.http.get<any[]>(this.baseUrl + "/Annonces/rechercher/" + iduser+ "/"+ dep +"/" + des +"/" + np +"/" + date);
-  }
-  rechercher2(dep:any , des:any  , np:any , date:any) : Observable<any[]>{
-    return this.http.get<any[]>(this.baseUrl + "/Annonces/rechercherHis/" + dep +"/" + des +"/" + np +"/" + date);
-  }
-
-
-  public saveAnnonce(prix : any ,depart :any ,destination : any ,lonDes : any , lonDep : any , latDes : any , latDep : any, id_User :any ,
-    date : any , nbrP : any ,climatisation:any , lourd :any , moyen : any , leger : any , cig : any , max2 : any , animal : any  , inst:any ,vehicule:any,filles:any , garcons:any , tous:any , pv:any , user:any  ) {
-    return this.http.post<any>(this.baseUrl + '/addAnnonce',{
-      "trajet" : { depart , destination , lonDes , lonDep , latDes , latDep}, 
-      "vehicule":vehicule,
-      "reservations":[],
-      "prix" : prix,
-      "nombrePlaces":nbrP,
-      "climatisation":climatisation,
-      "lourd":lourd,
-      "moyen":moyen,
-      "leger":leger,
-      "animal":animal,
-      "cigarette": cig,
-      "max2":max2,
-      "inst": inst,
-      "conducteur": user,
-      "date_Heure_Depart": date,
-      "iduser":id_User,
-      "filles":filles,
-      "garcons":garcons,
-      "tous":tous,
-      "profilVerife":pv
-    });
+  getPrixMoyen(depart: string, destination: string): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/PrixMoyen/" + depart + "/" + destination);
   }
 
 }

@@ -1,0 +1,1130 @@
+[
+  {
+    "city": "Tunis", 
+    "lat": "36.8064", 
+    "lng": "10.1817", 
+    "state": "Tunis"
+  }, 
+  {
+    "city": "Sidi Bouzid", 
+    "lat": "35.0381", 
+    "lng": "9.4858", 
+    "state": "Sidi Bouzid"
+ },
+  {
+    "city": "Sfax", 
+    "lat": "34.7400", 
+    "lng": "10.7600", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Sousse", 
+    "lat": "35.8333", 
+    "lng": "10.6333", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Kairouan", 
+    "lat": "35.6772", 
+    "lng": "10.1008", 
+    "state": "Kairouan"
+ },
+  {
+    "city": "Metouia", 
+    "lat": "33.9667", 
+    "lng": "10.0000", 
+    "state": "Gabes"
+ },
+  {
+    "city": "Kebili", 
+    "lat": "33.7050", 
+    "lng": "8.9650", 
+    "state": "Kebili"
+ },
+  {
+    "city": "Bizerte", 
+    "lat": "37.2778", 
+    "lng": "9.8639", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Sukrah", 
+    "lat": "36.8833", 
+    "lng": "10.2500", 
+    "state": "L’Ariana"
+ },
+  {
+    "city": "Gabes", 
+    "lat": "33.8833", 
+    "lng": "10.1167", 
+    "state": "Gabes"
+ },
+  {
+    "city": "Ariana", 
+    "lat": "36.8625", 
+    "lng": "10.1956", 
+    "state": "L’Ariana"
+ },
+  {
+    "city": "Sakiet ed Daier", 
+    "lat": "34.8000", 
+    "lng": "10.7800", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Jendouba", 
+    "lat": "36.5000", 
+    "lng": "8.7833", 
+    "state": "Jendouba"
+ },
+  {
+    "city": "Gafsa", 
+    "lat": "34.4167", 
+    "lng": "8.7833", 
+    "state": "Gafsa"
+ },
+  {
+    "city": "Msaken", 
+    "lat": "35.7333", 
+    "lng": "10.5833", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Medenine", 
+    "lat": "33.3547", 
+    "lng": "10.5053", 
+    "state": "Medenine"
+ },
+  {
+    "city": "Beja", 
+    "lat": "36.7333", 
+    "lng": "9.1833", 
+    "state": "Beja"
+ },
+  {
+    "city": "Kasserine", 
+    "lat": "35.1667", 
+    "lng": "8.8333", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "Monastir", 
+    "lat": "35.7694", 
+    "lng": "10.8194", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Rades", 
+    "lat": "36.7667", 
+    "lng": "10.2833", 
+    "state": "Ben Arous"
+ },
+  {
+    "city": "Hammamet", 
+    "lat": "36.4000", 
+    "lng": "10.6167", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Tataouine", 
+    "lat": "32.9306", 
+    "lng": "10.4500", 
+    "state": "Tataouine"
+ },
+  {
+    "city": "La Marsa", 
+    "lat": "36.8764", 
+    "lng": "10.3253", 
+    "state": "Tunis"
+ },
+  {
+    "city": "Ben Arous", 
+    "lat": "36.7472", 
+    "lng": "10.3333", 
+    "state": "Ben Arous"
+ },
+  {
+    "city": "Sakiet ez Zit", 
+    "lat": "34.8000", 
+    "lng": "10.7700", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Zarzis", 
+    "lat": "33.5000", 
+    "lng": "11.1167", 
+    "state": "Medenine"
+ },
+  {
+    "city": "Ben Gardane", 
+    "lat": "33.1389", 
+    "lng": "11.2167", 
+    "state": "Medenine"
+ },
+  {
+    "city": "Mahdia", 
+    "lat": "35.5000", 
+    "lng": "11.0667", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Houmt Souk", 
+    "lat": "33.8667", 
+    "lng": "10.8500", 
+    "state": "Medenine"
+ },
+  {
+    "city": "Fouchana", 
+    "lat": "36.7000", 
+    "lng": "10.1667", 
+    "state": "Ben Arous"
+ },
+  {
+    "city": "Le Kram", 
+    "lat": "36.8333", 
+    "lng": "10.3167", 
+    "state": "Tunis"
+ },
+  {
+    "city": "Le Bardo", 
+    "lat": "36.8092", 
+    "lng": "10.1406", 
+    "state": "Tunis"
+ },
+  {
+    "city": "El Kef", 
+    "lat": "36.1822", 
+    "lng": "8.7147", 
+    "state": "Kef"
+ },
+  {
+    "city": "El Hamma", 
+    "lat": "33.8864", 
+    "lng": "9.7951", 
+    "state": "Gabes"
+ },
+  {
+    "city": "Nabeul", 
+    "lat": "36.4542", 
+    "lng": "10.7347", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Djemmal", 
+    "lat": "35.6400", 
+    "lng": "10.7600", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Korba", 
+    "lat": "36.5667", 
+    "lng": "10.8667", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Menzel Temime", 
+    "lat": "36.7833", 
+    "lng": "10.9833", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Ghardimaou", 
+    "lat": "36.4500", 
+    "lng": "8.4333", 
+    "state": "Jendouba"
+ },
+  {
+    "city": "Midoun", 
+    "lat": "33.8000", 
+    "lng": "11.0000", 
+    "state": "Medenine"
+ },
+  {
+    "city": "Menzel Bourguiba", 
+    "lat": "37.1500", 
+    "lng": "9.7833", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Manouba", 
+    "lat": "36.8078", 
+    "lng": "10.1011", 
+    "state": "Manouba"
+ },
+  {
+    "city": "Kelibia", 
+    "lat": "36.8500", 
+    "lng": "11.1000", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Rass el Djebel", 
+    "lat": "37.2150", 
+    "lng": "10.1200", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Oued Lill", 
+    "lat": "36.8333", 
+    "lng": "10.0500", 
+    "state": "Manouba"
+ },
+  {
+    "city": "Moknine", 
+    "lat": "35.6333", 
+    "lng": "10.9000", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Bir Ali Ben Khalifa", 
+    "lat": "34.7339", 
+    "lng": "10.1000", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Kelaa Kebira", 
+    "lat": "35.8667", 
+    "lng": "10.5333", 
+    "state": "Sousse"
+ },
+  {
+    "city": "El Jem", 
+    "lat": "35.2967", 
+    "lng": "10.7128", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Tebourba", 
+    "lat": "36.8333", 
+    "lng": "9.8333", 
+    "state": "Manouba"
+ },
+  {
+    "city": "Ksar Hellal", 
+    "lat": "35.6429", 
+    "lng": "10.8911", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Douz", 
+    "lat": "33.4500", 
+    "lng": "9.0167", 
+    "state": "Kebili"
+ },
+  {
+    "city": "La Goulette", 
+    "lat": "36.8181", 
+    "lng": "10.3050", 
+    "state": "Tunis"
+ },
+  {
+    "city": "Jedeïda", 
+    "lat": "36.8333", 
+    "lng": "9.9167", 
+    "state": "Manouba"
+ },
+  {
+    "city": "Hammam Sousse", 
+    "lat": "35.8589", 
+    "lng": "10.5939", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Hammam-Lif", 
+    "lat": "36.7333", 
+    "lng": "10.3333", 
+    "state": "Ben Arous"
+ },
+  {
+    "city": "Sbiba", 
+    "lat": "35.5467", 
+    "lng": "9.0736", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "Soliman", 
+    "lat": "36.7000", 
+    "lng": "10.4833", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Tabarka", 
+    "lat": "36.9544", 
+    "lng": "8.7581", 
+    "state": "Jendouba"
+ },
+  {
+    "city": "Sejenane", 
+    "lat": "37.0564", 
+    "lng": "9.2383", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Metlaoui", 
+    "lat": "34.3333", 
+    "lng": "8.4000", 
+    "state": "Gafsa"
+ },
+  {
+    "city": "Teboulba", 
+    "lat": "35.6700", 
+    "lng": "10.9000", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Tozeur", 
+    "lat": "33.9167", 
+    "lng": "8.1333", 
+    "state": "Tozeur"
+ },
+  {
+    "city": "Beni Khiar", 
+    "lat": "36.4667", 
+    "lng": "10.7833", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Dar Chabanne", 
+    "lat": "36.4700", 
+    "lng": "10.7500", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Aïne Draham", 
+    "lat": "36.7833", 
+    "lng": "8.7000", 
+    "state": "Jendouba"
+ },
+  {
+    "city": "Bou Salem", 
+    "lat": "36.6167", 
+    "lng": "8.9667", 
+    "state": "Jendouba"
+ },
+  {
+    "city": "Ez Zahra", 
+    "lat": "36.7439", 
+    "lng": "10.3083", 
+    "state": "Ben Arous"
+ },
+  {
+    "city": "Kalaa Srira", 
+    "lat": "35.8236", 
+    "lng": "10.5583", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Skhira", 
+    "lat": "34.3006", 
+    "lng": "10.0708", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Akouda", 
+    "lat": "35.8714", 
+    "lng": "10.5697", 
+    "state": "Sousse"
+ },
+  {
+    "city": "El Ksar", 
+    "lat": "34.3900", 
+    "lng": "8.8000", 
+    "state": "Gafsa"
+ },
+  {
+    "city": "Mateur", 
+    "lat": "37.0400", 
+    "lng": "9.6650", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Siliana", 
+    "lat": "36.0819", 
+    "lng": "9.3747", 
+    "state": "Siliana"
+ },
+  {
+    "city": "Rhennouch", 
+    "lat": "33.9300", 
+    "lng": "10.0700", 
+    "state": "Gabes"
+ },
+  {
+    "city": "Dahmani", 
+    "lat": "35.9500", 
+    "lng": "8.8333", 
+    "state": "Kef"
+ },
+  {
+    "city": "El Alia", 
+    "lat": "37.1667", 
+    "lng": "10.0333", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Ar Rudayyif", 
+    "lat": "34.3833", 
+    "lng": "8.1500", 
+    "state": "Gafsa"
+ },
+  {
+    "city": "Megrine", 
+    "lat": "36.7667", 
+    "lng": "10.2333", 
+    "state": "Ben Arous"
+ },
+  {
+    "city": "Ksour Essaf", 
+    "lat": "35.4300", 
+    "lng": "10.9800", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Zaouiet Sousse", 
+    "lat": "35.7833", 
+    "lng": "10.6333", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Chebba", 
+    "lat": "35.2372", 
+    "lng": "11.1150", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Grombalia", 
+    "lat": "36.6000", 
+    "lng": "10.5000", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Ajim", 
+    "lat": "33.7167", 
+    "lng": "10.7500", 
+    "state": "Medenine"
+ },
+  {
+    "city": "Feriana", 
+    "lat": "34.9500", 
+    "lng": "8.5667", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "El Maknassi", 
+    "lat": "34.6042", 
+    "lng": "9.6056", 
+    "state": "Sidi Bouzid"
+ },
+  {
+    "city": "Beni Khalled", 
+    "lat": "36.6500", 
+    "lng": "10.6000", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Medjez el Bab", 
+    "lat": "36.6436", 
+    "lng": "9.6042", 
+    "state": "Beja"
+ },
+  {
+    "city": "Takelsa", 
+    "lat": "36.7833", 
+    "lng": "10.6333", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Tabursuq", 
+    "lat": "36.4572", 
+    "lng": "9.2483", 
+    "state": "Beja"
+ },
+  {
+    "city": "Ouardenine", 
+    "lat": "35.7200", 
+    "lng": "10.6700", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Moulares", 
+    "lat": "34.4833", 
+    "lng": "8.2667", 
+    "state": "Gafsa"
+ },
+  {
+    "city": "Nefta", 
+    "lat": "33.8833", 
+    "lng": "7.8833", 
+    "state": "Tozeur"
+ },
+  {
+    "city": "Carthage", 
+    "lat": "36.8528", 
+    "lng": "10.3233", 
+    "state": "Tunis"
+ },
+  {
+    "city": "Tinja", 
+    "lat": "37.1667", 
+    "lng": "9.7667", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Zaghouan", 
+    "lat": "36.4000", 
+    "lng": "10.1500", 
+    "state": "Zaghouan"
+ },
+  {
+    "city": "Sbeitla", 
+    "lat": "35.2297", 
+    "lng": "9.1294", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "La Mornaghia", 
+    "lat": "36.7667", 
+    "lng": "10.0167", 
+    "state": "Manouba"
+ },
+  {
+    "city": "Rhar el Melah", 
+    "lat": "37.1667", 
+    "lng": "10.1833", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Tajerouine", 
+    "lat": "35.8833", 
+    "lng": "8.5500", 
+    "state": "Kef"
+ },
+  {
+    "city": "Menzel Abderhaman", 
+    "lat": "37.2300", 
+    "lng": "9.8600", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Mennzel Bou Zelfa", 
+    "lat": "36.6817", 
+    "lng": "10.5847", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Galaat el Andeless", 
+    "lat": "37.0625", 
+    "lng": "10.1183", 
+    "state": "L’Ariana"
+ },
+  {
+    "city": "Bekalta", 
+    "lat": "35.6167", 
+    "lng": "11.0000", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Mareth", 
+    "lat": "33.6333", 
+    "lng": "10.3000", 
+    "state": "Gabes"
+ },
+  {
+    "city": "Ghomrassen", 
+    "lat": "33.0592", 
+    "lng": "10.3400", 
+    "state": "Tataouine"
+ },
+  {
+    "city": "Mahires", 
+    "lat": "34.5333", 
+    "lng": "10.5000", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Goubellat", 
+    "lat": "36.5333", 
+    "lng": "9.6667", 
+    "state": "Beja"
+ },
+  {
+    "city": "Bennane", 
+    "lat": "35.6833", 
+    "lng": "10.8333", 
+    "state": "Monastir"
+ },
+  {
+    "city": "El Guetar", 
+    "lat": "34.3372", 
+    "lng": "8.9528", 
+    "state": "Gafsa"
+ },
+  {
+    "city": "Thala", 
+    "lat": "35.5667", 
+    "lng": "8.6667", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "Hammam el Ghezez", 
+    "lat": "36.8900", 
+    "lng": "11.1200", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Testour", 
+    "lat": "36.5500", 
+    "lng": "9.4500", 
+    "state": "Beja"
+ },
+  {
+    "city": "Bou Arada", 
+    "lat": "36.3500", 
+    "lng": "9.6167", 
+    "state": "Siliana"
+ },
+  {
+    "city": "Ksibet el Mediouni", 
+    "lat": "35.6900", 
+    "lng": "10.8500", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Maktar", 
+    "lat": "35.8606", 
+    "lng": "9.2058", 
+    "state": "Siliana"
+ },
+  {
+    "city": "Messadine", 
+    "lat": "35.7619", 
+    "lng": "10.5953", 
+    "state": "Sousse"
+ },
+  {
+    "city": "M’dhilla", 
+    "lat": "34.2500", 
+    "lng": "8.7500", 
+    "state": "Gafsa"
+ },
+  {
+    "city": "Seïada", 
+    "lat": "35.6700", 
+    "lng": "10.9000", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Wadhraf", 
+    "lat": "33.9833", 
+    "lng": "9.9667", 
+    "state": "Gabes"
+ },
+  {
+    "city": "Bou Arkoub", 
+    "lat": "36.5400", 
+    "lng": "10.5500", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "As Sars", 
+    "lat": "36.0833", 
+    "lng": "9.0167", 
+    "state": "Kef"
+ },
+  {
+    "city": "Zriba-Village", 
+    "lat": "36.3333", 
+    "lng": "10.2500", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Bou Merdes", 
+    "lat": "35.4500", 
+    "lng": "10.7333", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Er Regueb", 
+    "lat": "34.8667", 
+    "lng": "9.7833", 
+    "state": "Sidi Bouzid"
+ },
+  {
+    "city": "Sidi Tabet", 
+    "lat": "36.9139", 
+    "lng": "10.0361", 
+    "state": "L’Ariana"
+ },
+  {
+    "city": "Enfida", 
+    "lat": "36.1353", 
+    "lng": "10.3808", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Rejiche", 
+    "lat": "35.4667", 
+    "lng": "11.0333", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Ousseltia", 
+    "lat": "35.8400", 
+    "lng": "9.5800", 
+    "state": "Kairouan"
+ },
+  {
+    "city": "Hajeb el Aïoun", 
+    "lat": "35.3900", 
+    "lng": "9.5400", 
+    "state": "Kairouan"
+ },
+  {
+    "city": "Sidi Bou Ali", 
+    "lat": "35.9561", 
+    "lng": "10.4722", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Gafour", 
+    "lat": "36.3400", 
+    "lng": "9.3200", 
+    "state": "Siliana"
+ },
+  {
+    "city": "Remada", 
+    "lat": "32.3061", 
+    "lng": "10.3822", 
+    "state": "Tataouine"
+ },
+  {
+    "city": "Khunays", 
+    "lat": "35.7122", 
+    "lng": "10.8167", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Jerissa", 
+    "lat": "35.8500", 
+    "lng": "8.6333", 
+    "state": "Kef"
+ },
+  {
+    "city": "El Haouaria", 
+    "lat": "37.0500", 
+    "lng": "11.0167", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Agareb", 
+    "lat": "34.7414", 
+    "lng": "10.5280", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Menzel Kamel", 
+    "lat": "35.6333", 
+    "lng": "10.6667", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Tazarka", 
+    "lat": "36.5500", 
+    "lng": "10.8333", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Harqalah", 
+    "lat": "36.0333", 
+    "lng": "10.5000", 
+    "state": "Sousse"
+ },
+  {
+    "city": "Beni Hassane", 
+    "lat": "35.5700", 
+    "lng": "10.8200", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Haffouz", 
+    "lat": "35.6333", 
+    "lng": "9.6833", 
+    "state": "Kairouan"
+ },
+  {
+    "city": "Khledia", 
+    "lat": "36.6400", 
+    "lng": "10.1900", 
+    "state": "Ben Arous"
+ },
+  {
+    "city": "Sbikha", 
+    "lat": "35.9333", 
+    "lng": "10.0167", 
+    "state": "Kairouan"
+ },
+  {
+    "city": "El Maamoura", 
+    "lat": "36.4667", 
+    "lng": "10.8000", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Degache", 
+    "lat": "33.9833", 
+    "lng": "8.2167", 
+    "state": "Tozeur"
+ },
+  {
+    "city": "Zaouiat Djedidi", 
+    "lat": "36.6500", 
+    "lng": "10.5833", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Sidi Alouane", 
+    "lat": "35.3833", 
+    "lng": "10.9333", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Hencha", 
+    "lat": "35.1229", 
+    "lng": "10.7415", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Mezzouna", 
+    "lat": "34.5833", 
+    "lng": "9.8333", 
+    "state": "Sidi Bouzid"
+ },
+  {
+    "city": "El Metline", 
+    "lat": "37.2500", 
+    "lng": "10.0500", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Touza", 
+    "lat": "35.6300", 
+    "lng": "10.8300", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Djebeniana", 
+    "lat": "35.0308", 
+    "lng": "10.9039", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Es Somaa", 
+    "lat": "36.5500", 
+    "lng": "10.7833", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Mellouleche", 
+    "lat": "35.1667", 
+    "lng": "11.0333", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Zaouiet Kountech", 
+    "lat": "35.5833", 
+    "lng": "10.7167", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Bir el Hafey", 
+    "lat": "34.9333", 
+    "lng": "9.2000", 
+    "state": "Sidi Bouzid"
+ },
+  {
+    "city": "Borj Mejen Bel Abbes", 
+    "lat": "34.7500", 
+    "lng": "8.5222", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "El Battan", 
+    "lat": "36.8167", 
+    "lng": "9.8333", 
+    "state": "Manouba"
+ },
+  {
+    "city": "Sakiet Sidi Youssef", 
+    "lat": "36.2237", 
+    "lng": "8.3561", 
+    "state": "Kef"
+ },
+  {
+    "city": "Bodeur", 
+    "lat": "35.6800", 
+    "lng": "10.8600", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Jemna", 
+    "lat": "33.5833", 
+    "lng": "9.0167", 
+    "state": "Kebili"
+ },
+  {
+    "city": "Thelepte", 
+    "lat": "34.9758", 
+    "lng": "8.5939", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "Jilma", 
+    "lat": "35.2667", 
+    "lng": "9.4333", 
+    "state": "Sidi Bouzid"
+ },
+  {
+    "city": "Sidi Bou Saïd", 
+    "lat": "36.8667", 
+    "lng": "10.3333", 
+    "state": "Tunis"
+ },
+  {
+    "city": "Lemta", 
+    "lat": "35.6754", 
+    "lng": "10.8807", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Chorbane", 
+    "lat": "35.2833", 
+    "lng": "10.3833", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "El Ksour", 
+    "lat": "35.8983", 
+    "lng": "8.8806", 
+    "state": "Kef"
+ },
+  {
+    "city": "Nibbar", 
+    "lat": "36.2997", 
+    "lng": "8.7683", 
+    "state": "Kef"
+ },
+  {
+    "city": "Souassi", 
+    "lat": "35.3447", 
+    "lng": "10.5483", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Menzel Heurr", 
+    "lat": "36.7333", 
+    "lng": "10.9500", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Zarat", 
+    "lat": "33.6700", 
+    "lng": "10.3500", 
+    "state": "Gabes"
+ },
+  {
+    "city": "Mesdour", 
+    "lat": "35.6800", 
+    "lng": "10.7800", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Rohia", 
+    "lat": "35.6500", 
+    "lng": "9.0500", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "Fernana", 
+    "lat": "36.6500", 
+    "lng": "8.7000", 
+    "state": "Jendouba"
+ },
+  {
+    "city": "Sidi Ben Nour", 
+    "lat": "35.5300", 
+    "lng": "10.9100", 
+    "state": "Monastir"
+ },
+  {
+    "city": "Dehiba", 
+    "lat": "32.0167", 
+    "lng": "10.7000", 
+    "state": "Tataouine"
+ },
+  {
+    "city": "El Mida", 
+    "lat": "36.7333", 
+    "lng": "10.8500", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Aousdja", 
+    "lat": "37.1422", 
+    "lng": "10.1022", 
+    "state": "Bizerte"
+ },
+  {
+    "city": "Tourki", 
+    "lat": "36.5748", 
+    "lng": "10.5158", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Korbous", 
+    "lat": "36.8167", 
+    "lng": "10.5667", 
+    "state": "Nabeul"
+ },
+  {
+    "city": "Salakta", 
+    "lat": "35.4000", 
+    "lng": "11.0500", 
+    "state": "Mahdia"
+ },
+  {
+    "city": "Sidi Bou Rouis", 
+    "lat": "36.1667", 
+    "lng": "9.1167", 
+    "state": "Siliana"
+ },
+  {
+    "city": "Ghraiba", 
+    "lat": "34.5000", 
+    "lng": "10.2167", 
+    "state": "Sfax"
+ },
+  {
+    "city": "Haïdra", 
+    "lat": "35.5667", 
+    "lng": "8.4667", 
+    "state": "Kasserine"
+ },
+  {
+    "city": "Beni Kheddache", 
+    "lat": "33.2514", 
+    "lng": "10.1994", 
+    "state": "Medenine"
+ },
+  {
+    "city": "El Aroussa", 
+    "lat": "36.3833", 
+    "lng": "9.4500", 
+    "state": "Siliana"
+ },
+  {
+    "city": "Sidi el Hani", 
+    "lat": "35.6667", 
+    "lng": "10.3167", 
+    "state": "Sousse"
+  }
+]

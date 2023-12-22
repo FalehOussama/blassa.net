@@ -19,7 +19,7 @@
 
             <ion-list [hidden]="autocompleteItemsDep.length == 0">
               <ion-item *ngFor="let item of autocompleteItemsDep" tappable (click)="SelectSearchResultDep(item)">
-                {{ item.description }}
+                {{ item.city }}
               </ion-item>
             </ion-list>
 
@@ -30,7 +30,7 @@
 
             <ion-list [hidden]="autocompleteItemsDes.length == 0">
               <ion-item *ngFor="let item of autocompleteItemsDes" tappable (click)="SelectSearchResultDes(item)">
-                {{ item.description }}
+                {{ item.city }}
               </ion-item>
             </ion-list>
 

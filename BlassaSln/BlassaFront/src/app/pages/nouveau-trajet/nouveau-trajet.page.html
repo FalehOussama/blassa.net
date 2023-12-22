@@ -20,27 +20,27 @@
   <ion-card class="trajetCard">
     <ion-grid>
       <ion-row>
-        <ion-item lines="none">
+        <ion-item lines="none" style="width: 100%">
           <ion-input [(ngModel)]="trajetAnnonce.depart" class="text" placeholder="Depart" value="{{trajetAnnonce.depart}}" (ionInput)="UpdateSearchResultsDep()"></ion-input>
           <ion-icon name="locate-outline" slot="start" style="color: rgb(89, 89, 233);"></ion-icon>
         </ion-item>
 
-        <ion-list [hidden]="autocompleteItemsDep.length == 0">
+        <ion-list [hidden]="autocompleteItemsDep.length == 0" style="width: 100%">
           <ion-item *ngFor="let item of autocompleteItemsDep" tappable (click)="SelectSearchResultDep(item)">
-            {{ item.description }}
+            {{ item.city }}
           </ion-item>
         </ion-list>
       </ion-row>
 
       <ion-row>
-        <ion-item lines="none">
+        <ion-item lines="none" style="width: 100%">
           <ion-input [(ngModel)]="trajetAnnonce.destination" class="text" placeholder="Destination" value="{{trajetAnnonce.destination}}" (ionInput)="UpdateSearchResultsDes()"></ion-input>
           <ion-icon name="location-outline" slot="start" style="color: rgb(206, 72, 72);"></ion-icon>
         </ion-item>
 
-        <ion-list [hidden]="autocompleteItemsDes.length == 0">
+        <ion-list [hidden]="autocompleteItemsDes.length == 0" style="width: 100%">
           <ion-item *ngFor="let item of autocompleteItemsDes" tappable (click)="SelectSearchResultDes(item)">
-            {{ item.description }}
+            {{ item.city }}
           </ion-item>
         </ion-list>
       </ion-row>
@@ -80,6 +80,12 @@
             <ion-icon name="remove-circle-outline" style="color:blue;" (click)="minusPrix()" slot="end"></ion-icon>
             <ion-input type="number" placeholder="{{trajetAnnonce.prix}}" slot="end" style="color:blue; width: 60px; font-size: 2rem; text-align: center;" [(ngModel)]="trajetAnnonce.prix"></ion-input>
             <ion-icon name="add-circle-outline" style="color:blue;" (click)="plusPrix()" slot="end"></ion-icon>
+          </ion-item>
+        </ion-col>
+
+        <ion-col *ngIf="prixMoyen > 0" pull-sm="6" size="auto" style="align-content: center;">
+          <ion-item mode="ios" lines="none">
+            <ion-chip style="width: 100%" color="success" (click)="setPrixMoyen()">Prix moyen pour les trajets semblables: {{prixMoyen}}</ion-chip>
           </ion-item>
         </ion-col>
       </ion-row>

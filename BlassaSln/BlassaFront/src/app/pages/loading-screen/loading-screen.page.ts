@@ -40,24 +40,24 @@ export class LoadingScreenPage implements OnInit , OnDestroy{
     if(this.methodId == 1){
       console.log(this.methodId);
       this.uid = this.route.snapshot.paramMap.get('id');
-      this.userService.getUserByUid(this.uid).subscribe(
-        res=>{
-          console.log(res);
-          this.tokenStorage.userback = res;
-          if(res.conditionsGenerales==true){this.router.navigate(['/rechercher-trajets']);}
-          else{this.router.navigate(['/gc']);}
-        }
-      );
+      //this.userService.getUserByUid(this.uid).subscribe(
+      //  res=>{
+      //    console.log(res);
+      //    this.tokenStorage.userback = res;
+      //    if(res.conditionsGenerales==true){this.router.navigate(['/rechercher-trajets']);}
+      //    else{this.router.navigate(['/gc']);}
+      //  }
+      //);
       this.methodId = this.route.snapshot.paramMap.get('0');
     
     }
     else if(this.methodId == 2){
       console.log(this.methodId);
       this.annonceId = this.route.snapshot.paramMap.get('id');
-      this.annonceService.getAnnonceById(this.annonceId).subscribe(data => {
-        this.storedAnnonce.annonce= data;
-        this.router.navigate(['/tablinks/fiche-trajet']);
-      });
+      //this.annonceService.getAnnonceById(this.annonceId).subscribe(data => {
+      //  this.storedAnnonce.annonce= data;
+      //  this.router.navigate(['/tablinks/fiche-trajet']);
+      //});
     }
     // else if(this.methodId == 0){
     //   this.router.navigate(['/rechercher-trajets']);

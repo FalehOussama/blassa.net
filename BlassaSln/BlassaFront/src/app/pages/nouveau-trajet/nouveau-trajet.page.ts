@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { UserService } from 'src/app/services/user.service';
 import { VehiculeService } from '../../services/vehicule.service';
+import { LocationService } from 'src/app/services/location.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { TrajetAnnonce } from '../../classes/trajetAnnonce';
 import { Vehicule } from '../../classes/vehicule';
@@ -29,6 +30,7 @@ export class NouveauTrajetPage implements OnInit  {
   newVehicule: Vehicule = new Vehicule();
   today: String = this.toIsoString(new Date());
   etape: number;
+  prixMoyen: number;
   /************************** */
 
   static lonDep: any;
@@ -42,6 +44,7 @@ export class NouveauTrajetPage implements OnInit  {
     private annonceService : AnnonceService,
     private userService: UserService,
     private vehiculeService: VehiculeService,
+    private locationService: LocationService,
     private storage : StorageService,
     private blassaAlert: BlassaAlertComponent
   ) {
@@ -101,7 +104,7 @@ export class NouveauTrajetPage implements OnInit  {
     this.trajetAnnonce.dateHeureDepart = new Date();
     this.trajetAnnonce.dateHeureDepartStr = this.toIsoString(this.trajetAnnonce.dateHeureDepart);
     this.trajetAnnonce.nombrePlaces = 3;
-    this.trajetAnnonce.prix = 0;
+    this.trajetAnnonce.prix = 5;
     this.etape = 1;
     this.ngOnInit();
   }
@@ -212,27 +215,29 @@ export class NouveauTrajetPage implements OnInit  {
 
   SelectSearchResultDep(item) {
     ///WE CAN CONFIGURE MORE COMPLEX FUNCTIONS SUCH AS UPLOAD DATA TO FIRESTORE OR LINK IT TO SOMETHING
-    // alert(JSON.stringify(item))      
+    // alert(JSON.stringify(item))
     //this.placeid = item.place_id
     //this.depart= item.description
     //this.autocompleteItemsDep = [];
     //this.getLatLngFromAddressDep(this.placeid);
+    this.trajetAnnonce.depart = item.city;
+    this.autocompleteItemsDep = [];
+    this.getPrixMoyen();
   }
 
   UpdateSearchResultsDep() {
-    //if (this.autocompleteDep.input == '') {
-    //  this.autocompleteItemsDep = [];
-    //  return;
-    //}
-    //this.GoogleAutocompleteDep.getPlacePredictions({ input: this.autocompleteDep.input },
-    //(predictions, status) => {
-    //  this.autocompleteItemsDep = [];
-    //  this.zone.run(() => {
-    //    predictions.forEach((prediction) => {
-    //      this.autocompleteItemsDep.push(prediction);
-    //    });
-    //  });
-    //});
+    this.autocompleteItemsDep = [];
+
+    if (this.trajetAnnonce.depart.length < 2) {
+      return;
+    }
+
+    this.locationService.get(this.trajetAnnonce.depart).subscribe(
+      async (res) => {
+        this.autocompleteItemsDep = res;
+      }
+    );
+    this.getPrixMoyen();
   }
 
   getLatLngFromAddressDes(place_Id : any){
@@ -250,28 +255,50 @@ export class NouveauTrajetPage implements OnInit  {
 
   SelectSearchResultDes(item) {
     ///WE CAN CONFIGURE MORE COMPLEX FUNCTIONS SUCH AS UPLOAD DATA TO FIRESTORE OR LINK IT TO SOMETHING
-    // alert(JSON.stringify(item))      
+    // alert(JSON.stringify(item))
     //this.placeid = item.place_id
     //this.destination= item.description
     //this.autocompleteItemsDes = [];
 
     //this.getLatLngFromAddressDes(this.placeid);
+
+    this.trajetAnnonce.destination = item.city;
+    this.autocompleteItemsDes = [];
+    this.getPrixMoyen();
   }
   
   UpdateSearchResultsDes(){
-    //if (this.autocompleteDes.input == '') {
-    //  this.autocompleteItemsDes = [];
-    //  return;
-    //}
-    //this.GoogleAutocompleteDes.getPlacePredictions({ input: this.autocompleteDes.input },
-    //(predictions, status) => {
-    //  this.autocompleteItemsDes = [];
-    //  this.zone.run(() => {
-    //    predictions.forEach((prediction) => {
-    //      this.autocompleteItemsDes.push(prediction);
-    //    });
-    //  });
-    //});
+    this.autocompleteItemsDep = [];
+
+    if (this.trajetAnnonce.destination.length < 2) {
+      return;
+    }
+
+    this.locationService.get(this.trajetAnnonce.destination).subscribe(
+      async (res) => {
+        this.autocompleteItemsDes = res;
+      }
+    );
+    this.getPrixMoyen();
+  }
+
+  getPrixMoyen() {
+    this.prixMoyen = 0;
+    if (!this.trajetAnnonce.depart || !this.trajetAnnonce.destination)
+      return;
+
+    this.annonceService.getPrixMoyen(this.trajetAnnonce.depart, this.trajetAnnonce.destination).subscribe(
+      async (value: number) => {
+        this.prixMoyen = value;
+      },
+      async (err) => {
+        
+      }
+    );
+  }
+
+  setPrixMoyen() {
+    this.trajetAnnonce.prix = parseInt(this.prixMoyen.toString());
   }
     
   validationTrajet(){
