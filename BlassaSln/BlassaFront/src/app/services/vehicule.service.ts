@@ -23,6 +23,10 @@ export class VehiculeService {
     return this.http.get<any>(this.baseUrl + "/User/" + uid);
   }
 
+  public getMarques(marque: string): Observable<any> {
+    return this.http.get<any>(this.baseUrl + "/Json/" + marque);
+  }
+
   public post(vehicule: Vehicule) {
     return this.http.post<Vehicule>(this.baseUrl, vehicule);
   }

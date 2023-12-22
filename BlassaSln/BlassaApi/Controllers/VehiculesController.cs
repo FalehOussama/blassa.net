@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BlassaApi.Models;
+using BlassaApi.Dto;
+using Newtonsoft.Json;
 
 namespace BlassaApi.Controllers
 {
@@ -9,6 +11,7 @@ namespace BlassaApi.Controllers
     public class VehiculesController : Controller
     {
         private const int Limit = 3;
+        private static List<CarBrandModels>? _Cars = null;
         private readonly BlassaContext _dbContext;
 
         public VehiculesController(BlassaContext dbContext)
@@ -41,6 +44,17 @@ namespace BlassaApi.Controllers
                 return NotFound();
 
             return Ok(vehicule);
+        }
+
+        //GET : api/Vehicules/json/audi
+        [HttpGet("Json/{marque}")]
+        public async Task<ActionResult<IEnumerable<CarBrandModels>>> GetVehiculeMarques(string marque)
+        {
+            this.LoadCarsJson();
+            return _Cars
+                .Where(c => c.Brand != null && c.Brand.ToUpper().Contains(marque.ToUpper()))
+                .OrderBy(l => l.Brand)
+                .ToList();
         }
 
         //POST : api/Vehicules
@@ -159,6 +173,18 @@ namespace BlassaApi.Controllers
         private bool VehiculeCanAdd(int idUser)
         { 
             return _dbContext.Vehicules.Count(u => u.UserId == idUser) < Limit;
+        }
+
+        private void LoadCarsJson()
+        {
+            if (_Cars == null)
+            {
+                using (StreamReader r = new StreamReader("./Data/car-list.json"))
+                {
+                    string json = r.ReadToEnd();
+                    _Cars = JsonConvert.DeserializeObject<List<CarBrandModels>>(json);
+                }
+            }
         }
     }
 }

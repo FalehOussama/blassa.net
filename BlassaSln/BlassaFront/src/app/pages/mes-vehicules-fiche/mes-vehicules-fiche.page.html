@@ -62,7 +62,12 @@
         <ion-card-content>
           <form #vehiculeForm="ngForm">
 
-            <ion-input class="textInput" label="Marque" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="vehicule.marque" name="marque" #marque="ngModel" required minlength="3"></ion-input>
+            <ion-input class="textInput" label="Marque" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="vehicule.marque" (ionInput)="UpdateSearchResultsMarques()" name="marque" #marque="ngModel" required minlength="3"></ion-input>
+            <ion-list [hidden]="autoCompleteMarques.length == 0" style="width: 100%">
+              <ion-item *ngFor="let item of autoCompleteMarques" tappable (click)="SelectSearchResultMarque(item)">
+                {{ item.brand }}
+              </ion-item>
+            </ion-list>
             <div *ngIf="marque.invalid && (marque.dirty || marque.touched)" class="alert">
               <ul>
                 <li *ngIf="marque.errors?.['required']">Marque est obligatoire.</li>
@@ -70,11 +75,16 @@
               </ul>
             </div>
             <hr />
-            <ion-input class="textInput" label="Modèle" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="vehicule.modele" name="modele" #modele="ngModel" required minlength="3"></ion-input>
+            <ion-input class="textInput" label="Modèle" label-placement="floating" fill="outline" placeholder="Enter text" [(ngModel)]="vehicule.modele" (ionInput)="UpdateSearchResultsModels()" name="modele" #modele="ngModel" required minlength="2"></ion-input>
+            <ion-list [hidden]="autoCompleteModels.length == 0" style="width: 100%">
+              <ion-item *ngFor="let item of autoCompleteModels" tappable (click)="SelectSearchResultModel(item)">
+                {{ item }}
+              </ion-item>
+            </ion-list>
             <div *ngIf="modele.invalid && (modele.dirty || modele.touched)" class="alert">
               <ul>
                 <li *ngIf="modele.errors?.['required']">Modèle est obligatoire.</li>
-                <li *ngIf="modele.errors?.['minlength']">Modèle de longeur 3 min.</li>
+                <li *ngIf="modele.errors?.['minlength']">Modèle de longeur 2 min.</li>
               </ul>
             </div>
 

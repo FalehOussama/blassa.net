@@ -28,6 +28,9 @@ export class NouveauTrajetPage implements OnInit  {
   vehiculeSelect: any;
   vehiculeSelectId: any;
   newVehicule: Vehicule = new Vehicule();
+  autoCompleteMarques: any[];
+  autoCompleteModels: any[];
+  carModels: any[];
   today: String = this.toIsoString(new Date());
   etape: number;
   prixMoyen: number;
@@ -55,6 +58,10 @@ export class NouveauTrajetPage implements OnInit  {
     //this.GoogleAutocompleteDes = new google.maps.places.AutocompleteService();
     //this.autocompleteDes = { input: '' };
     this.autocompleteItemsDes = [];
+
+    this.autoCompleteMarques = [];
+    this.autoCompleteModels = [];
+    this.carModels = [];
   }
 
   async ionViewWillEnter(){
@@ -299,6 +306,44 @@ export class NouveauTrajetPage implements OnInit  {
 
   setPrixMoyen() {
     this.trajetAnnonce.prix = parseInt(this.prixMoyen.toString());
+  }
+
+  SelectSearchResultModel(item) {
+    this.newVehicule.modele = item;
+    this.autoCompleteModels = [];
+  }
+
+  UpdateSearchResultsModels() {
+    this.autoCompleteModels = [];
+
+    if (this.newVehicule.modele.length < 1) {
+      return;
+    }
+
+    let PATTERN = this.newVehicule.modele.toUpperCase();
+    this.autoCompleteModels = this.carModels.filter(function (str) { return str.toUpperCase().indexOf(PATTERN) > -1; });
+  }
+
+  SelectSearchResultMarque(item) {
+    this.newVehicule.marque = item.brand;
+    this.autoCompleteMarques = [];
+    this.carModels = item.models;
+  }
+
+  UpdateSearchResultsMarques() {
+    this.autoCompleteMarques = [];
+
+    if (this.newVehicule.marque.length < 2) {
+      return;
+    }
+
+    this.vehiculeService.getMarques(this.newVehicule.marque).subscribe(
+      async (res) => {
+        this.autoCompleteMarques = res;
+        if (this.autoCompleteMarques.length == 1)
+          this.carModels = this.autoCompleteMarques[0].models;
+      }
+    );
   }
     
   validationTrajet(){

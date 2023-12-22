@@ -135,13 +135,23 @@
           <ion-item>
             <ion-icon name="car-outline" slot="start"></ion-icon>
             <ion-label class="text" position="floating">Marque</ion-label>
-            <ion-input [(ngModel)]="newVehicule.marque" name="marque" #marque="ngModel" required minlength="3" class="text"></ion-input>
+            <ion-input [(ngModel)]="newVehicule.marque" (ionInput)="UpdateSearchResultsMarques()" name="marque" #marque="ngModel" required minlength="3" class="text"></ion-input>
           </ion-item>
+          <ion-list [hidden]="autoCompleteMarques.length == 0" style="width: 100%">
+            <ion-item *ngFor="let item of autoCompleteMarques" tappable (click)="SelectSearchResultMarque(item)">
+              {{ item.brand }}
+            </ion-item>
+          </ion-list>
           <ion-item>
             <ion-icon name="car-outline" slot="start"></ion-icon>
             <ion-label class="text" position="floating">Modèle</ion-label>
-            <ion-input [(ngModel)]="newVehicule.modele" name="modele" #modele="ngModel" required minlength="3" class="text"></ion-input>
+            <ion-input [(ngModel)]="newVehicule.modele" (ionInput)="UpdateSearchResultsModels()" name="modele" #modele="ngModel" required minlength="3" class="text"></ion-input>
           </ion-item>
+          <ion-list [hidden]="autoCompleteModels.length == 0" style="width: 100%">
+            <ion-item *ngFor="let item of autoCompleteModels" tappable (click)="SelectSearchResultModel(item)">
+              {{ item }}
+            </ion-item>
+          </ion-list>
           <ion-item>
             <ion-icon name="car-outline" slot="start"></ion-icon>
             <ion-label class="text" position="floating">Matricule</ion-label>

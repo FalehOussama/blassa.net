@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlassaApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+794847306c4cd6e187bcc237bd1443095b34817d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9610e1b5f2d36dc2308048b0481beb9e7876bd5b")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlassaApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlassaApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

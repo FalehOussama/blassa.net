@@ -19,6 +19,9 @@ export class MesVehiculesFichePage implements OnInit {
   idVehicule: any;
   vehicule: Vehicule = new Vehicule();
   isEdit: boolean = false;
+  autoCompleteMarques: any[];
+  autoCompleteModels: any[];
+  carModels: any[];
   typeVehicules: string[] = [
     "COMPACTE",
     "BERLINE",
@@ -66,7 +69,11 @@ export class MesVehiculesFichePage implements OnInit {
     private vehiculeService: VehiculeService,
     private storage: StorageService,
     private blassaAlert: BlassaAlertComponent)
-  { }
+  {
+    this.autoCompleteMarques = [];
+    this.autoCompleteModels = [];
+    this.carModels = [];
+  }
 
   ionViewWillEnter() {
 
@@ -104,6 +111,44 @@ export class MesVehiculesFichePage implements OnInit {
   }
 
   ngOnInit() { }
+
+  SelectSearchResultModel(item) {
+    this.vehicule.modele = item;
+    this.autoCompleteModels = [];
+  }
+
+  UpdateSearchResultsModels() {
+    this.autoCompleteModels = [];
+
+    if (this.vehicule.modele.length < 1) {
+      return;
+    }
+
+    let PATTERN = this.vehicule.modele.toUpperCase();
+    this.autoCompleteModels = this.carModels.filter(function (str) { return str.toUpperCase().indexOf(PATTERN) > -1; });
+  }
+
+  SelectSearchResultMarque(item) {
+    this.vehicule.marque = item.brand;
+    this.autoCompleteMarques = [];
+    this.carModels = item.models;
+  }
+
+  UpdateSearchResultsMarques() {
+    this.autoCompleteMarques = [];
+
+    if (this.vehicule.marque.length < 2) {
+      return;
+    }
+
+    this.vehiculeService.getMarques(this.vehicule.marque).subscribe(
+      async (res) => {
+        this.autoCompleteMarques = res;
+        if (this.autoCompleteMarques.length == 1)
+          this.carModels = this.autoCompleteMarques[0].models;
+      }
+    );
+  }
 
   typeVehiculeChange(ev) {
     this.vehicule.typeVehicule = parseInt(ev.target.value);
