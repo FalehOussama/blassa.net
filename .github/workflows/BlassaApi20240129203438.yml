@@ -18,7 +18,7 @@ env:
   API_IMPORT_VERSION: v1
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: BlassaApi
+  WORKING_DIRECTORY: ../../BlassaSln/BlassaApi
 jobs:
   build:
     runs-on: windows-latest
@@ -33,9 +33,9 @@ jobs:
       with:
         dotnet-version: ${{ env.SWASHBUCKLE_DOTNET_CORE_VERSION }}
     - name: Restore
-      run: dotnet restore ${{ env.WORKING_DIRECTORY }}/BlassaApi.csproj
+      run: dotnet restore ${{ env.WORKING_DIRECTORY }}
     - name: Build
-      run: dotnet build ${{ env.WORKING_DIRECTORY }}/BlassaApi.csproj --configuration ${{ env.CONFIGURATION }} --no-restore
+      run: dotnet build ${{ env.WORKING_DIRECTORY }} --configuration ${{ env.CONFIGURATION }} --no-restore
     - name: Test
       run: dotnet test ${{ env.WORKING_DIRECTORY }} --no-build
     - name: Publish
