@@ -49,8 +49,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}    
   deploy:
+    permissions:
+        id-token: write # This is required for requesting the JWT
     runs-on: windows-latest
     needs: build
     steps:
