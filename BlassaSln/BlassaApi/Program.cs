@@ -19,7 +19,8 @@ builder.Services.AddCors(options =>
 
 // Add services to the container.
 builder.Services.AddDbContext<BlassaContext>(options => 
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BlassaContext")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString(
+        builder.Environment.IsDevelopment() ? "BlassaContextDev" : "BlassaContextProd")));
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
