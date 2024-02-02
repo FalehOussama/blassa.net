@@ -68,6 +68,8 @@ jobs:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         publish-profile: ${{ secrets.BlassaApi20240129203438_6D38 }}
+    - name: Run Migrations
+      run: dotnet ef database update --project ${{ env.WORKING_DIRECTORY }}/BlassaApi.csproj
     - name: Azure Login
       uses: azure/login@v1
       env:
