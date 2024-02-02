@@ -71,7 +71,7 @@ jobs:
     - name: Install dotnet-ef
       run: dotnet tool install --global dotnet-ef --version 8.*
     - name: Run Migrations
-      run: dotnet ef database update --project ./BlassaApi/BlassaApi.csproj
+      run: dotnet ef database update
     - name: Azure Login
       uses: azure/login@v1
       env:
