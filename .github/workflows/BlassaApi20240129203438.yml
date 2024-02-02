@@ -45,6 +45,8 @@ jobs:
       working-directory: ${{ env.WORKING_DIRECTORY }}
     - name: Install dotnet-ef
       run: dotnet tool install --global dotnet-ef --version 8.*
+    - name: Set DbContext
+      run: Scaffold-DbContext "Data Source=blassa-server.database.windows.net; Authentication=Active Directory Integrated; Initial Catalog=Blassa;" Microsoft.EntityFrameworkCore.SqlServer -Verbose
     - name: Run Migrations
       run: dotnet ef database update --project ${{ env.WORKING_DIRECTORY }}/BlassaApi.csproj
     - name: Generate Open API Specification Document
