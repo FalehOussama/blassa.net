@@ -33,7 +33,7 @@ jobs:
         run: |
           bower install ${{ env.PACKAGE_PATH }}
           npm install ${{ env.PACKAGE_PATH }}
-          npm run build ${{ env.PACKAGE_PATH }}
+          npm run build
       - name: Deploy Azure App Service code Node.js and use IIS 10.0, Windows Server 2016
         uses: azure/webapps-deploy@v2
         with:
