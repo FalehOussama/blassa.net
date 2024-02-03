@@ -49,11 +49,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using (var serviceScope = app.Services?.GetService<IServiceScopeFactory>()?.CreateScope())
+try
 {
-    var context = serviceScope?.ServiceProvider.GetRequiredService<BlassaContext>();
-    if (context?.Database != null)
+    using (var serviceScope = app.Services?.GetService<IServiceScopeFactory>()?.CreateScope())
+    {
+        var context = serviceScope?.ServiceProvider.GetRequiredService<BlassaContext>();
         context?.Database.Migrate();
+    }
 }
+catch (Exception)
+{ }
+
+
 
 app.Run();
