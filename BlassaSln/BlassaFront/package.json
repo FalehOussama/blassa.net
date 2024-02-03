@@ -142,7 +142,7 @@
       "browser"
     ],
     "scripts": {
-      "ionic:build": "ionic-app-scripts build",
+      "build": "ionic-app-scripts build",
       "ionic:serve": "ionic-app-scripts serve"
     }
   }
