@@ -1,15 +1,17 @@
 {
-  "name": "Blassa",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
+  "name": "BlassaApp",
+  "version": "1.0.0",
+  "author": "RCS",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "build": "tsc",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve"
   },
   "private": true,
   "dependencies": {
@@ -142,11 +144,6 @@
       "browser",
       "ios",
       "android"
-    ],
-    "scripts": {
-      "build": "tsc",
-      "ionic:build": "ionic-app-scripts build",
-      "ionic:serve": "ionic-app-scripts serve"
-    }
+    ]
   }
 }
