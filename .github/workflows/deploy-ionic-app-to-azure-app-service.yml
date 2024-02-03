@@ -29,7 +29,7 @@ jobs:
         working-directory: ${{ env.PACKAGE_PATH }}
         run: |
           npm install -g bower
-          npm i @angular/cli  
+          npm i @angular/cli@16.0.0  
           npm install -g @ionic/cli
       - name: Build all Node.js projects with npm 
         working-directory: ${{ env.PACKAGE_PATH }}
