@@ -139,10 +139,12 @@
       "cordova-plugin-android-permissions": {}
     },
     "platforms": [
-      "browser"
+      "browser",
+      "ios",
+      "android"
     ],
     "scripts": {
-      "build": "ls",
+      "build": "ng build && cap copy",
       "ionic:build": "ionic-app-scripts build",
       "ionic:serve": "ionic-app-scripts serve"
     }

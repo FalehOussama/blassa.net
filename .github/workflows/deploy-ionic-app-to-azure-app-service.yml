@@ -30,7 +30,6 @@ jobs:
           npm install -g bower
       - name: Build all Node.js projects with npm
         run: |
-          npm fund ${{ env.PACKAGE_PATH }}
           bower install ${{ env.PACKAGE_PATH }}
           npm install ${{ env.PACKAGE_PATH }}
           npm run build ${{ env.PACKAGE_PATH }}
