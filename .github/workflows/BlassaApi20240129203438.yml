@@ -1,4 +1,4 @@
-name: Générer et déployer une application .NET Core sur l'application web BlassaApi20240129203438 avec le service Gestion des API BlassaApiapi-BlassaApi
+name: Générer et déployer BlassaApi20240129203438 avec le service Gestion des API BlassaApiapi-BlassaApi
 on:
   push:
     branches:
@@ -43,10 +43,6 @@ jobs:
     - name: Install Swashbuckle CLI .NET Global Tool
       run: dotnet tool install --global Swashbuckle.AspNetCore.Cli --version ${{ env.SWASHBUCLE_ASPNET_CORE_CLI_PACKAGE_VERSION }}
       working-directory: ${{ env.WORKING_DIRECTORY }}
-    - name: Install dotnet-ef
-      run: dotnet tool install --global dotnet-ef --version 8.*
-    - name: Run Migrations
-      run: dotnet ef database update --project ${{ env.WORKING_DIRECTORY }}/BlassaApi.csproj --configuration Release --verbose --environment Production
     - name: Generate Open API Specification Document
       run: swagger tofile --output "${{ env.API_IMPORT_SPECIFICATION_PATH }}" "${{ env.API_IMPORT_DLL }}" "${{ env.API_IMPORT_VERSION }}"
     - name: Publish Artifacts
