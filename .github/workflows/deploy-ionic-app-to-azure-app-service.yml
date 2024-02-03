@@ -26,13 +26,15 @@ jobs:
       # Gulp CLI already installed
       # https://github.com/actions/virtual-environments/blob/main/images/win/scripts/Installers/Install-NodeLts.ps1
       - name: Install Bower and Ionic
+        working-directory: ${{ env.PACKAGE_PATH }}
         run: |
           npm install -g bower
           npm install -g @ionic/cli
-      - name: Build all Node.js projects with npm
+      - name: Build all Node.js projects with npm 
+        working-directory: ${{ env.PACKAGE_PATH }}
         run: |
-          bower install ${{ env.PACKAGE_PATH }}
-          npm install ${{ env.PACKAGE_PATH }}
+          bower install
+          npm install
           npm run build
       - name: Deploy Azure App Service code Node.js and use IIS 10.0, Windows Server 2016
         uses: azure/webapps-deploy@v2
