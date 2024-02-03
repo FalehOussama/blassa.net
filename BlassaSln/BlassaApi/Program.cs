@@ -52,7 +52,8 @@ app.MapControllers();
 using (var serviceScope = app.Services?.GetService<IServiceScopeFactory>()?.CreateScope())
 {
     var context = serviceScope?.ServiceProvider.GetRequiredService<BlassaContext>();
-    context?.Database.Migrate();
+    if (context?.Database != null)
+        context?.Database.Migrate();
 }
 
 app.Run();
