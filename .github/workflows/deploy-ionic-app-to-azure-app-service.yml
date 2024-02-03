@@ -30,9 +30,9 @@ jobs:
           npm install -g bower
       - name: Build all Node.js projects with npm
         run: |
-          bower install
-          npm install
-          npm run build
+          bower install ${{ env.PACKAGE_PATH }}
+          npm install ${{ env.PACKAGE_PATH }}
+          npm run build ${{ env.PACKAGE_PATH }}
       - name: Deploy Azure App Service code Node.js and use IIS 10.0, Windows Server 2016
         uses: azure/webapps-deploy@v2
         with:
