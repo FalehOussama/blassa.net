@@ -144,7 +144,7 @@
       "android"
     ],
     "scripts": {
-      "build": "ng build && cap copy",
+      "build": "tsc",
       "ionic:build": "ionic-app-scripts build",
       "ionic:serve": "ionic-app-scripts serve"
     }
