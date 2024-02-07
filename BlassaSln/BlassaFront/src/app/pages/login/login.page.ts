@@ -7,7 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
-import { FirebaseAuthentication } from '@robingenz/capacitor-firebase-authentication';
+import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
 import { getAuth, signInAnonymously } from "firebase/auth";
 

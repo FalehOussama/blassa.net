@@ -2,7 +2,6 @@ import { Component, Input, NgZone, OnInit, SimpleChange } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Sim, SimCard } from '@jonz94/capacitor-sim';
-import { Geocoder } from 'ionic-native';
 import { StorageService } from 'src/app/services/storage.service';
 import { LocationService } from 'src/app/services/location.service';
 import { TrajetAnnonceCriteresDto } from '../../classes/trajetAnnonceCriteresDto';

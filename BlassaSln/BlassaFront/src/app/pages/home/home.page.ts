@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AnnonceService } from 'src/app/services/annonce.service';
 import { IonModal, LoadingController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core';
-import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@capacitor/geolocation';
 import { StorageService } from 'src/app/services/storage.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -95,7 +94,6 @@ export class HomePage implements OnInit  {
     private router : Router,
     private annonceService : AnnonceService,
     public loadingController: LoadingController,
-    private nativeGeocoder: NativeGeocoder,
     private ngZone: NgZone,
     private storage : StorageService,
     private formBuilder : FormBuilder,
@@ -164,21 +162,21 @@ export class HomePage implements OnInit  {
 
   async geocode() {
     if (this.address != "") {
-      let options: NativeGeocoderOptions = {
-        useLocale: true,
-        maxResults: 5
-      };
-      this.nativeGeocoder.forwardGeocode(this.address, options)
-        .then((result: NativeGeocoderResult[]) => {
-          this.ngZone.run(() => {
-            this.lat = parseFloat(result[0].latitude);
-            this.lng = parseFloat(result[0].longitude);
-          })
-          this.showingCurrent = false;
-          console.log(this.address)
-          alert(this.address);
-        })
-        .catch((error: any) => console.log(error));
+      //let options: NativeGeocoderOptions = {
+      //  useLocale: true,
+      //  maxResults: 5
+      //};
+      //this.nativeGeocoder.forwardGeocode(this.address, options)
+      //  .then((result: NativeGeocoderResult[]) => {
+      //    this.ngZone.run(() => {
+      //      this.lat = parseFloat(result[0].latitude);
+      //      this.lng = parseFloat(result[0].longitude);
+      //    })
+      //    this.showingCurrent = false;
+      //    console.log(this.address)
+      //    alert(this.address);
+      //  })
+      //  .catch((error: any) => console.log(error));
     }
     else {
       alert('Please add address to Geocode');

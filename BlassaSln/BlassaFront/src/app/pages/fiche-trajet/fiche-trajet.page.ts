@@ -6,7 +6,8 @@ import { AnnonceService } from 'src/app/services/annonce.service';
 import { ReservationService } from 'src/app/services/reservation.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { CallNumber } from '@awesome-cordova-plugins/call-number/ngx';
-import { AppAvailability, InAppBrowser } from 'ionic-native';
+//import { type } from 'cordova-plugin-inappbrowser/src/browser';
+import { AppAvailability } from '@ionic-native/app-availability';
 import { StorageService } from 'src/app/services/storage.service';
 import { VoyageAvecType } from '../../classes/voyageAvecType';
 import { ReservationStatusType } from '../../classes/reservationStatusType';
@@ -15,6 +16,8 @@ import { AvisCondComponent } from '../../components/avis-cond/avis-cond.componen
 import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
 import { BlassaToastComponent } from '../../components/blassa-toast/blassa-toast.component';
 import { Base64 } from 'js-base64';
+
+declare var cordova: any;
 
 @Component({
   selector: 'app-fiche-trajet',
@@ -76,16 +79,16 @@ export class FicheTrajetPage implements OnInit , OnDestroy {
      } else if (this.platform.is("android")) {  
             app = androidPackageName; 
      } else {  
-            let browser = new InAppBrowser(httpUrl + username, '_system');  
+       let browser = cordova.InAppBrowser.open(httpUrl + username, '_system', 'location=yes'); //new InAppBrowser(httpUrl + username, '_system');  
      return;  
    }  
  
    AppAvailability.check(app).then(() => { // success callback  
-         let browser = new InAppBrowser(appUrl + username, '_system');  
+     let browser = cordova.InAppBrowser.open(appUrl + username, '_system', 'location=yes'); //new InAppBrowser(appUrl + username, '_system');  
          console.log("app launch", appUrl + username);  
        },  
        () => { // error callback  
-         let browser = new InAppBrowser(httpUrl + username, '_system');  
+         let browser = cordova.InAppBrowser.open(httpUrl + username, '_system', 'location=yes'); //new InAppBrowser(httpUrl + username, '_system');  
          console.log("url launch", httpUrl + username);  
        }  
       );  
