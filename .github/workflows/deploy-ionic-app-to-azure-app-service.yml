@@ -25,31 +25,48 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       # Gulp CLI already installed
       # https://github.com/actions/virtual-environments/blob/main/images/win/scripts/Installers/Install-NodeLts.ps1
-      - name: Install Angular, Ionic and Bower
+      - name: Install Bower
         working-directory: ${{ env.PACKAGE_PATH }}
         run: |
-          npm install -g bower
+          npm install -g bower --save --legacy-peer-deps
+      - name: Install node modules
+        working-directory: ${{ env.PACKAGE_PATH }}
+        run: |
           npm install --save --legacy-peer-deps
           npm fund
+      - name: Install Ionic CLI
+        working-directory: ${{ env.PACKAGE_PATH }}
+        run: |
           npm i -g @ionic/cli
           npm fund
+      - name: Uninstall ionic-native
+        working-directory: ${{ env.PACKAGE_PATH }}
+        run: |
           npm uninstall @ionic-native --force
           npm fund
           npm uninstall ionic-native --force
           npm fund
+      - name: Install ionic-native/app-availability @ionic-native/core
+        working-directory: ${{ env.PACKAGE_PATH }}
+        run: |
           npm i @ionic-native/app-availability --legacy-peer-deps
           npm fund
           npm i @ionic-native/core --legacy-peer-deps
           npm fund
+      - name: Install cordova-plugin-inappbrowser
+        working-directory: ${{ env.PACKAGE_PATH }}
+        run: |
           npm i cordova-plugin-inappbrowser --save --legacy-peer-deps
           npm fund
+      - name: Install applicationinsights
+        working-directory: ${{ env.PACKAGE_PATH }}
+        run: |
           npm i applicationinsights --legacy-peer-deps
           npm fund
       - name: Build all Node.js projects with npm 
         working-directory: ${{ env.PACKAGE_PATH }}
         run: |
           bower install
-          npm install
           npm run build
       - name: Deploy Azure App Service code Node.js and use IIS 10.0, Windows Server 2016
         uses: azure/webapps-deploy@v2
