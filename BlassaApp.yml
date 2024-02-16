@@ -54,6 +54,6 @@ steps:
       testResultsFormat: 'JUnit'
       testResultsFiles: '**/TESTS-*.xml'
 
-  - publish: 'BlassaFront/www/' # Publish App artifact
+  - publish: 'BlassaSln/BlassaFront/www/' # Publish App artifact
     artifact: 'www'
     displayName: 'Publishing Artifact'
