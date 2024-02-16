@@ -24,7 +24,7 @@ steps:
     displayName: 'npm install'
     inputs:
       command: install
-      workingDir: '$(System.DefaultWorkingDirectory)'
+      workingDir: '$(System.DefaultWorkingDirectory)/BlassaSln/BlassaFront'
 
   - task: Npm@1 # Run npm run build
     displayName: 'npm run build'
