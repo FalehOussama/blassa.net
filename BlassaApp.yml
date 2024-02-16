@@ -21,7 +21,7 @@ steps:
 # We can choose from a catalog of tasks available by default or download from the Azure DevOps marketplace 
 # In this case I chose to use 6 tasks (not mandatory) to install dependencies and build the App. 
   - task: Npm@1 # Run npm install
-    displayName: 'npm install'
+    displayName: 'npm install --legacy-peer-deps'
     inputs:
       command: install
       workingDir: '$(System.DefaultWorkingDirectory)/BlassaSln/BlassaFront'
