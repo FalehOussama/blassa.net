@@ -32,6 +32,7 @@ steps:
     inputs:
       command: custom
       customCommand: run build
+      workingDir: '$(System.DefaultWorkingDirectory)/BlassaSln/BlassaFront'
 
   - script: | # Run unit tests
       npx --no-install ng test --watch=false --reporters=progress,junit
