@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MesVehiculesPage } from './mes-vehicules.page';
 
 describe('MesVehiculesPage', () => {
   let component: MesVehiculesPage;
   let fixture: ComponentFixture<MesVehiculesPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(MesVehiculesPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
