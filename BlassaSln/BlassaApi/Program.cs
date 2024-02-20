@@ -10,8 +10,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:8100",
-                                              "http://localhost:8101")
+                          policy.WithOrigins(
+                                                "https://kind-water-0666b6e03.4.azurestaticapps.net",
+                                                "https://blassa-cov.tn",
+                                                "http://localhost:8100",
+                                                "http://localhost:8101")
                           .AllowAnyMethod()
                           .AllowAnyHeader();
                       });
