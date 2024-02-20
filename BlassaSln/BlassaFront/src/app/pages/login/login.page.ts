@@ -5,7 +5,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
-import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { GoogleAuth, InitOptions } from '@codetrix-studio/capacitor-google-auth';
 
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
@@ -64,7 +64,11 @@ export class LoginPage implements OnInit   {
       
   }
   ionViewDidEnter() {
-    GoogleAuth.initialize();
+    let gOptions: InitOptions = {
+      clientId: '361433567189-j7u13f9q53m2mnn0tcu0mgeunpgr85gs.apps.googleusercontent.com',
+      grantOfflineAccess: false
+    };
+    GoogleAuth.initialize(gOptions);
     this.menuCtrl.enable(false);
   }
 
