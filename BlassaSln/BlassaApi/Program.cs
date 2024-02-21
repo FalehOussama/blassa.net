@@ -1,5 +1,7 @@
 using BlassaApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,7 @@ builder.Services.AddCors(options =>
                                                 "http://localhost:8101")
                           .AllowAnyMethod()
                           .AllowAnyHeader();
+                          policy.WithMethods(["GET", "POST", "PUT", "DELETE", "OPTIONS"]);
                       });
 });
 
