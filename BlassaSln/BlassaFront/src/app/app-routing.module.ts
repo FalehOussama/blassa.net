@@ -11,18 +11,9 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
-  
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
-  },
   {
     path: 'gc',
     loadChildren: () => import('./pages/gc/gc.module').then( m => m.GCPageModule)
-  },
-  {
-    path: 'tablinks',
-    loadChildren: () => import('./pages/tablinks/tablinks.module').then( m => m.TablinksPageModule)
   },
   {
     path: 'loading-screen/:id/:id2',
@@ -51,14 +42,6 @@ const routes: Routes = [
   {
     path: 'profil',
     loadChildren: () => import('./pages/profil/profil.module').then( m => m.ProfilPageModule)
-  },
-  {
-    path: 'add-car',
-    loadChildren: () => import('./pages/add-car/add-car.module').then( m => m.AddCarPageModule)
-  },
-  {
-    path: 'car-info/:i',
-    loadChildren: () => import('./pages/car-info/car-info.module').then( m => m.CarInfoPageModule)
   },
   {
     path: 'profil-membre',
