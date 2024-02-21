@@ -1,4 +1,4 @@
-name: BlassaApi CI/CD
+name: Blassa Back CI/CD
 on:
   push:
     branches:

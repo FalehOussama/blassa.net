@@ -1,4 +1,4 @@
-name: BlassaApp CI/CD
+name: Blassa Front CI/CD
 
 on:
   push:
