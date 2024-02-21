@@ -17,9 +17,11 @@ builder.Services.AddCors(options =>
                                                 "https://blassa-cov.tn",
                                                 "http://localhost:8100",
                                                 "http://localhost:8101")
-                          .AllowAnyMethod()
+                          .SetIsOriginAllowedToAllowWildcardSubdomains()
                           .AllowAnyHeader()
-                          .AllowCredentials();
+                          .AllowCredentials()
+                          .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
+                          .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
                       });
 });
 
@@ -39,6 +41,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -47,8 +51,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
-app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 
