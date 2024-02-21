@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
                           .AllowAnyOrigin()
                           .SetIsOriginAllowedToAllowWildcardSubdomains()
                           .AllowAnyHeader()
-                          .AllowCredentials()
+                          //.AllowCredentials()
                           .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
                           .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
                       });
