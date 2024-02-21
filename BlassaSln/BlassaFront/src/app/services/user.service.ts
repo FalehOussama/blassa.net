@@ -18,7 +18,7 @@ export class UserService {
 
   private baseUrl = url +  "/Users";
   private httpOptions = {
-    headers: { 'Access-Control-Allow-Origin': '_blassaOrigins' }
+    headers: { 'Access-Control-Allow-Origin': 'https://kind-water-0666b6e03.4.azurestaticapps.net' }
   };
 
   public save(user: User) {
