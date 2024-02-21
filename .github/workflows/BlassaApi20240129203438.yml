@@ -1,8 +1,10 @@
-name: Générer et déployer BlassaApi20240129203438 avec le service Gestion des API BlassaApiapi-BlassaApi
+name: BlassaApi CI/CD
 on:
   push:
     branches:
     - main
+    paths:
+      - 'BlassaSln/BlassaApi/**'
 env:
   AZURE_WEBAPP_NAME: BlassaApi20240129203438
   AZURE_WEBAPP_PACKAGE_PATH: BlassaApi\publish
