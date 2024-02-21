@@ -18,8 +18,8 @@ builder.Services.AddCors(options =>
                                                 "http://localhost:8100",
                                                 "http://localhost:8101")
                           .AllowAnyMethod()
-                          .AllowAnyHeader();
-                          policy.WithMethods(["GET", "POST", "PUT", "DELETE", "OPTIONS"]);
+                          .AllowAnyHeader()
+                          .AllowCredentials();
                       });
 });
 
