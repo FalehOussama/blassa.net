@@ -7,23 +7,23 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_blassaOrigins";
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.WithOrigins(
-                                                "https://kind-water-0666b6e03.4.azurestaticapps.net",
-                                                "https://blassa-cov.tn",
-                                                "http://localhost:8100",
-                                                "http://localhost:8101")
-                          .SetIsOriginAllowedToAllowWildcardSubdomains()
-                          .AllowAnyHeader()
-                          .AllowCredentials()
-                          .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
-                          .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
-                      });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//                      policy =>
+//                      {
+//                          policy.WithOrigins(
+//                                                "https://kind-water-0666b6e03.4.azurestaticapps.net",
+//                                                "https://blassa-cov.tn",
+//                                                "http://localhost:8100",
+//                                                "http://localhost:8101")
+//                          .SetIsOriginAllowedToAllowWildcardSubdomains()
+//                          .AllowAnyHeader()
+//                          .AllowCredentials()
+//                          .WithMethods("GET", "PUT", "POST", "DELETE", "OPTIONS")
+//                          .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+//                      });
+//});
 
 // Add services to the container.
 builder.Services.AddDbContext<BlassaContext>(options => 
@@ -41,7 +41,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors(MyAllowSpecificOrigins);
+//app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
