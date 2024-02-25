@@ -6,17 +6,17 @@ export const environment = {
   production: false,
   firebaseConfig : {
 
-    apiKey: "AIzaSyB9zrBmlfelYzS4Bd0cqZk5NOaGF3ZUyEM",
+    apiKey: "AIzaSyDxIYRzWt_un6fsDINoqMJ4U75Uj_UCnzY",
   
-    authDomain: "appblassa-c7e00.firebaseapp.com",
+    authDomain: "blassa-cov.firebaseapp.com",
   
-    projectId: "appblassa-c7e00",
+    projectId: "blassa-cov",
   
-    storageBucket: "appblassa-c7e00.appspot.com",
+    storageBucket: "blassa-cov.appspot.com",
   
-    messagingSenderId: "856756010084",
+    messagingSenderId: "444878268840",
   
-    appId: "1:856756010084:web:5c89b5fe8511dd67aff371"
+    appId: "1:444878268840:web:5f282667a094852f16d59d"
   
   }
   
