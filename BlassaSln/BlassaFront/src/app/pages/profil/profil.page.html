@@ -304,20 +304,6 @@
         </ion-card-content>
       </ion-card>
     </ion-row>
-
-    <hr *ngIf="!user.preferences.passager" />
-    <ion-row *ngIf="!user.preferences.passager">
-      <ion-label class="font1">Mes véhicules</ion-label>
-      <ion-fab horizontal="end" *ngIf="user.vehicules.length < 3">
-        <ion-fab-button routerLink="/add-car">
-          <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-      </ion-fab>
-    </ion-row>
-    <app-car-card *ngIf="!user.preferences.passager"
-                  [car1]="user.vehicules[0]"
-                  [car2]="user.vehicules[1]"
-                  [car3]="user.vehicules[2]"></app-car-card>
   </ion-grid>
 </ion-content>
 

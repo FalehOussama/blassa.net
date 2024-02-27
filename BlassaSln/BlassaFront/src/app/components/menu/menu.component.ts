@@ -19,14 +19,15 @@ export class MenuComponent  implements OnInit  {
     private storage : StorageService,
     public menuCtrl: MenuController
   ) { 
-      this.storage.get('user').then(
+      
+  }
+
+  async ngOnInit() {
+    await this.storage.get('user').then(
       async data => {
         this.user = await data;
       }
-    )
-  }
-
-  async ngOnInit () {
+    );
   }
 
   toggleSideMenu() { this.menuCtrl.toggle(); }

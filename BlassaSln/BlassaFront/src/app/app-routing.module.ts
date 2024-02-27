@@ -32,7 +32,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'fiche-trajet',
+    path: 'fiche-trajet/:id',
     loadChildren: () => import('./pages/fiche-trajet/fiche-trajet.module').then( m => m.FicheTrajetPageModule)
   },
   {

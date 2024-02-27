@@ -24,6 +24,7 @@ export class NouveauTrajetPage implements OnInit  {
   /************************** */
   user: any;
   trajetAnnonce: TrajetAnnonce = new TrajetAnnonce();
+  idTrajetAnnonce: any;
   vehicules: any;
   vehiculeSelect: any;
   vehiculeSelectId: any;
@@ -386,7 +387,7 @@ export class NouveauTrajetPage implements OnInit  {
   async postTrajetAnnonce() {
     this.annonceService.post(this.trajetAnnonce).subscribe(
       async (value: TrajetAnnonce) => {
-        await this.storage.set('idTrajetAnnonce', await value.id);
+        this.idTrajetAnnonce = await value.id;
         this.blassaAlert.alertDismiss("Enregistrement de votre trajet",
           "Votre trajet a été enregistrée avec succès",
           this.publierAnnonceSuccess.bind(this));
@@ -397,8 +398,9 @@ export class NouveauTrajetPage implements OnInit  {
     );
   }
 
-  async publierAnnonceSuccess(data) {
-    this.router.navigateByUrl('/fiche-trajet');
+  publierAnnonceSuccess(data) {
+    this.storage.set('idTrajetAnnonce', this.idTrajetAnnonce);
+    this.router.navigate(['/fiche-trajet/' + this.idTrajetAnnonce]);
   }
 
   changeBagageLourd() {

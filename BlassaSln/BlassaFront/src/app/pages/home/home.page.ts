@@ -185,7 +185,7 @@ export class HomePage implements OnInit  {
 
   afficherFiche(id) {
     this.storage.set('idTrajetAnnonce', id);
-    this.router.navigate(['/fiche-trajet']);
+    this.router.navigate(['/fiche-trajet/' + id]);
   }
 
   //pagination
