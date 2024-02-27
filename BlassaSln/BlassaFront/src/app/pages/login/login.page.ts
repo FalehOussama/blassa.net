@@ -1,4 +1,3 @@
-
 import { Component, NgZone, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl } from '@angular/forms';
@@ -14,7 +13,7 @@ import { getAuth, signInAnonymously } from "firebase/auth";
 import { preferences , avis } from 'src/app/modules/preferences/preferences.module';
 import { userModel } from '../../modules/user/user.module'
 import { StorageService } from 'src/app/services/storage.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, LoadingController } from '@ionic/angular';
 
 
 @Component({
@@ -39,6 +38,7 @@ export class LoginPage implements OnInit   {
   method: any;
   tel1: any;
   value: any;
+  loading: any;
 
 
   constructor(
@@ -46,6 +46,7 @@ export class LoginPage implements OnInit   {
     private router: Router,
     private userService: UserService,
     public menuCtrl: MenuController,
+    private loadingCtrl: LoadingController,
     private storage : StorageService
     
   ) { 
@@ -111,6 +112,13 @@ export class LoginPage implements OnInit   {
 
   //google login
   async doLogin() {
+    this.loading = await this.loadingCtrl.create({
+      message: 'Authentification Google...',
+      cssClass: 'custom-loading',
+      mode: 'ios'
+    });
+    this.loading.present();
+
     const user = await GoogleAuth.signIn();
     if (user) { 
       this.uid = user.id;
@@ -134,7 +142,14 @@ export class LoginPage implements OnInit   {
 
 
   // Facebook login
-  async signInWithF(){
+  async signInWithF() {
+    this.loading = await this.loadingCtrl.create({
+      message: 'Authentification Facebook...',
+      cssClass: 'custom-loading',
+      mode: 'ios'
+    });
+    this.loading.present();
+
     await FirebaseAuthentication.signInWithFacebook().then(
       (user)=>{
         console.log(user)
@@ -155,7 +170,15 @@ export class LoginPage implements OnInit   {
 
 
 // Check save user or/and get user from database
-  async getUser(uid : any , email : any){
+  async getUser(uid: any, email: any) {
+    this.loading.dismiss();
+    this.loading = await this.loadingCtrl.create({
+      message: 'Chargement en cours...',
+      cssClass: 'custom-loading',
+      mode: 'ios'
+    });
+    this.loading.present();
+
     await this.userService.getUserByUid(this.uid).subscribe(
       async (res) => {
         let user = await this.storage.get('user');
@@ -219,6 +242,7 @@ export class LoginPage implements OnInit   {
   }
 
   private redirectByUser(user: any) {
+    this.loading.dismiss();
     if (user == undefined)
       return;
     if (user?.conditionsGenerales) {

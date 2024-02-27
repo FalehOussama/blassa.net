@@ -73,6 +73,12 @@
     url('../../../assets/images/Background/map.jpg');
 }
 
+ion-loading.custom-loading {
+  --background: #e3edff;
+  --spinner-color: #1c6dff;
+  color: #1c6dff;
+}
+
 
 @keyframes myAnim {
 	0%,
