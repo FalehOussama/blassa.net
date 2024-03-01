@@ -8,12 +8,11 @@ import { GoogleAuth, InitOptions } from '@codetrix-studio/capacitor-google-auth'
 
 import { FirebaseAuthentication } from '@capacitor-firebase/authentication';
 
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { FacebookAuthProvider, getAuth, signInAnonymously } from "firebase/auth";
 
-import { preferences , avis } from 'src/app/modules/preferences/preferences.module';
-import { userModel } from '../../modules/user/user.module'
 import { StorageService } from 'src/app/services/storage.service';
 import { MenuController, LoadingController } from '@ionic/angular';
+import { BlassaAlertComponent } from '../../components/blassa-alert/blassa-alert.component';
 
 
 @Component({
@@ -47,11 +46,11 @@ export class LoginPage implements OnInit   {
     private userService: UserService,
     public menuCtrl: MenuController,
     private loadingCtrl: LoadingController,
-    private storage : StorageService
+    private storage: StorageService,
+    private blassaAlert: BlassaAlertComponent
     
   ) { 
-
-    
+        
     this.storage.get('user').then(
       async data => {
         this.value = await data;
@@ -119,25 +118,43 @@ export class LoginPage implements OnInit   {
     });
     this.loading.present();
 
-    const user = await GoogleAuth.signIn();
-    if (user) { 
-      this.uid = user.id;
-      this.email = user.email;
-      this.img = user.imageUrl;
-      this.prenom = user.givenName;
-      this.nom = user.familyName;
-      this.method = "Google";
+    try {
+      const user = await GoogleAuth.signIn();
+      if (user) {
+        this.uid = user.id;
+        this.email = user.email;
+        this.img = user.imageUrl;
+        this.prenom = user.givenName;
+        this.nom = user.familyName;
+        this.method = "Google";
 
-      //temp
-      //this.uid = "uId29";
-      //this.email = "user29@gmail.com";
-      //this.img = "../../assets/images/profil.png";
-      //this.prenom = "PUser29";
-      //this.nom = "User29";
-      //this.method = "Google";
+        //temp
+        //this.uid = "uId29";
+        //this.email = "user29@gmail.com";
+        //this.img = "../../assets/images/profil.png";
+        //this.prenom = "PUser29";
+        //this.nom = "User29";
+        //this.method = "Google";
 
-      this.getUser(this.uid, this.email);
-     }
+        this.getUser(this.uid, this.email);
+      }
+      else {
+        this.loading.dismiss();
+        this.blassaAlert.alert("Erreur connexion Google", "User non défini");
+      }
+    }
+    catch (error) {
+      this.loading.dismiss();
+      let errorMessage = '';
+      // Handle Errors.
+      if (typeof error === "string") {
+        errorMessage = error.toString();
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      this.blassaAlert.alert("Erreur connexion Google", errorMessage);
+    }
+    
   }
 
 
@@ -164,7 +181,17 @@ export class LoginPage implements OnInit   {
           this.getUser(this.uid, this.email);
          }
       }
-    );
+    ).catch((error) => {
+      this.loading.dismiss();
+      // Handle Errors.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // AuthCredential type that was used.
+      const credential = FacebookAuthProvider.credentialFromError(error);
+      this.blassaAlert.alert("Erreur connexion Google", errorCode + ": " + errorMessage);
+    });
     
   }
 
@@ -187,7 +214,6 @@ export class LoginPage implements OnInit   {
           newUser.uid = uid;
           newUser.email = email;
           newUser.imgUrl = this.img;
-          newUser.avis = avis;
           newUser.nom = this.nom;
           newUser.prenom = this.prenom;
           newUser.tel1 = this.tel1;
