@@ -9,3 +9,4 @@
 /BlassaSln/BlassaApi/obj/Debug/net6.0/apphost.exe
 /BlassaSln/BlassaApi/obj/Debug/net6.0/BlassaApi.GeneratedMSBuildEditorConfig.editorconfig
 /BlassaSln/BlassaApi/obj/project.assets.json
+/BlassaSln/BlassaFront/src/app/modules/url/url.module.ts
