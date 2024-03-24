@@ -30,7 +30,7 @@ namespace BlassaApi.Controllers
                 .ToListAsync();
         }
 
-        //GET : api/Users/5
+        //GET : api/Users/1
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
